@@ -1,4 +1,4 @@
-import {ICategoryList} from "./ICategoryList";
+
 
 export interface IProduct {
   id: number
@@ -15,13 +15,13 @@ export interface IProduct {
   price: number
 
 
-  saleStartDate: number
-  saleEndDate: number
+  saleStartDate: Date
+  saleEndDate: Date
   salePercentOff: number
 
   description: string
   image: string
   quantityAtCost: number
   dateAvailableOn: Date
-  categoryList: ICategoryList[]
+  categoryList: string[]
 }
