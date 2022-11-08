@@ -16,25 +16,25 @@ export class HttpService {
 // Product methods
   public createProduct(product: IProduct): Observable<IProduct>{
     return this.httpClient.post(
-      "http://localhost:8080/api/product", product
+      "http://localhost:8080/api/products", product
     ) as Observable<IProduct>
   }
 
   public getAllProducts(): Observable<IProduct[]> {
     return this.httpClient.get(
-      "http://localhost:8080/api/product"
+      "http://localhost:8080/api/products"
     ) as Observable<IProduct[]>
   }
 
   public updateProduct(product: IProduct): Observable<IProduct>{
     return this.httpClient.put(
-      "http://localhost:8080/api/product",product
+      "http://localhost:8080/api/products",product
     ) as Observable<IProduct>
   }
 
   public deleteProduct(productId: number): Observable<IProduct>{
     return this.httpClient.delete(
-      `http://localhost:8080/api/product/${productId}`
+      `http://localhost:8080/api/products/${productId}`
     ) as Observable<IProduct>
   }
 
