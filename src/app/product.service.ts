@@ -27,27 +27,7 @@ export class ProductService {
     quantityAtCost: 6,
     dateAvailableOn: new Date(),
     categoryList: ["footwear"]
-  },
-    {
-      id: 1,
-      isDiscontinued: false,
-      storeQuantity: 10,
-      msrp: 30,
-      currentPrice: 35,
-      mapStartDate: new Date(),
-      mapEndDate: new Date(),
-      priceStartDate: new Date(),
-      priceEndDate: new Date(),
-      price: 40,
-      saleStartDate: new Date(),
-      saleEndDate: new Date(),
-      salePercentOff: 5,
-      description: "shoe",
-      image: "https://functionjunction.com/wp-content/uploads/2021/04/m_3778-200x200.jpg",
-      quantityAtCost: 6,
-      dateAvailableOn: new Date(),
-      categoryList: ["footwear"]
-    }]);
+  }]);
 
   constructor(private httpService: HttpService) {
    this.getProductList();
@@ -58,6 +38,7 @@ export class ProductService {
     this.httpService.getAllProducts().pipe(first()).subscribe({
       next: (productList) => {
         this.$productList.next(productList);
+        console.log(productList);
       },
       error: (err) => {
         console.error(err);

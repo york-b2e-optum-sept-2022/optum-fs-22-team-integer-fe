@@ -11,7 +11,9 @@ export class ProductComponent {
 
   @Input() product!: IProduct;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {
+    console.log(this.product);
+  }
 
   onClickAddProduct(){
     this.cartService.addProduct(this.product);
