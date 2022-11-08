@@ -2,9 +2,9 @@ import {ICategoryList} from "./ICategoryList";
 
 export interface IProduct {
   id: number
-  discontinuedStatus: boolean
+  isDiscontinued: boolean
   storeQuantity: number
-  MSRP: number
+  msrp: number
   currentPrice: number
 
   mapStartDate: Date
@@ -17,11 +17,11 @@ export interface IProduct {
 
   saleStartDate: number
   saleEndDate: number
-  salePercent: number
+  salePercentOff: number
 
   description: string
   image: string
-  quantitiesAtCost: number
-  availableOnDate: Date
-  categories: ICategoryList[]
+  quantityAtCost: number
+  dateAvailableOn: Date
+  categoryList: ICategoryList[]
 }
