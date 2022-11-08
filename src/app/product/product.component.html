@@ -1,1 +1,10 @@
-<p>product works!</p>
+<div>
+  <div>
+    <h5>
+      {{product.description}}
+      <span *ngIf="product.isDiscontinued" >Product is Discontinued</span>
+    </h5>
+    <img src="{{product.image}}" alt="product">
+    <h6>{{product.currentPrice}}</h6>
+  </div>
+</div>

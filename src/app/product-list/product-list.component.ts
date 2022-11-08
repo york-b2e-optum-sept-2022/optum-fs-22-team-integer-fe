@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {IProduct} from "../___interfaces/IProduct";
+import {ProductService} from "../product.service";
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent {
 
-  constructor() { }
+  public productList: IProduct[] = [];
 
-  ngOnInit(): void {
+  constructor(private productService: ProductService) {
+    this.productService.$productList.subscribe(
+      productList => {
+        this.productList = productList
+      }
+    );
   }
 
 }
