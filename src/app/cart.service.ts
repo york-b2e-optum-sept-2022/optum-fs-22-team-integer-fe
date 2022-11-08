@@ -14,6 +14,8 @@ export class CartService {
     totalPrice: 0
   });
 
+  public $viewCart = new BehaviorSubject<boolean>(false);
+
   constructor() { }
 
   addProduct(product: IProduct) {
@@ -23,6 +25,12 @@ export class CartService {
       count: 1,
       product: product
     });
+
+    console.log(currentCart);
+  }
+
+  viewCart() {
+    this.$viewCart.next(true);
   }
 
 
