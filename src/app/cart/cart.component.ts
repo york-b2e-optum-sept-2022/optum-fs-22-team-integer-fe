@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
-import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -38,6 +37,10 @@ this.cartService.createInvoice(this.cart)
 
   ngOnInit(): void {
 
+  }
+
+  onClose() {
+    this.cartService.viewClose();
   }
 
 }

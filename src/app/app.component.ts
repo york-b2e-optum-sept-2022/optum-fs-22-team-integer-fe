@@ -13,8 +13,22 @@ export class AppComponent {
   viewInvoices: boolean = false
   viewLogin: boolean = false;
   viewRegister: boolean = false;
+  isLoggedIn: boolean = false;
+  accountType: number = 1;
 
   constructor(private accountService: AccountService, private cartService: CartService) {
+    this.accountService.$account.subscribe({
+      next: (account) => {
+        if(account) {
+          this.isLoggedIn = account !== null;
+          this.accountType = account.accountType;
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+
     this.accountService.$viewLogin.subscribe(
       (viewLogin) => {
         this.viewLogin = viewLogin;

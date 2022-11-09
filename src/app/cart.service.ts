@@ -38,6 +38,10 @@ export class CartService {
     this.$viewCart.next(true);
   }
 
+  public viewClose() {
+    this.$viewCart.next(false);
+  }
+
   createInvoice(cart: ICart){
     this.httpService.createInvoice(cart).pipe(first()).subscribe({
       next: (invoice) => {
