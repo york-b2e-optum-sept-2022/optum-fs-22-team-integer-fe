@@ -23,7 +23,6 @@ export class CartService {
 
   constructor(private httpService: HttpService) {
     this.getAllInvoices()
-    console.log(this.$invoiceList.getValue())
   }
 
   public addProduct(product: IProduct) {
@@ -39,7 +38,6 @@ export class CartService {
       existingProduct.count ++
       currentCart.totalPrice += product.currentPrice
     }
-    console.log(currentCart);
     this.$cart.next(currentCart)
   }
 
@@ -56,7 +54,6 @@ export class CartService {
       {
         next: (invoiceList) => {
           this.$invoiceList.next(invoiceList)
-          console.log(invoiceList)
         },
         error: (err) => {
           console.error(err);
@@ -77,7 +74,6 @@ export class CartService {
         }
       )
     }
-    console.log(listOfPurchases)
     let invoice: IInvoiceList = {
       id: null,
       totalPrice: cart.totalPrice,

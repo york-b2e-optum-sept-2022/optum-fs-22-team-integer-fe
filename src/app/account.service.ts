@@ -42,6 +42,7 @@ export class AccountService {
           this.$account.next(account);
         },
         error: (err) => {
+          //TODO: is this field declared as unique in back end?
           if (err.status === 409) {
             this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
             return;

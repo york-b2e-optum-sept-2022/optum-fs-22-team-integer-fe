@@ -48,8 +48,7 @@ export class AppComponent {
     );
 
     this.cartService.$viewInvoices.subscribe(
-      viewInvoices => {this.viewInvoices = viewInvoices
-      console.log (this.viewInvoices)}
+      viewInvoices => this.viewInvoices = viewInvoices
     );
 
   }
