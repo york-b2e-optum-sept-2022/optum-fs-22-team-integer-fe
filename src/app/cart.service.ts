@@ -28,11 +28,17 @@ export class CartService {
 
   public addProduct(product: IProduct) {
     let currentCart: ICart = {...this.$cart.getValue()};
-    currentCart.totalPrice += product.currentPrice;
-    currentCart.productList.push({
-      count: 1,
-      product: product
-    });
+    const existingProduct = currentCart.productList.find(item => item.product = product)
+    if (!existingProduct) {
+      currentCart.totalPrice += product.currentPrice;
+      currentCart.productList.push({
+        count: 1,
+        product: product
+      });
+    } else {
+      existingProduct.count ++
+      currentCart.totalPrice += product.currentPrice
+    }
     console.log(currentCart);
     this.$cart.next(currentCart)
   }
@@ -62,7 +68,7 @@ export class CartService {
 
   createInvoice(cart: ICart) {
     let listOfPurchases = []
-    for(let purchase of cart.productList){
+    for (let purchase of cart.productList) {
       listOfPurchases.push(
         {
           count: purchase.count,
@@ -72,7 +78,7 @@ export class CartService {
       )
     }
     console.log(listOfPurchases)
-    let invoice: IInvoiceList  = {
+    let invoice: IInvoiceList = {
       id: null,
       totalPrice: cart.totalPrice,
       purchaseDate: new Date(),
