@@ -4,7 +4,7 @@
 <app-register *ngIf="viewRegister"></app-register>
 <app-login *ngIf="viewLogin"></app-login>
 <app-cart *ngIf="viewCart"></app-cart>
-<app-invoice></app-invoice>
+<app-invoice *ngIf="viewInvoices"></app-invoice>
 
 <app-customer *ngIf="isLoggedIn && accountType === 1"></app-customer>
 <app-shopkeeper *ngIf="isLoggedIn && accountType === 2"></app-shopkeeper>

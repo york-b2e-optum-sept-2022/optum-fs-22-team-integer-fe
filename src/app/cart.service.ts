@@ -88,6 +88,10 @@ export class CartService {
 
     this.httpService.createInvoice(invoice).pipe(first()).subscribe({
       next: (invoice) => {
+        if(invoice.accountId === 0) {
+          this.$invoiceList.next([invoice])
+          return
+        }
         let newList: IInvoiceList[] = [...this.$invoiceList.getValue()];
         newList.push(invoice)
         this.$invoiceList.next(newList)
