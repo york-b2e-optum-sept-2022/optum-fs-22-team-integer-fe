@@ -23,7 +23,6 @@ export class CartService {
 
   constructor(private httpService: HttpService) {
     this.getAllInvoices()
-    console.log(this.$invoiceList.getValue())
   }
 
   public addProduct(product: IProduct) {
@@ -36,10 +35,9 @@ export class CartService {
         product: product
       });
     } else {
-      existingProduct.count ++
+      existingProduct.count++
       currentCart.totalPrice += product.currentPrice
     }
-    console.log(currentCart);
     this.$cart.next(currentCart)
   }
 
@@ -56,7 +54,6 @@ export class CartService {
       {
         next: (invoiceList) => {
           this.$invoiceList.next(invoiceList)
-          console.log(invoiceList)
         },
         error: (err) => {
           console.error(err);
@@ -77,7 +74,6 @@ export class CartService {
         }
       )
     }
-    console.log(listOfPurchases)
     let invoice: IInvoiceList = {
       id: null,
       totalPrice: cart.totalPrice,
@@ -88,6 +84,10 @@ export class CartService {
 
     this.httpService.createInvoice(invoice).pipe(first()).subscribe({
       next: (invoice) => {
+        if (invoice.accountId === 0) {
+          this.$invoiceList.next([invoice])
+          return
+        }
         let newList: IInvoiceList[] = [...this.$invoiceList.getValue()];
         newList.push(invoice)
         this.$invoiceList.next(newList)
@@ -97,5 +97,33 @@ export class CartService {
         // TODO - handle error
       }
     })
+  }
+
+
+  public connectCart(accountId: number) {
+    let cart: ICart = this.$cart.getValue()
+    cart.id = accountId
+    this.httpService.createCart(cart).pipe(first())
+      .subscribe({
+        next: (savedCart) => {
+          this.$cart.next(savedCart)
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            this.httpService.getCart(accountId).pipe(first())
+              .subscribe({
+                next: (returnedCart) => {
+                  returnedCart.totalPrice += cart.totalPrice
+                  for (let item of cart.productList)
+                    returnedCart.productList.push(item)
+                  this.$cart.next(returnedCart)
+                },
+                error: (err) => {
+                  //TODO
+                }
+                })
+              }
+          }
+        })
   }
 }

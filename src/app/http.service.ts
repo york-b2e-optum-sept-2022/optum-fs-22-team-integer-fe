@@ -76,9 +76,9 @@ export class HttpService {
   }
 
   //cart methods
-  public createCart(): Observable<ICart>{
+  public createCart(cart: ICart): Observable<ICart>{
     return this.httpClient.post(
-      "http://localhost:8080/api/carts", {}
+      "http://localhost:8080/api/carts", cart
     ) as Observable<ICart>
   }
 

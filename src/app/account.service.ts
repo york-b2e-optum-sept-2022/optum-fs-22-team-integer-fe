@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {IAccount} from "./___interfaces/IAccount";
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
+import {CartService} from "./cart.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,14 @@ export class AccountService {
   private UNKNOWN_ERROR = "Unknown error, please try again"
   private LOGIN_ERROR = "Invalid login, please try again"
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private cartService: CartService) {
   }
 
   public login(username: string, password: string) {
     this.httpService.login(username,password).pipe(first()).subscribe({
       next: (account) => {
         this.$account.next(account);
+        this.cartService.connectCart(account.id)
         this.viewClose();
       },
       error: (err) => {
@@ -46,9 +48,11 @@ export class AccountService {
       .subscribe({
         next: (account) => {
           this.$account.next(account);
+          this.cartService.connectCart(account.id)
           this.viewClose();
         },
         error: (err) => {
+          //TODO: is this field declared as unique in back end?
           if (err.status === 409) {
             this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
             return;

@@ -26,12 +26,13 @@ this.cartService.createInvoice(this.cart)
   //update product quantites
   for (let item of this.cart.productList)
     item.product.storeQuantity -= item.count
+  //TODO: update product table
   //clear cart
     this.cart.productList = []
     this.cart.totalPrice = 0
   this.cartService.$cart.next(this.cart)
   this.cartService.$viewCart.next(false)
-  if(this.cart.id = 0)
+  if(this.cart.id === 0)
     this.cartService.$viewInvoices.next(true)
 }
 

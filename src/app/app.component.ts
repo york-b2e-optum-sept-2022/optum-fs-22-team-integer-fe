@@ -50,6 +50,7 @@ export class AppComponent {
     this.cartService.$viewInvoices.subscribe(
       viewInvoices => this.viewInvoices = viewInvoices
     );
+
   }
 
 
