@@ -1,1 +1,24 @@
-<p>login works!</p>
+<div>
+  <div>
+    <h3>Login</h3>
+
+    <div *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+
+    <div>
+      <span>Username</span>
+      <input type="text" [(ngModel)]="username">
+    </div>
+
+    <div>
+      <span>Password</span>
+      <input type="password" [(ngModel)]="password">
+    </div>
+
+    <div>
+      <button (click)="onClick()">Submit</button>
+    </div>
+  </div>
+
+</div>

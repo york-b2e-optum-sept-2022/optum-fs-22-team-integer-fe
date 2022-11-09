@@ -13,6 +13,7 @@ import { FilterSidebarComponent } from './filter-sidebar/filter-sidebar.componen
 import { CustomerComponent } from './_customer/customer.component';
 import { ShopkeeperComponent } from './_shopkeeper/shopkeeper.component';
 import { AdminComponent } from './_admin/admin.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AdminComponent } from './_admin/admin.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

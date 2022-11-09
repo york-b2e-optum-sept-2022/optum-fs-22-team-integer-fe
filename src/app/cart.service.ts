@@ -18,7 +18,7 @@ export class CartService {
 
   constructor() { }
 
-  addProduct(product: IProduct) {
+  public addProduct(product: IProduct) {
     let currentCart: ICart = {...this.$cart.getValue()};
     currentCart.totalPrice += product.currentPrice;
     currentCart.productList.push({
@@ -29,7 +29,7 @@ export class CartService {
     console.log(currentCart);
   }
 
-  viewCart() {
+  public viewCart() {
     this.$viewCart.next(true);
   }
 
