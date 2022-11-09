@@ -26,11 +26,17 @@ export class AccountService {
     this.httpService.login(username,password).pipe(first()).subscribe({
       next: (account) => {
         this.$account.next(account);
+        this.viewClose();
       },
       error: (err) => {
         this.$loginError.next(this.LOGIN_ERROR);
       }
     })
+  }
+
+  public logout() {
+    this.$account.next(null);
+    console.log(this.$account.getValue());
   }
 
   public createAccount(username: string, password: string) {
@@ -40,6 +46,7 @@ export class AccountService {
       .subscribe({
         next: (account) => {
           this.$account.next(account);
+          this.viewClose();
         },
         error: (err) => {
           //TODO: is this field declared as unique in back end?
