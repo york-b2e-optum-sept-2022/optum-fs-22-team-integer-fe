@@ -4,6 +4,7 @@ import {IProduct} from "./___interfaces/IProduct";
 import {Observable} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
+import {IAccount} from "./___interfaces/IAccount";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,23 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient) {
 
+  }
+// Account methods
+  public login(username: string, password: string): Observable<IAccount> {
+    return this.httpClient.get(
+      `http://localhost:8080/api/account?username=${username}&password=${password}`
+    ) as Observable<IAccount>;
+  }
+
+  public createAccount(username: string, password: string, accountType: number): Observable<IAccount> {
+    return this.httpClient.post(
+      "http://localhost:8080/api/account",
+      {
+        username: username,
+        password: password,
+        accountType: accountType
+      }
+    ) as Observable<IAccount>
   }
 
 // Product methods

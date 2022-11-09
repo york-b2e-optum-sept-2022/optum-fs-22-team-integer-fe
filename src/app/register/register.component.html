@@ -1,1 +1,26 @@
-<p>register works!</p>
+<div>
+  <div>
+    <h3>Register New Account</h3>
+
+    <div *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
+
+    <div>
+      <span>Username</span>
+      <input type="text" [(ngModel)]="username">
+    </div>
+
+    <div>
+      <span>Password</span>
+      <input type="password" [(ngModel)]="password">
+    </div>
+
+    <div>
+      <button (click)="onClose()">Close</button>
+      <button (click)="onAccountExists()">Already have Account?</button>
+      <button (click)="onRegister()">Register</button>
+    </div>
+  </div>
+
+</div>

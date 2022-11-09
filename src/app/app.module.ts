@@ -14,6 +14,7 @@ import { CustomerComponent } from './_customer/customer.component';
 import { ShopkeeperComponent } from './_shopkeeper/shopkeeper.component';
 import { AdminComponent } from './_admin/admin.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { InvoiceComponent } from './invoice/invoice.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
