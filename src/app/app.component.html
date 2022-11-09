@@ -6,11 +6,10 @@
 <app-cart *ngIf="viewCart"></app-cart>
 <app-invoice *ngIf="viewInvoices"></app-invoice>
 
-<app-customer></app-customer>
-<app-shopkeeper></app-shopkeeper>
-<app-admin></app-admin>
+<app-customer *ngIf="isLoggedIn && accountType === 1"></app-customer>
+<app-shopkeeper *ngIf="isLoggedIn && accountType === 2"></app-shopkeeper>
+<app-admin *ngIf="isLoggedIn && accountType === 3"></app-admin>
 
 <app-product-list></app-product-list>
-<app-product></app-product>
 
 <app-filter-sidebar></app-filter-sidebar>
