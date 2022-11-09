@@ -25,8 +25,16 @@ export class LoginComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onClick() {
+  onLogin() {
     this.accountService.login(this.username, this.password);
+  }
+
+  onCreateAccount() {
+    this.accountService.viewRegister();
+  }
+
+  onClose() {
+    this.accountService.viewClose();
   }
 
 }

@@ -54,9 +54,16 @@ export class AccountService {
 
   public viewLogin() {
     this.$viewLogin.next(true);
+    this.$viewRegister.next(false);
   }
 
   public viewRegister() {
     this.$viewRegister.next(true);
+    this.$viewLogin.next(false);
+  }
+
+  public viewClose() {
+    this.$viewLogin.next(false);
+    this.$viewRegister.next(false);
   }
 }

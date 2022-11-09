@@ -25,11 +25,19 @@ export class RegisterComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onClick() {
+  onRegister() {
     this.accountService.createAccount(
       this.username,
       this.password
     );
+  }
+
+  onAccountExists() {
+    this.accountService.viewLogin();
+  }
+
+  onClose() {
+    this.accountService.viewClose();
   }
 
 }
