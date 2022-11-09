@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ICart} from "../___interfaces/ICart";
+import {CartService} from "../cart.service";
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  cart!: ICart
+
+
+
+  constructor(private cartService: CartService) {
+    this.cartService.$cart.subscribe(
+      cart => this.cart = cart
+    )
+}
+
+onCheckoutClick(){
+    //save invoice
+this.cartService.createInvoice(this.cart)
+
+  //update product quantites
+  for (let item of this.cart.productList)
+    item.product.storeQuantity -= item.count
+  //clear cart
+    this.cart.productList = []
+    this.cart.totalPrice = 0
+  this.cartService.$cart.next(this.cart)
+}
 
   ngOnInit(): void {
+
   }
 
 }

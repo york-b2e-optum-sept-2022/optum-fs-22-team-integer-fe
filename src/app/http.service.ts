@@ -4,6 +4,7 @@ import {IProduct} from "./___interfaces/IProduct";
 import {Observable} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
 import {IAccount} from "./___interfaces/IAccount";
+import {IInvoices} from "./___interfaces/IInvoices";
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,26 @@ export class HttpService {
     return this.httpClient.delete(`http://localhost:8080/api/carts/${cartId}`
     ) as Observable<ICart>
   }
+
+  //invoice methods
+  public createInvoice(cart: ICart): Observable<IInvoices>{
+    return this.httpClient.post(
+      "http://localhost:8080/api/invoices", cart
+    ) as Observable<IInvoices>
+  }
+
+  public getAllInvoices(): Observable<IInvoices[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/invoices"
+    ) as Observable<IInvoices[]>
+  }
+
+  public getInvoicesById(accountId: number): Observable<IInvoices[]>{
+    return this.httpClient.get(
+      `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoices[]>
+  }
+
+
 
 
 

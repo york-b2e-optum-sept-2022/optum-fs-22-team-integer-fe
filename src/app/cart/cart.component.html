@@ -1,1 +1,21 @@
-<p>cart works!</p>
+
+<div
+*ngFor="let productList of cart.productList">
+<h5>
+  {{productList.product.description}}
+  <span *ngIf="productList.product.isDiscontinued" >Product is Discontinued</span>
+</h5>
+<img src="{{productList.product.image}}" alt="product">
+<h6>{{productList.product.currentPrice}}</h6>
+  <h3>Quantity: {{productList.product.storeQuantity}}</h3>
+</div>
+
+<div>
+  <h3>Total Price: {{cart.totalPrice}}</h3>
+</div>
+
+<div>
+  <button (click)="onCheckoutClick()">Check out</button>
+
+</div>
+
