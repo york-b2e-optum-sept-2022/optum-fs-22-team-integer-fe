@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {IProduct} from "./___interfaces/IProduct";
 import {Observable} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
+import {IInvoices} from "./___interfaces/IInvoices";
 
 @Injectable({
   providedIn: 'root'
@@ -41,25 +42,45 @@ export class HttpService {
   //cart methods
   public createCart(): Observable<ICart>{
     return this.httpClient.post(
-      "http://localhost:8080/api/cart", {}
+      "http://localhost:8080/api/carts", {}
     ) as Observable<ICart>
   }
 
   public getCart(accountId: number): Observable<ICart>{
     return this.httpClient.get(
-      `http://localhost:8080/api/cart/${accountId}`) as Observable<ICart>
+      `http://localhost:8080/api/carts/${accountId}`) as Observable<ICart>
   }
 
   public updateCart(cart: ICart): Observable<ICart>{
     return this.httpClient.put(
-      "http://localhost:8080/api/cart", cart
+      "http://localhost:8080/api/carts", cart
     ) as Observable<ICart>
   }
 
   public deleteCart(cartId: number): Observable<ICart>{
-    return this.httpClient.delete(`http://localhost:8080/api/cart/${cartId}`
+    return this.httpClient.delete(`http://localhost:8080/api/carts/${cartId}`
     ) as Observable<ICart>
   }
+
+  //invoice methods
+  public createInvoice(cart: ICart): Observable<IInvoices>{
+    return this.httpClient.post(
+      "http://localhost:8080/api/invoices", cart
+    ) as Observable<IInvoices>
+  }
+
+  public getAllInvoices(): Observable<IInvoices[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/invoices"
+    ) as Observable<IInvoices[]>
+  }
+
+  public getInvoicesById(accountId: number): Observable<IInvoices[]>{
+    return this.httpClient.get(
+      `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoices[]>
+  }
+
+
 
 
 
