@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-cart',
@@ -30,6 +31,9 @@ this.cartService.createInvoice(this.cart)
     this.cart.productList = []
     this.cart.totalPrice = 0
   this.cartService.$cart.next(this.cart)
+  this.cartService.$viewCart.next(false)
+  if(this.cart.id = 0)
+    this.cartService.$viewInvoices.next(true)
 }
 
   ngOnInit(): void {

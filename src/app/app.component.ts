@@ -9,6 +9,7 @@ import {CartService} from "./cart.service";
 export class AppComponent {
   title = 'optum-fs-22-team-integer-fe';
   viewCart: boolean = false;
+  viewInvoices: boolean = false
 
   constructor(private cartService: CartService) {
     this.cartService.$viewCart.subscribe(
@@ -16,7 +17,9 @@ export class AppComponent {
         this.viewCart = viewCart;
       }
     );
-
+this.cartService.$viewInvoices.subscribe(
+  viewInvoices => this.viewInvoices = viewInvoices
+)
   }
 
 
