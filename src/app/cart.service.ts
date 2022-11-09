@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, first} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
 import {IProduct} from "./___interfaces/IProduct";
@@ -21,7 +21,10 @@ export class CartService {
   public $viewCart = new BehaviorSubject<boolean>(false);
   public $viewInvoices = new BehaviorSubject<boolean>(false)
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {
+    this.getAllInvoices()
+    console.log(this.$invoiceList.getValue())
+  }
 
   public addProduct(product: IProduct) {
     let currentCart: ICart = {...this.$cart.getValue()};
@@ -42,19 +45,46 @@ export class CartService {
     this.$viewCart.next(false);
   }
 
-  createInvoice(cart: ICart){
-    this.httpService.createInvoice(cart).pipe(first()).subscribe({
+  getAllInvoices() {
+    this.httpService.getAllInvoices().pipe(first()).subscribe(
+      {
+        next: (invoiceList) => {
+          this.$invoiceList.next(invoiceList)
+          console.log(invoiceList)
+        },
+        error: (err) => {
+          console.error(err);
+          // TODO - handle error
+        }
+      }
+    )
+  }
+
+  createInvoice(cart: ICart) {
+    let listOfPurchases = []
+    for(let purchase of cart.productList){
+      listOfPurchases.push(
+        {
+          count: purchase.count,
+          name: purchase.product.description,
+          price: purchase.product.currentPrice,
+        }
+      )
+    }
+    console.log(listOfPurchases)
+    let invoice: IInvoiceList  = {
+      id: null,
+      totalPrice: cart.totalPrice,
+      purchaseDate: new Date(),
+      accountId: cart.id,
+      purchaseList: listOfPurchases
+    }
+
+    this.httpService.createInvoice(invoice).pipe(first()).subscribe({
       next: (invoice) => {
         let newList: IInvoiceList[] = [...this.$invoiceList.getValue()];
         newList.push(invoice)
         this.$invoiceList.next(newList)
-        console.log({
-          id: 1,
-          cartId: cart.id,
-          totalPrice: cart.totalPrice,
-          productList: cart.productList,
-          dateOfPurchase: new Date(),
-          })
       },
       error: (err) => {
         console.error(err);
