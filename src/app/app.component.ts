@@ -10,6 +10,7 @@ import {AccountService} from "./account.service";
 export class AppComponent {
   title = 'optum-fs-22-team-integer-fe';
   viewCart: boolean = false;
+  viewInvoices: boolean = false
   viewLogin: boolean = false;
   viewRegister: boolean = false;
 
@@ -32,6 +33,9 @@ export class AppComponent {
       }
     );
 
+    this.cartService.$viewInvoices.subscribe(
+      viewInvoices => this.viewInvoices = viewInvoices
+    );
   }
 
 

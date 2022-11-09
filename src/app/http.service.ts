@@ -3,8 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {IProduct} from "./___interfaces/IProduct";
 import {Observable} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
+import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
-import {IInvoices} from "./___interfaces/IInvoices";
 
 @Injectable({
   providedIn: 'root'
@@ -81,21 +81,21 @@ export class HttpService {
   }
 
   //invoice methods
-  public createInvoice(cart: ICart): Observable<IInvoices>{
+  public createInvoice(cart: ICart): Observable<IInvoiceList>{
     return this.httpClient.post(
       "http://localhost:8080/api/invoices", cart
-    ) as Observable<IInvoices>
+    ) as Observable<IInvoiceList>
   }
 
-  public getAllInvoices(): Observable<IInvoices[]> {
+  public getAllInvoices(): Observable<IInvoiceList[]> {
     return this.httpClient.get(
       "http://localhost:8080/api/invoices"
-    ) as Observable<IInvoices[]>
+    ) as Observable<IInvoiceList[]>
   }
 
-  public getInvoicesById(accountId: number): Observable<IInvoices[]>{
+  public getInvoicesById(accountId: number): Observable<IInvoiceList[]>{
     return this.httpClient.get(
-      `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoices[]>
+      `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoiceList[]>
   }
 
 

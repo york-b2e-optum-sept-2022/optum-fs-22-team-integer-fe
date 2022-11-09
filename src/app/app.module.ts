@@ -13,6 +13,7 @@ import { FilterSidebarComponent } from './filter-sidebar/filter-sidebar.componen
 import { CustomerComponent } from './_customer/customer.component';
 import { ShopkeeperComponent } from './_shopkeeper/shopkeeper.component';
 import { AdminComponent } from './_admin/admin.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 import {FormsModule} from "@angular/forms";
 
 @NgModule({
@@ -27,7 +28,8 @@ import {FormsModule} from "@angular/forms";
     FilterSidebarComponent,
     CustomerComponent,
     ShopkeeperComponent,
-    AdminComponent
+    AdminComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule,

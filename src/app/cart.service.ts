@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, first} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
 import {IProduct} from "./___interfaces/IProduct";
-import {IInvoices} from "./___interfaces/IInvoices";
+import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {HttpService} from "./http.service";
 
 @Injectable({
@@ -16,9 +16,10 @@ export class CartService {
     totalPrice: 0
   });
 
-  public $invoiceList = new BehaviorSubject<IInvoices[]>([])
+  public $invoiceList = new BehaviorSubject<IInvoiceList[]>([])
 
   public $viewCart = new BehaviorSubject<boolean>(false);
+  public $viewInvoices = new BehaviorSubject<boolean>(false)
 
   constructor(private httpService: HttpService) { }
 
@@ -40,7 +41,7 @@ export class CartService {
   createInvoice(cart: ICart){
     this.httpService.createInvoice(cart).pipe(first()).subscribe({
       next: (invoice) => {
-        let newList: IInvoices[] = [...this.$invoiceList.getValue()];
+        let newList: IInvoiceList[] = [...this.$invoiceList.getValue()];
         newList.push(invoice)
         this.$invoiceList.next(newList)
         console.log({
