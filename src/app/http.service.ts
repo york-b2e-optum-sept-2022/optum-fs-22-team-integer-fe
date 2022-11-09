@@ -23,12 +23,30 @@ export class HttpService {
 
   public createAccount(username: string, password: string, accountType: number): Observable<IAccount> {
     return this.httpClient.post(
-      "http://localhost:8080/api/account",
+      "http://localhost:8080/api/accounts",
       {
         username: username,
         password: password,
         accountType: accountType
       }
+    ) as Observable<IAccount>
+  }
+
+  public getAllAccounts(): Observable<IAccount[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/accounts"
+    ) as Observable<IAccount[]>
+  }
+
+  public updateAccount(account: IAccount): Observable<IAccount>{
+    return this.httpClient.put(
+      "http://localhost:8080/api/accounts", account
+    ) as Observable<IAccount>
+  }
+
+  public deleteAccount(accountId: number): Observable<IAccount>{
+    return this.httpClient.delete(
+      `http://localhost:8080/api/accounts/${accountId}`
     ) as Observable<IAccount>
   }
 
