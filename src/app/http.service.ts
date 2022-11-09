@@ -81,9 +81,9 @@ export class HttpService {
   }
 
   //invoice methods
-  public createInvoice(cart: ICart): Observable<IInvoiceList>{
+  public createInvoice(invoice: IInvoiceList): Observable<IInvoiceList>{
     return this.httpClient.post(
-      "http://localhost:8080/api/invoices", cart
+      "http://localhost:8080/api/invoices", invoice
     ) as Observable<IInvoiceList>
   }
 

@@ -1,9 +1,9 @@
 import {IProduct} from "./IProduct";
 
 export interface IInvoiceList {
-  id: number
+  id: number | null
   accountId: number
-  dateOfPurchase: Date
+  purchaseDate: Date
   purchaseList: {count: number, name: string, price: number}[]
   totalPrice: number
 }

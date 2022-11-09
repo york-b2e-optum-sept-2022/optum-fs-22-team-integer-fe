@@ -3,7 +3,7 @@
   <div
   *ngFor="let invoice of invoiceList">
 <h4>Invoice Number: {{invoice.id}}</h4>
-    <h5> Purchase Date: {{invoice.dateOfPurchase}}</h5>
+    <h5> Purchase Date: {{invoice.purchaseDate }}</h5>
     <div
     *ngFor="let purchase of invoice.purchaseList">
       <div>
