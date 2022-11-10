@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
+import {IProduct} from "../___interfaces/IProduct";
 
 @Component({
   selector: 'app-cart',
@@ -35,6 +36,18 @@ this.cartService.createInvoice(this.cart)
   if(this.cart.accountId === 0)
     this.cartService.$viewInvoices.next(true)
 }
+
+  onMinusClick(product: IProduct){
+    this.cartService.decreaseProductCount(product)
+  }
+
+  onRemoveClick(product: IProduct){
+    this.cartService.removeProduct(product)
+  }
+
+  onPlusClick(product: IProduct){
+    this.cartService.increaseProductCount(product)
+  }
 
   ngOnInit(): void {
 

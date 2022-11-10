@@ -18,6 +18,7 @@ export class CartService {
 
   public $invoiceList = new BehaviorSubject<IInvoiceList[]>([])
 
+  public $viewCartUI = new BehaviorSubject(false)
   public $viewCart = new BehaviorSubject<boolean>(false);
   public $viewInvoices = new BehaviorSubject<boolean>(false)
 
@@ -27,7 +28,7 @@ export class CartService {
 
   public addProduct(product: IProduct) {
     let currentCart: ICart = {...this.$cart.getValue()};
-    const existingProduct = currentCart.productList.find(item => item.product = product)
+    const existingProduct = currentCart.productList.find(item => item.product === product)
     if (!existingProduct) {
       currentCart.totalPrice += product.currentPrice;
       currentCart.productList.push({
@@ -38,6 +39,46 @@ export class CartService {
       existingProduct.count++
       currentCart.totalPrice += product.currentPrice
     }
+    this.$cart.next(currentCart)
+    this.$viewCartUI.next(false)
+  }
+
+  increaseProductCount(product: IProduct) {
+    let currentCart: ICart = {...this.$cart.getValue()};
+    for (let item of currentCart.productList)
+      if (item.product === product)
+        item.count++
+    this.$cart.next(currentCart)
+    this.calculateTotalPrice()
+  }
+
+  decreaseProductCount(product: IProduct) {
+    let currentCart: ICart = {...this.$cart.getValue()};
+    for (let item of currentCart.productList)
+      if (item.product === product) {
+        item.count--
+        if (item.count <= 0)
+          this.removeProduct(item.product)
+      } else this.$cart.next(currentCart)
+    this.calculateTotalPrice()
+
+
+  }
+
+  removeProduct(product: IProduct) {
+    let currentCart: ICart = {...this.$cart.getValue()};
+    let newProductList = currentCart.productList.filter(productList => productList.product !== product)
+    currentCart.productList = newProductList
+    this.$cart.next(currentCart)
+    this.calculateTotalPrice()
+  }
+
+  calculateTotalPrice(){
+    let currentCart: ICart = {...this.$cart.getValue()};
+    let totalPrice = 0
+    for (let item of currentCart.productList)
+      totalPrice += (item.product.currentPrice * item.count)
+    currentCart.totalPrice = totalPrice
     this.$cart.next(currentCart)
   }
 
@@ -56,6 +97,20 @@ export class CartService {
           this.$invoiceList.next(invoiceList)
         },
         error: (err) => {
+          console.error(err);
+          // TODO - handle error
+        }
+      }
+    )
+  }
+
+  getInvoiceByCartId() {
+    this.httpService.getInvoicesById(this.$cart.getValue().accountId).pipe(first()).subscribe(
+      {
+        next: invoiceList => {
+          this.$invoiceList.next(invoiceList)
+        },
+        error: err => {
           console.error(err);
           // TODO - handle error
         }
@@ -123,9 +178,9 @@ export class CartService {
                 error: (err) => {
                   //TODO
                 }
-                })
-              }
+              })
           }
-        })
+        }
+      })
   }
 }
