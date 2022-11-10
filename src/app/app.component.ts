@@ -14,14 +14,14 @@ export class AppComponent {
   viewLogin: boolean = false;
   viewRegister: boolean = false;
   isLoggedIn: boolean = false;
-  accountType: number = 1;
+  type!: number;
 
   constructor(private accountService: AccountService, private cartService: CartService) {
     this.accountService.$account.subscribe({
       next: (account) => {
         if(account) {
           this.isLoggedIn = account !== null;
-          this.accountType = account.accountType;
+          this.type = account.type;
         }
       },
       error: (err) => {

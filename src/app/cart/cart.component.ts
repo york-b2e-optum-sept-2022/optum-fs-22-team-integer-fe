@@ -32,7 +32,7 @@ this.cartService.createInvoice(this.cart)
     this.cart.totalPrice = 0
   this.cartService.$cart.next(this.cart)
   this.cartService.$viewCart.next(false)
-  if(this.cart.id === 0)
+  if(this.cart.accountId === 0)
     this.cartService.$viewInvoices.next(true)
 }
 

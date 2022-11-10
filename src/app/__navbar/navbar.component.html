@@ -1,6 +1,6 @@
 
 <div *ngIf="account">
-  <h2>{{account.email}} {{account.accountType}}</h2>
+  <h2>{{account.email}} {{account.type}}</h2>
 </div>
 <div *ngIf="!account">
   <button (click)="onViewLogin()">Login</button>

@@ -45,7 +45,7 @@ export class AccountService {
     let account = {
       email: email,
       password: password,
-      accountType: 1
+      type: 1
     }
 
     this.httpService.createAccount(account)
@@ -57,7 +57,6 @@ export class AccountService {
           this.viewClose();
         },
         error: (err) => {
-          //TODO: is this field declared as unique in back end?
           if (err.status === 409) {
             this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
             return;
