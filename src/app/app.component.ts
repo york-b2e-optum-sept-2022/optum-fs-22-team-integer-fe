@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {CartService} from "./cart.service";
 import {AccountService} from "./account.service";
+import {ViewService} from "./view.service";
 
 @Component({
   selector: 'app-root',
@@ -9,17 +10,18 @@ import {AccountService} from "./account.service";
 })
 export class AppComponent {
   title = 'optum-fs-22-team-integer-fe';
-  viewCart: boolean = false;
-  viewInvoices: boolean = false;
   viewLogin: boolean = false;
   viewRegister: boolean = false;
+  viewCart: boolean = false;
+  viewInvoices: boolean = false;
+  viewProfile: boolean = false;
   isLoggedIn: boolean = false;
   type!: number;
 
-  constructor(private accountService: AccountService, private cartService: CartService) {
+  constructor(private accountService: AccountService, private cartService: CartService, private viewService: ViewService) {
     this.accountService.$account.subscribe({
       next: (account) => {
-        if(account) {
+        if (account) {
           this.isLoggedIn = account !== null;
           this.type = account.type;
         }
@@ -29,28 +31,40 @@ export class AppComponent {
       }
     });
 
-    this.accountService.$viewLogin.subscribe(
+    this.viewService.$viewLogin.subscribe(
       (viewLogin) => {
         this.viewLogin = viewLogin;
       }
     );
 
-    this.accountService.$viewRegister.subscribe(
+    this.viewService.$viewRegister.subscribe(
       (viewRegister) => {
         this.viewRegister = viewRegister;
       }
     );
 
-    this.cartService.$viewCart.subscribe(
+    this.viewService.$viewCart.subscribe(
       (viewCart) => {
         this.viewCart = viewCart;
       }
     );
 
-    this.cartService.$viewInvoices.subscribe(
+    this.viewService.$viewInvoices.subscribe(
       viewInvoices => this.viewInvoices = viewInvoices
     );
 
+    this.viewService.$viewProfile.subscribe(
+      viewProfile => this.viewProfile = viewProfile
+    );
+
+  }
+
+  onViewInvoices() {
+    this.viewService.viewInvoices();
+  }
+
+  onViewProfile() {
+    this.viewService.viewProfile();
   }
 
 

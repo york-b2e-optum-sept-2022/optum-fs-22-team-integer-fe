@@ -8,22 +8,27 @@
 <app-invoice *ngIf="viewInvoices"></app-invoice>
 
 <div *ngIf="isLoggedIn && type === 1">
-  <button>Profile</button>
-  <button>order History</button>
+  <button (click)="onViewProfile()">Profile</button>
+  <button (click)="onViewInvoices()">order History</button>
 
-  <app-customer></app-customer>
+  <app-profile *ngIf="viewProfile"></app-profile>
+  <app-invoice *ngIf="viewInvoices"></app-invoice>
 </div>
 
 <div *ngIf="isLoggedIn && type > 1">
-  <button *ngIf="type === 3">All Accounts</button>
-  <button>Categories</button>
-  <button>Products</button>
-  <button>Coupons</button>
-  <button>order History</button>
-  <button *ngIf="type === 2">Profile</button>
+  <button (click)="onViewCategories()">Categories</button>
+  <button (click)="onViewInventory()">Products</button>
+  <button (click)="onViewCoupons()">Coupons</button>
+  <button (click)="onViewInvoices()">order History</button>
+  <button *ngIf="type === 2" (click)="onViewProfile()">Profile</button>
+  <button *ngIf="type === 3" (click)="onViewManageProfiles()">All Accounts</button>
 
-  <app-shopkeeper *ngIf="type === 2"></app-shopkeeper>
-  <app-admin *ngIf="type === 3"></app-admin>
+  <app-product-categories *ngIf="viewCategories"></app-product-categories>
+  <app-inventory *ngIf="viewInventory"></app-inventory>
+  <app-coupons *ngIf="viewCoupons"></app-coupons>
+  <app-invoice *ngIf="viewInvoices"></app-invoice>
+  <app-profile *ngIf="viewProfile"></app-profile>
+  <app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
 </div>
 
 <app-product-list></app-product-list>

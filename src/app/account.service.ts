@@ -3,6 +3,7 @@ import {IAccount} from "./___interfaces/IAccount";
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {CartService} from "./cart.service";
+import {ViewService} from "./view.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,6 @@ import {CartService} from "./cart.service";
 export class AccountService {
 
   $account = new BehaviorSubject<IAccount | null>(null);
-  public $viewLogin = new BehaviorSubject<boolean>(false);
-  public $viewRegister = new BehaviorSubject<boolean>(false);
 
   $loginError = new BehaviorSubject<string>("");
   $registrationError = new BehaviorSubject<string>("");
@@ -20,7 +19,7 @@ export class AccountService {
   private UNKNOWN_ERROR = "Unknown error, please try again"
   private LOGIN_ERROR = "Invalid login, please try again"
 
-  constructor(private httpService: HttpService, private cartService: CartService) {
+  constructor(private httpService: HttpService, private cartService: CartService, private viewService: ViewService) {
   }
 
   public login(email: string, password: string) {
@@ -28,7 +27,7 @@ export class AccountService {
       next: (account) => {
         this.$account.next(account);
         this.cartService.connectCart(account.id)
-        this.viewClose();
+        this.viewService.viewClose();
       },
       error: (err) => {
         this.$loginError.next(this.LOGIN_ERROR);
@@ -54,7 +53,7 @@ export class AccountService {
         next: (account) => {
           this.$account.next(account);
           this.cartService.connectCart(account.id)
-          this.viewClose();
+          this.viewService.viewClose();
         },
         error: (err) => {
           if (err.status === 409) {
@@ -67,18 +66,4 @@ export class AccountService {
       })
   }
 
-  public viewLogin() {
-    this.$viewLogin.next(true);
-    this.$viewRegister.next(false);
-  }
-
-  public viewRegister() {
-    this.$viewRegister.next(true);
-    this.$viewLogin.next(false);
-  }
-
-  public viewClose() {
-    this.$viewLogin.next(false);
-    this.$viewRegister.next(false);
-  }
 }
