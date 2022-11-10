@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {ICart} from "./___interfaces/ICart";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
+import {IAccountNew} from "./___interfaces/IAccountNew";
 
 @Injectable({
   providedIn: 'root'
@@ -15,20 +16,15 @@ export class HttpService {
 
   }
 // Account methods
-  public login(username: string, password: string): Observable<IAccount> {
+  public login(email: string, password: string): Observable<IAccount> {
     return this.httpClient.get(
-      `http://localhost:8080/api/account?username=${username}&password=${password}`
-    ) as Observable<IAccount>;
+      `http://localhost:8080/api/accounts?email=${email}&password=${password}`
+    ) as Observable<IAccount>
   }
 
-  public createAccount(username: string, password: string, accountType: number): Observable<IAccount> {
+  public createAccount(account: IAccountNew): Observable<IAccount> {
     return this.httpClient.post(
-      "http://localhost:8080/api/accounts",
-      {
-        username: username,
-        password: password,
-        accountType: accountType
-      }
+      "http://localhost:8080/api/accounts", account
     ) as Observable<IAccount>
   }
 

@@ -9,7 +9,7 @@ import {AccountService} from "../account.service";
 })
 export class RegisterComponent implements OnDestroy {
 
-  username: string = "";
+  email: string = "";
   password: string = "";
   errorMessage: string = "";
 
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnDestroy {
 
   onRegister() {
     this.accountService.createAccount(
-      this.username,
+      this.email,
       this.password
     );
   }

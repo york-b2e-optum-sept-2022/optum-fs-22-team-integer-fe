@@ -23,8 +23,8 @@ export class AccountService {
   constructor(private httpService: HttpService, private cartService: CartService) {
   }
 
-  public login(username: string, password: string) {
-    this.httpService.login(username,password).pipe(first()).subscribe({
+  public login(email: string, password: string) {
+    this.httpService.login(email, password).pipe(first()).subscribe({
       next: (account) => {
         this.$account.next(account);
         this.cartService.connectCart(account.id)
@@ -41,9 +41,14 @@ export class AccountService {
     console.log(this.$account.getValue());
   }
 
-  public createAccount(username: string, password: string) {
-    const accountType: number = 1;
-    this.httpService.createAccount(username, password, accountType)
+  public createAccount(email: string, password: string) {
+    let account = {
+      email: email,
+      password: password,
+      accountType: 1
+    }
+
+    this.httpService.createAccount(account)
       .pipe(first())
       .subscribe({
         next: (account) => {
