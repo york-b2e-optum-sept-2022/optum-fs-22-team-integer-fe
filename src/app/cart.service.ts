@@ -11,7 +11,7 @@ import {HttpService} from "./http.service";
 export class CartService {
 
   public $cart = new BehaviorSubject<ICart>({
-    id: 0,
+    accountId: 0,
     productList: [],
     totalPrice: 0
   });
@@ -78,7 +78,7 @@ export class CartService {
       id: null,
       totalPrice: cart.totalPrice,
       purchaseDate: new Date(),
-      accountId: cart.id,
+      accountId: cart.accountId,
       purchaseList: listOfPurchases
     }
 
@@ -102,7 +102,7 @@ export class CartService {
 
   public connectCart(accountId: number) {
     let cart: ICart = this.$cart.getValue()
-    cart.id = accountId
+    cart.accountId = accountId
     this.httpService.createCart(cart).pipe(first())
       .subscribe({
         next: (savedCart) => {

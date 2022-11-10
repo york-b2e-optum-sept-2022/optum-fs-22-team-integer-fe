@@ -7,9 +7,9 @@
 <app-cart *ngIf="viewCart"></app-cart>
 <app-invoice *ngIf="viewInvoices"></app-invoice>
 
-<app-customer *ngIf="isLoggedIn && accountType === 1"></app-customer>
-<app-shopkeeper *ngIf="isLoggedIn && accountType === 2"></app-shopkeeper>
-<app-admin *ngIf="isLoggedIn && accountType === 3"></app-admin>
+<app-customer *ngIf="isLoggedIn && type === 1"></app-customer>
+<app-shopkeeper *ngIf="isLoggedIn && type === 2"></app-shopkeeper>
+<app-admin *ngIf="isLoggedIn && type === 3"></app-admin>
 
 <app-product-list></app-product-list>
 
