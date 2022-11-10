@@ -106,10 +106,12 @@ export class CartService {
     this.httpService.createCart(cart).pipe(first())
       .subscribe({
         next: (savedCart) => {
+          //cart did not exist, so cart is created
           this.$cart.next(savedCart)
         },
         error: (err) => {
           if (err.status === 409) {
+            //cart existed, so existing cart is retrieved
             this.httpService.getCart(accountId).pipe(first())
               .subscribe({
                 next: (returnedCart) => {
