@@ -7,7 +7,18 @@
 </h5>
 <img src="{{productList.product.image}}" alt="product">
 <h6>{{productList.product.currentPrice}}</h6>
-  <h3>Quantity: {{productList.product.storeQuantity}}</h3>
+  <h3>Quantity: {{productList.count}}</h3>
+  <div>
+    <span>
+      <button (click)="onMinusClick(productList.product)">-</button>
+    </span>
+    <span>
+      <button (click)="onRemoveClick(productList.product)">Remove</button>
+    </span>
+    <span>
+      <button (click)="onPlusClick(productList.product)">+</button>
+    </span>
+  </div>
 </div>
 
 <div>

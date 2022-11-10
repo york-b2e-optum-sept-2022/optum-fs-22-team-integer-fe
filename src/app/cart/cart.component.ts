@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
 import {ViewService} from "../view.service";
+import {IProduct} from "../___interfaces/IProduct";
 
 @Component({
   selector: 'app-cart',
@@ -36,6 +37,17 @@ export class CartComponent {
       this.viewService.viewInvoices();
   }
 
+  onMinusClick(product: IProduct){
+    this.cartService.decreaseProductCount(product)
+  }
+
+  onRemoveClick(product: IProduct){
+    this.cartService.removeProduct(product)
+  }
+
+  onPlusClick(product: IProduct){
+    this.cartService.increaseProductCount(product)
+  }
 
   onClose() {
     this.viewService.viewCloseCart();
