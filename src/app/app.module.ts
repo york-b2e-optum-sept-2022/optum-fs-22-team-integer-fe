@@ -15,6 +15,11 @@ import { ShopkeeperComponent } from './_shopkeeper/shopkeeper.component';
 import { AdminComponent } from './_admin/admin.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import {FormsModule} from "@angular/forms";
+import { ProfileComponent } from './profile/profile.component';
+import { ProductCategoriesComponent } from './product-categories/product-categories.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { CouponsComponent } from './coupons/coupons.component';
+import { ManageProfilesComponent } from './manage-profiles/manage-profiles.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,12 @@ import {FormsModule} from "@angular/forms";
     CustomerComponent,
     ShopkeeperComponent,
     AdminComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    ProfileComponent,
+    ProductCategoriesComponent,
+    InventoryComponent,
+    CouponsComponent,
+    ManageProfilesComponent
   ],
   imports: [
     BrowserModule,
