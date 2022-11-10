@@ -7,9 +7,24 @@
 <app-cart *ngIf="viewCart"></app-cart>
 <app-invoice *ngIf="viewInvoices"></app-invoice>
 
-<app-customer *ngIf="isLoggedIn && type === 1"></app-customer>
-<app-shopkeeper *ngIf="isLoggedIn && type === 2"></app-shopkeeper>
-<app-admin *ngIf="isLoggedIn && type === 3"></app-admin>
+<div *ngIf="isLoggedIn && type === 1">
+  <button>Profile</button>
+  <button>order History</button>
+
+  <app-customer></app-customer>
+</div>
+
+<div *ngIf="isLoggedIn && type > 1">
+  <button *ngIf="type === 3">All Accounts</button>
+  <button>Categories</button>
+  <button>Products</button>
+  <button>Coupons</button>
+  <button>order History</button>
+  <button *ngIf="type === 2">Profile</button>
+
+  <app-shopkeeper *ngIf="type === 2"></app-shopkeeper>
+  <app-admin *ngIf="type === 3"></app-admin>
+</div>
 
 <app-product-list></app-product-list>
 
