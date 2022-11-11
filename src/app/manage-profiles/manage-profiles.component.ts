@@ -1,33 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ViewService} from "../view.service";
 import {IAccount} from "../___interfaces/IAccount";
 import {AccountService} from "../account.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-manage-profiles',
   templateUrl: './manage-profiles.component.html',
   styleUrls: ['./manage-profiles.component.css']
 })
-export class ManageProfilesComponent implements OnInit {
+export class ManageProfilesComponent implements OnInit, OnDestroy {
 
   accountList!: IAccount[]
   selectedAccount!: IAccount | null
+  errorMessage: string = "";
+
+  subscription: Subscription;
+  subscription2: Subscription;
 
   constructor(private accountService: AccountService, private viewService: ViewService) {
-    this.accountService.$accountList.subscribe({
+    this.subscription = this.accountService.$accountList.subscribe({
         next: (accountList) => {
           if (accountList) {
             this.accountList = accountList
           }
         },
-        error: () => {
-        }
-      }
-    )
+        error: () => {}
+    });
+
+    this.subscription2 = this.accountService.$accountError.subscribe((errorMessage) => {
+      this.errorMessage = errorMessage;
+    });
   }
 
   ngOnInit(): void {
     this.accountService.getAllAccounts();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   onClose() {
@@ -35,9 +47,26 @@ export class ManageProfilesComponent implements OnInit {
   }
 
   onSelectAccountClick(accountId: string) {
-    for(let account of this.accountList){
-      if(account.id === parseInt(accountId))
+    for (let account of this.accountList) {
+      if (account.id === parseInt(accountId))
         this.selectedAccount = account
+    }
+  }
+
+  onDeleteClick() {
+    if(this.selectedAccount) {
+      this.accountService.deleteAccount(this.selectedAccount.id);
+    }
+  }
+
+  onSaveClick() {
+    if (this.selectedAccount) {
+      let account = {
+        id: this.selectedAccount.id,
+        password: this.selectedAccount.password,
+        type: this.selectedAccount.type
+      }
+      this.accountService.updateAccount(account);
     }
   }
 

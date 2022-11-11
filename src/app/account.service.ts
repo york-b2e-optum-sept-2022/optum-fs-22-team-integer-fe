@@ -16,6 +16,7 @@ export class AccountService {
 
   $loginError = new BehaviorSubject<string>("");
   $registrationError = new BehaviorSubject<string>("");
+  $accountError = new BehaviorSubject<string>("");
 
   private USERNAME_TAKEN_ERROR = "Username is already in use"
   private UNKNOWN_ERROR = "Unknown error, please try again"
@@ -76,11 +77,17 @@ export class AccountService {
   }
 
   public deleteAccount(id: number) {
+    if (this.$account.getValue()?.id === id) {
+      this.$accountError.next(this.UNKNOWN_ERROR);
+      return;
+    }
     this.httpService.deleteAccount(id).pipe(first()).subscribe({
       next: () => {},
       error: () => {}
     });
-    this.$account.next(null);
+    if (this.$account.getValue()?.type !== 3) {
+      this.$account.next(null);
+    }
   }
 
   public getAllAccounts() {
