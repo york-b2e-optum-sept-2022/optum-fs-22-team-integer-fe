@@ -74,7 +74,6 @@ export class ProductService {
       next: (categoryList) => {
         categoryList.sort((a, b) => a.id - b.id)
         this.$categoryList.next(categoryList);
-        console.log(this.$categoryList.getValue());
       },
       error: (err) => {
         console.error(err);
@@ -83,6 +82,16 @@ export class ProductService {
     })
   }
 
-
+  public updateCategoryName(category: ICategoryList) {
+    this.httpService.updateCategory(category).pipe(first()).subscribe({
+      next: (category) => {
+        this.getAllCategoriesList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
 
 }
