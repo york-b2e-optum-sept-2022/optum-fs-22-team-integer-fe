@@ -6,6 +6,7 @@ import {ICart} from "./___interfaces/ICart";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
+import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 import {ICategoryList} from "./___interfaces/ICategoryList";
 
 @Injectable({
@@ -35,16 +36,17 @@ export class HttpService {
     ) as Observable<IAccount[]>
   }
 
-  public updateAccount(account: IAccount): Observable<IAccount>{
+  public updateAccount(account: IAccountUpdate): Observable<IAccount>{
     return this.httpClient.put(
       "http://localhost:8080/api/accounts", account
     ) as Observable<IAccount>
   }
 
-  public deleteAccount(accountId: number): Observable<IAccount>{
+  public deleteAccount(accountId: number) {
+    console.log(accountId);
     return this.httpClient.delete(
-      `http://localhost:8080/api/accounts/${accountId}`
-    ) as Observable<IAccount>
+      `http://localhost:8080/api/accounts?accountId=${accountId}`
+    )
   }
 
 // Product methods
