@@ -94,4 +94,21 @@ export class ProductService {
     })
   }
 
+  public createNewCategory(category: ICategoryList) {
+    this.httpService.createCategory(category).pipe(first()).subscribe({
+      next: (category) => {
+        this.getAllCategoriesList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
+
+
+
+
+
+
 }
