@@ -4,6 +4,7 @@ import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {CartService} from "./cart.service";
 import {ViewService} from "./view.service";
+import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,14 @@ export class AccountService {
           this.$registrationError.next(this.UNKNOWN_ERROR);
         }
       })
+  }
+
+  public updateAccount(account: IAccountUpdate) {
+    this.httpService.updateAccount(account).subscribe()
+  }
+
+  public deleteAccount() {
+
   }
 
 }

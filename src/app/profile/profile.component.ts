@@ -1,20 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ViewService} from "../view.service";
+import {AccountService} from "../account.service";
+import {Subscription} from "rxjs";
+import {IAccount} from "../___interfaces/IAccount";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnDestroy {
 
-  constructor(private viewService: ViewService) { }
+  account!: IAccount;
+  password: string = "";
 
-  ngOnInit(): void {
+  subscription: Subscription;
+
+  constructor(private accountService: AccountService, private viewService: ViewService) {
+    this.subscription = this.accountService.$account.subscribe({
+      next: (account) => {
+        if(account) {
+          this.account = account;
+        }
+      },
+      error: (err) => {
+        // TODO add error handling
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onClose() {
     this.viewService.viewCloseProfile();
+  }
+
+  onDelete() {
+    console.log("onDelete clicked");
+  }
+
+  onUpdate() {
+    let account = {
+      id: this.account.id,
+      password: this.password,
+      type: this.account.type
+    }
+
+    this.accountService.updateAccount(account);
   }
 
 }

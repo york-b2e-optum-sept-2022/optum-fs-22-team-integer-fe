@@ -6,6 +6,7 @@ import {ICart} from "./___interfaces/ICart";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
+import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class HttpService {
     ) as Observable<IAccount[]>
   }
 
-  public updateAccount(account: IAccount): Observable<IAccount>{
+  public updateAccount(account: IAccountUpdate): Observable<IAccount>{
     return this.httpClient.put(
       "http://localhost:8080/api/accounts", account
     ) as Observable<IAccount>
