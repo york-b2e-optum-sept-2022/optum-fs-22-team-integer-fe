@@ -8,6 +8,7 @@ import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
 import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 import {ICategoryList} from "./___interfaces/ICategoryList";
+import {NewProduct} from "./___interfaces/NewProduct";
 
 @Injectable({
   providedIn: 'root'
