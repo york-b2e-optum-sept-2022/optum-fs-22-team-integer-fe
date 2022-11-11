@@ -111,6 +111,8 @@ export class HttpService {
   public getInvoicesById(accountId: number): Observable<IInvoiceList[]>{
     return this.httpClient.get(
       `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoiceList[]>
+
+    //
   }
 
 
@@ -120,6 +122,8 @@ export class HttpService {
       "http://localhost:8080/api/category"
     ) as Observable<ICategoryList[]>
   }
+
+
 
 
 
