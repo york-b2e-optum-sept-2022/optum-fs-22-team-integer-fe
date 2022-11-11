@@ -42,10 +42,11 @@ export class HttpService {
     ) as Observable<IAccount>
   }
 
-  public deleteAccount(accountId: number): Observable<IAccount>{
+  public deleteAccount(accountId: number) {
+    console.log(accountId);
     return this.httpClient.delete(
-      `http://localhost:8080/api/accounts/${accountId}`
-    ) as Observable<IAccount>
+      `http://localhost:8080/api/accounts?accountId=${accountId}`
+    )
   }
 
 // Product methods

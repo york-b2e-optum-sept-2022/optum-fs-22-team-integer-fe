@@ -38,7 +38,7 @@ export class ProfileComponent implements OnDestroy {
   }
 
   onDelete() {
-    console.log("onDelete clicked");
+    this.accountService.deleteAccount(this.account.id);
   }
 
   onUpdate() {

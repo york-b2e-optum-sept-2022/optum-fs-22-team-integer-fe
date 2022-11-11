@@ -67,11 +67,12 @@ export class AccountService {
   }
 
   public updateAccount(account: IAccountUpdate) {
-    this.httpService.updateAccount(account).subscribe()
+    this.httpService.updateAccount(account);
+    this.viewService.viewCloseProfile();
   }
 
-  public deleteAccount() {
-
+  public deleteAccount(id: number) {
+    this.httpService.deleteAccount(id);
   }
 
 }
