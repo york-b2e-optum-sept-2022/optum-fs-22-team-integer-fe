@@ -37,8 +37,11 @@ export class CartService {
       existingProduct.count++
       currentCart.totalPrice += product.currentPrice
     }
+    if (currentCart.accountId !== 0) {
+      this.updateCart(currentCart)
+      return
+    }
     this.$cart.next(currentCart)
-    this.$viewCartUI.next(false)
   }
 
   increaseProductCount(product: IProduct) {
@@ -59,8 +62,6 @@ export class CartService {
           this.removeProduct(item.product)
       } else this.$cart.next(currentCart)
     this.calculateTotalPrice()
-
-
   }
 
   removeProduct(product: IProduct) {
@@ -71,13 +72,18 @@ export class CartService {
     this.calculateTotalPrice()
   }
 
-  calculateTotalPrice(){
+  calculateTotalPrice() {
     let currentCart: ICart = {...this.$cart.getValue()};
     let totalPrice = 0
     for (let item of currentCart.productList)
       totalPrice += (item.product.currentPrice * item.count)
     currentCart.totalPrice = totalPrice
+    if (currentCart.accountId !== 0) {
+      this.updateCart(currentCart)
+      return
+    }
     this.$cart.next(currentCart)
+
   }
 
   getAllInvoices() {
@@ -173,4 +179,19 @@ export class CartService {
         }
       })
   }
-}
+
+  updateCart(cart: ICart) {
+    this.httpService.updateCart(cart).pipe(first())
+      .subscribe({
+        next: cart => {
+          this.$cart.next(cart)
+        },
+        error: err => {
+          if (err.status === 500)
+            "error handled"
+          //TODO: add errors
+        }
+      })
+  }
+
+}// end of class
