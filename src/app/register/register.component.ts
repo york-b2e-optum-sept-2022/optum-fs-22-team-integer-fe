@@ -38,7 +38,7 @@ export class RegisterComponent implements OnDestroy {
   }
 
   onClose() {
-    this.viewService.viewClose();
+    this.viewService.viewCloseRegister();
   }
 
 }

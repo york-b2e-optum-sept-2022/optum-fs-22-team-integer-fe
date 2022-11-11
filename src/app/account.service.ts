@@ -27,7 +27,7 @@ export class AccountService {
       next: (account) => {
         this.$account.next(account);
         this.cartService.connectCart(account.id)
-        this.viewService.viewClose();
+        this.viewService.viewCloseLogin();
       },
       error: (err) => {
         this.$loginError.next(this.LOGIN_ERROR);
@@ -37,7 +37,6 @@ export class AccountService {
 
   public logout() {
     this.$account.next(null);
-    console.log(this.$account.getValue());
   }
 
   public createAccount(email: string, password: string) {
@@ -53,7 +52,7 @@ export class AccountService {
         next: (account) => {
           this.$account.next(account);
           this.cartService.connectCart(account.id)
-          this.viewService.viewClose();
+          this.viewService.viewCloseRegister();
         },
         error: (err) => {
           if (err.status === 409) {

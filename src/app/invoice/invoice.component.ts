@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CartService} from "../cart.service";
 import {IInvoiceList} from "../___interfaces/IInvoiceList";
 import {AccountService} from "../account.service";
+import {ViewService} from "../view.service";
 
 @Component({
   selector: 'app-invoice',
@@ -12,7 +13,7 @@ export class InvoiceComponent implements OnInit {
 
   invoiceList!: IInvoiceList[]
 
-  constructor(private cartService: CartService, private accountService: AccountService) {
+  constructor(private cartService: CartService, private accountService: AccountService, private viewService: ViewService) {
     if (this.cartService.$cart.getValue().accountId === 0 || !this.accountService.$account.getValue())
       return
     if(this.accountService.$account.getValue()?.type === 1)
@@ -26,6 +27,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  onClose() {
+    this.viewService.viewCloseInvoices();
   }
 
 }

@@ -5,11 +5,10 @@
 <app-login *ngIf="viewLogin"></app-login>
 
 <app-cart *ngIf="viewCart"></app-cart>
-<app-invoice *ngIf="viewInvoices"></app-invoice>
 
 <div *ngIf="isLoggedIn && type === 1">
   <button (click)="onViewProfile()">Profile</button>
-  <button (click)="onViewInvoices()">order History</button>
+  <button (click)="onViewInvoices()">Order History</button>
 
   <app-profile *ngIf="viewProfile"></app-profile>
   <app-invoice *ngIf="viewInvoices"></app-invoice>
@@ -19,7 +18,7 @@
   <button (click)="onViewCategories()">Categories</button>
   <button (click)="onViewInventory()">Products</button>
   <button (click)="onViewCoupons()">Coupons</button>
-  <button (click)="onViewInvoices()">order History</button>
+  <button (click)="onViewInvoices()">Order History</button>
   <button *ngIf="type === 2" (click)="onViewProfile()">Profile</button>
   <button *ngIf="type === 3" (click)="onViewManageProfiles()">All Accounts</button>
 
@@ -31,6 +30,10 @@
   <app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
 </div>
 
+<app-invoice *ngIf="viewInvoices"></app-invoice>
+
+<button (click)="onViewFilterSidebar()">Filter Sidebar</button>
+<app-filter-sidebar *ngIf="viewFilterSidebar"></app-filter-sidebar>
+
 <app-product-list></app-product-list>
 
-<app-filter-sidebar></app-filter-sidebar>

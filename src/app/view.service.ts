@@ -11,13 +11,15 @@ export class ViewService {
   public $viewCart = new BehaviorSubject<boolean>(false);
   public $viewInvoices = new BehaviorSubject<boolean>(false);
   public $viewProfile = new BehaviorSubject<boolean>(false);
+  public $viewCategories = new BehaviorSubject<boolean>(false);
+  public $viewInventory = new BehaviorSubject<boolean>(false);
+  public $viewCoupons = new BehaviorSubject<boolean>(false);
+  public $viewManageProfiles = new BehaviorSubject<boolean>(false);
+  public $viewFilterSidebar = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
-  public viewClose() {
-    this.$viewLogin.next(false);
-    this.$viewRegister.next(false);
-  }
+  // Open views
   public viewLogin() {
     this.$viewLogin.next(true);
     this.$viewRegister.next(false);
@@ -32,10 +34,6 @@ export class ViewService {
     this.$viewCart.next(true);
   }
 
-  public viewCloseCart() {
-    this.$viewCart.next(false);
-  }
-
   public viewInvoices() {
     this.$viewInvoices.next(true);
   }
@@ -44,6 +42,65 @@ export class ViewService {
     this.$viewProfile.next(true);
   }
 
+  public viewCategories() {
+    this.$viewCategories.next(true);
+  }
 
+  public viewInventory() {
+    this.$viewInventory.next(true);
+  }
+
+  public viewCoupons() {
+    this.$viewCoupons.next(true);
+  }
+
+  public viewManageProfiles() {
+    this.$viewManageProfiles.next(true);
+  }
+
+  public viewFilterSidebar() {
+    this.$viewFilterSidebar.next(true);
+  }
+
+  // Close views
+  public viewCloseLogin() {
+    this.$viewLogin.next(false);
+  }
+
+  public viewCloseRegister() {
+    this.$viewRegister.next(false);
+  }
+
+  public viewCloseCart() {
+    this.$viewCart.next(false);
+  }
+
+  public viewCloseInvoices() {
+    this.$viewInvoices.next(false);
+  }
+
+  public viewCloseProfile() {
+    this.$viewProfile.next(false);
+  }
+
+  public viewCloseCategories() {
+    this.$viewCategories.next(false);
+  }
+
+  public viewCloseInventory() {
+    this.$viewInventory.next(false);
+  }
+
+  public viewCloseCoupons() {
+    this.$viewCoupons.next(false);
+  }
+
+  public viewCloseManageProfiles() {
+    this.$viewManageProfiles.next(false);
+  }
+
+  public viewCloseFilterSidebar() {
+    this.$viewFilterSidebar.next(false);
+  }
 
 }

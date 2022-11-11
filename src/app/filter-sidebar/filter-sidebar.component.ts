@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ViewService} from "../view.service";
 
 @Component({
   selector: 'app-filter-sidebar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterSidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private viewService: ViewService) { }
 
   ngOnInit(): void {
+  }
+
+  onClose() {
+    this.viewService.viewCloseFilterSidebar();
   }
 
 }

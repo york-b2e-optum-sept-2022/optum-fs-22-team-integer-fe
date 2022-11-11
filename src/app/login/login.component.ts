@@ -35,7 +35,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   onClose() {
-    this.viewService.viewClose();
+    this.viewService.viewCloseLogin();
   }
 
 }
