@@ -8,7 +8,7 @@ import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
 import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 import {ICategoryList} from "./___interfaces/ICategoryList";
-import {NewProduct} from "./___interfaces/NewProduct";
+import {ICouponCodes} from "./___interfaces/ICouponCodes";
 
 @Injectable({
   providedIn: 'root'
@@ -126,25 +126,46 @@ export class HttpService {
   }
 
 //   PUT http://localhost:8080/api/category
-//     Content-Type: application/json
   public updateCategory(category: ICategoryList): Observable<ICategoryList>{
     return this.httpClient.put(
       "http://localhost:8080/api/category", category
     ) as Observable<ICategoryList>
   }
 
+//  POST http://localhost:8080/api/category
+  public createCategory(category: ICategoryList): Observable<ICategoryList>{
+    return this.httpClient.post(
+      "http://localhost:8080/api/category", category
+    ) as Observable<ICategoryList>
+  }
 
 
+// Coupons
+  //GET http://localhost:8080/api/couponcode
+    public getAllCouponCodes(): Observable<ICouponCodes[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/couponcode"
+    ) as Observable<ICouponCodes[]>
+  }
 
+//   POST http://localhost:8080/api/couponcode
+  public createCouponCode(couponcode: ICouponCodes): Observable<ICouponCodes>{
+    return this.httpClient.post(
+      "http://localhost:8080/api/couponcode", couponcode
+    ) as Observable<ICouponCodes>
+  }
 
+// PUT http://localhost:8080/api/couponcode
+  public updateCouponCode(couponcode: ICouponCodes): Observable<ICouponCodes>{
+    return this.httpClient.put(
+      "http://localhost:8080/api/couponcode", couponcode
+    ) as Observable<ICouponCodes>
+  }
 
-
-
-
-
-
-
-
-
+// DELETE http://localhost:8080/api/couponcode/9
+  public deleteCouponCode(couponCodeId: number): Observable<ICouponCodes>{
+    return this.httpClient.delete(`http://localhost:8080/api/couponcode/${couponCodeId}`
+    ) as Observable<ICouponCodes>
+  }
 
 }//end of class

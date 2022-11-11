@@ -3,7 +3,6 @@ import {IProduct} from "./___interfaces/IProduct";
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {ICategoryList} from "./___interfaces/ICategoryList";
-import {NewProduct} from "./___interfaces/NewProduct";
 
 @Injectable({
   providedIn: 'root'
@@ -46,8 +45,7 @@ export class ProductService {
   public getProductList() {
     this.httpService.getAllProducts().pipe(first()).subscribe({
       next: (productList) => {
-        productList.filter(product => product.id !== null)
-        productList.sort((a, b) => a.id - b.id);
+        productList.sort((a, b) => a.id - b.id)
         this.$productList.next(productList);
       },
       error: (err) => {
@@ -108,4 +106,16 @@ export class ProductService {
       }
     })
   }
+  public createNewCategory(category: ICategoryList) {
+    this.httpService.createCategory(category).pipe(first()).subscribe({
+      next: (category) => {
+        this.getAllCategoriesList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
+
 }

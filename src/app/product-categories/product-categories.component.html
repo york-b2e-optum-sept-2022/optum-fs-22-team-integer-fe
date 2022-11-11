@@ -9,11 +9,18 @@
   <button type=button class="btn btn-success" (click)="onSelectCategoryClick(category.value)">View <i
     class="bi bi-envelope"></i>
   </button>
+  <button class="btn btn-primary" (click)="onAddNewClick()">Add New Category</button>
+  <div *ngIf="isAddingNewCategory" class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around">
+      <input type="text" class="form-control" placeholder="New Category to Add" [(ngModel)]="newCategoryName">
+      <button class="btn btn-danger" (click)="onCancelNew()">Cancel</button>
+      <button class="btn btn-primary" (click)="onSubmitNew()">Submit Category</button>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="selectedCategory">
   <h5>{{selectedCategory.id}}</h5>
-<!--  <h5>{{selectedCategory.name}}</h5>-->
   <div class="input-group mb-3">
     <span class="input-group-text">category name</span>
     <input type="text" class="form-control" [(ngModel)]="categoryName">
