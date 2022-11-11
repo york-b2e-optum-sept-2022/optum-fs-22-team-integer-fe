@@ -14,6 +14,8 @@ export class ProductCategoriesComponent implements OnInit {
   categoryList!: ICategoryList[]
   selectedCategory!: ICategoryList | null
   categoryName: string ='';
+  isAddingNewCategory: boolean = false;
+  newCategoryName: string ='';
 
   constructor(private viewService: ViewService, private productService: ProductService ) {
     this.productService.$categoryList.subscribe(
@@ -55,5 +57,24 @@ export class ProductCategoriesComponent implements OnInit {
 
       this.selectedCategory = null;
     }
+  }
+
+  onAddNewClick() {
+    this.isAddingNewCategory = true
+  }
+
+  onCancelNew() {
+    this.isAddingNewCategory = false
+    this.newCategoryName = ''
+  }
+
+  onSubmitNew() {
+    this.isAddingNewCategory = false
+    const newCategoryToAdd: ICategoryList = {
+      id: -1,
+      name: this.newCategoryName
+    }
+    this.productService.createNewCategory(newCategoryToAdd)
+    this.newCategoryName = ''
   }
 }
