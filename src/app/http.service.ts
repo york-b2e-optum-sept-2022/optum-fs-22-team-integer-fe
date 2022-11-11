@@ -125,9 +125,15 @@ export class HttpService {
   }
 
 //   PUT http://localhost:8080/api/category
-//     Content-Type: application/json
   public updateCategory(category: ICategoryList): Observable<ICategoryList>{
     return this.httpClient.put(
+      "http://localhost:8080/api/category", category
+    ) as Observable<ICategoryList>
+  }
+
+//  POST http://localhost:8080/api/category
+  public createCategory(category: ICategoryList): Observable<ICategoryList>{
+    return this.httpClient.post(
       "http://localhost:8080/api/category", category
     ) as Observable<ICategoryList>
   }
