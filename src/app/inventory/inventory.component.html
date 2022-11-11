@@ -1,3 +1,26 @@
 <p>inventory works!</p>
 
+<input class="form-control" placeholder="Select Product Id" type="text" list="inventory" #inventory/>
+<datalist id="inventory">
+  <option
+    *ngFor="let product of productList" [value]="product.id"
+  >{{product.description}}</option>
+</datalist>
+<div class="input-group-append">
+  <button type=button class="btn btn-success" (click)="onSelectProductClick(inventory.value)">View <i
+    class="bi bi-envelope"></i>
+  </button>
+</div>
+
+<div *ngIf="selectedProduct">
+  <h5>
+    {{selectedProduct.description}}
+    <span *ngIf="selectedProduct.isDiscontinued" >Product is Discontinued</span>
+  </h5>
+  <img src="{{selectedProduct.image}}" alt="product">
+  <h6>{{selectedProduct.currentPrice | currency}}</h6>
+</div>
+
+
+
 <button (click)="onClose()">Inventory Close</button>
