@@ -7,6 +7,7 @@ import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
 import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
+import {ICategoryList} from "./___interfaces/ICategoryList";
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class HttpService {
 
   public updateProduct(product: IProduct): Observable<IProduct>{
     return this.httpClient.put(
-      "http://localhost:8080/api/products",product
+      "http://localhost:8080/api/products", product
     ) as Observable<IProduct>
   }
 
@@ -111,7 +112,18 @@ export class HttpService {
   public getInvoicesById(accountId: number): Observable<IInvoiceList[]>{
     return this.httpClient.get(
       `http://localhost:8080/api/invoices/${accountId}`) as Observable<IInvoiceList[]>
+
+    //
   }
+
+
+  // GET http://localhost:8080/api/category
+  public getAllCategories(): Observable<ICategoryList[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/category"
+    ) as Observable<ICategoryList[]>
+  }
+
 
 
 

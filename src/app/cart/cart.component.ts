@@ -3,6 +3,7 @@ import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
 import {ViewService} from "../view.service";
 import {IProduct} from "../___interfaces/IProduct";
+import {ProductService} from "../product.service";
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,7 @@ export class CartComponent {
   cart!: ICart
 
 
-  constructor(private cartService: CartService, private viewService: ViewService) {
+  constructor(private cartService: CartService, private viewService: ViewService, private productService: ProductService) {
     this.cartService.$cart.subscribe(
       cart => this.cart = cart
     )
@@ -25,8 +26,9 @@ export class CartComponent {
     this.cartService.createInvoice(this.cart)
 
     //update product quantites
-    for (let item of this.cart.productList)
+    for (let item of this.cart.productList){
       item.product.storeQuantity -= item.count
+    this.productService.updateProduct(item.product)}
     //TODO: update product table
     //clear cart
     this.cart.productList = []
