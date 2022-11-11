@@ -12,6 +12,7 @@ import {IAccountUpdate} from "./___interfaces/IAccountUpdate";
 export class AccountService {
 
   $account = new BehaviorSubject<IAccount | null>(null);
+  $accountList = new BehaviorSubject<IAccount[] | null>(null);
 
   $loginError = new BehaviorSubject<string>("");
   $registrationError = new BehaviorSubject<string>("");
@@ -80,6 +81,16 @@ export class AccountService {
       error: () => {}
     });
     this.$account.next(null);
+  }
+
+  public getAllAccounts() {
+    this.httpService.getAllAccounts().pipe(first()).subscribe({
+      next: (accountList) => {
+        accountList.sort((a, b) => a.id - b.id);
+        this.$accountList.next(accountList);
+      },
+      error: () => {}
+    });
   }
 
 }
