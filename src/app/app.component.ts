@@ -28,8 +28,10 @@ export class AppComponent {
     this.accountService.$account.subscribe({
       next: (account) => {
         if (account) {
-          this.isLoggedIn = account !== null;
+          this.isLoggedIn = true;
           this.type = account.type;
+        } else {
+          this.isLoggedIn = false;
         }
       },
       error: (err) => {

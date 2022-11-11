@@ -30,7 +30,7 @@ export class AccountService {
         this.cartService.connectCart(account.id)
         this.viewService.viewCloseLogin();
       },
-      error: (err) => {
+      error: () => {
         this.$loginError.next(this.LOGIN_ERROR);
       }
     })
@@ -67,12 +67,19 @@ export class AccountService {
   }
 
   public updateAccount(account: IAccountUpdate) {
-    this.httpService.updateAccount(account);
+    this.httpService.updateAccount(account).pipe(first()).subscribe({
+      next: () => {},
+      error: () => {}
+    });
     this.viewService.viewCloseProfile();
   }
 
   public deleteAccount(id: number) {
-    this.httpService.deleteAccount(id);
+    this.httpService.deleteAccount(id).pipe(first()).subscribe({
+      next: () => {},
+      error: () => {}
+    });
+    this.$account.next(null);
   }
 
 }
