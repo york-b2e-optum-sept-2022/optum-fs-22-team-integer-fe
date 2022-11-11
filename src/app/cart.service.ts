@@ -19,8 +19,6 @@ export class CartService {
   public $invoiceList = new BehaviorSubject<IInvoiceList[]>([])
 
   public $viewCartUI = new BehaviorSubject(false)
-  public $viewCart = new BehaviorSubject<boolean>(false);
-  public $viewInvoices = new BehaviorSubject<boolean>(false)
 
   constructor(private httpService: HttpService) {
     this.getAllInvoices()
@@ -80,14 +78,6 @@ export class CartService {
       totalPrice += (item.product.currentPrice * item.count)
     currentCart.totalPrice = totalPrice
     this.$cart.next(currentCart)
-  }
-
-  public viewCart() {
-    this.$viewCart.next(true);
-  }
-
-  public viewClose() {
-    this.$viewCart.next(false);
   }
 
   getAllInvoices() {

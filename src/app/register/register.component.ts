@@ -1,6 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AccountService} from "../account.service";
+import {ViewService} from "../view.service";
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private viewService: ViewService) {
     this.subscription = this.accountService.$registrationError.subscribe((errorMessage) => {
       this.errorMessage = errorMessage;
     });
@@ -33,11 +34,11 @@ export class RegisterComponent implements OnDestroy {
   }
 
   onAccountExists() {
-    this.accountService.viewLogin();
+    this.viewService.viewLogin();
   }
 
   onClose() {
-    this.accountService.viewClose();
+    this.viewService.viewCloseRegister();
   }
 
 }

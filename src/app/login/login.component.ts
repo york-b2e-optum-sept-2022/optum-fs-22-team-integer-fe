@@ -1,6 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AccountService} from "../account.service";
+import {ViewService} from "../view.service";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private viewService: ViewService) {
     this.subscription = this.accountService.$loginError.subscribe((errorMessage) => {
       this.errorMessage = errorMessage;
     });
@@ -30,11 +31,11 @@ export class LoginComponent implements OnDestroy {
   }
 
   onCreateAccount() {
-    this.accountService.viewRegister();
+    this.viewService.viewRegister();
   }
 
   onClose() {
-    this.accountService.viewClose();
+    this.viewService.viewCloseLogin();
   }
 
 }

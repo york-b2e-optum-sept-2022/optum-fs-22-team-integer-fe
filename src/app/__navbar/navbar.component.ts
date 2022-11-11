@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {CartService} from "../cart.service";
 import {AccountService} from "../account.service";
 import {IAccount} from "../___interfaces/IAccount";
+import {ViewService} from "../view.service";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,7 @@ export class NavbarComponent {
 
   public account: IAccount | null = null;
 
-  constructor(private cartService: CartService, private accountService: AccountService) {
+  constructor(private cartService: CartService, private accountService: AccountService, private viewService: ViewService) {
     this.accountService.$account.subscribe({
       next: (account) => {
           this.account = account
@@ -26,15 +27,15 @@ export class NavbarComponent {
   }
 
   onViewLogin() {
-    this.accountService.viewLogin();
+    this.viewService.viewLogin();
   }
 
   onViewRegister() {
-    this.accountService.viewRegister();
+    this.viewService.viewRegister();
   }
 
-  onCart() {
-    this.cartService.viewCart();
+  onViewCart() {
+    this.viewService.viewCart();
   }
 
   onLogout() {
