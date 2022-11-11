@@ -20,6 +20,7 @@ import { ProductCategoriesComponent } from './product-categories/product-categor
 import { InventoryComponent } from './inventory/inventory.component';
 import { CouponsComponent } from './coupons/coupons.component';
 import { ManageProfilesComponent } from './manage-profiles/manage-profiles.component';
+import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ManageProfilesComponent } from './manage-profiles/manage-profiles.compo
     ProductCategoriesComponent,
     InventoryComponent,
     CouponsComponent,
-    ManageProfilesComponent
+    ManageProfilesComponent,
+    InvoiceListComponent
   ],
   imports: [
     BrowserModule,

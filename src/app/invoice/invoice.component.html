@@ -1,16 +1,16 @@
 <div>
   <h2>Previous Orders</h2>
   <div
-  *ngFor="let invoice of invoiceList">
-<h4>Invoice Number: {{invoice.id}}</h4>
-    <h5> Purchase Date: {{invoice.purchaseDate }}</h5>
+    *ngFor="let invoice of invoiceList">
+    <h4>Invoice Number: {{invoice.id}}</h4>
+    <h5> Purchase Date: {{invoice.purchaseDate | date }}</h5>
     <div
-    *ngFor="let purchase of invoice.purchaseList">
+      *ngFor="let purchase of invoice.purchaseList">
       <div>
         {{purchase.count}}    {{purchase.price}}    {{purchase.name}}
       </div>
-      <h5>Total Price: {{invoice.totalPrice}}</h5>
     </div>
+    <h5>Total Price: {{invoice.totalPrice}}</h5>
 
   </div>
   <button (click)="onClose()">Invoice Close</button>
