@@ -1,11 +1,11 @@
-<div>
+<div class="card m-2" style="width: 18rem; height: 22rem;">
   <div>
     <h5>
       {{product.description}}
       <span *ngIf="product.isDiscontinued" >Product is Discontinued</span>
     </h5>
     <img src="{{product.image}}" alt="product">
-    <h6>{{product.currentPrice}}</h6>
+    <h6>{{product.currentPrice | currency}}</h6>
   </div>
-  <button (click)="onClickAddProduct()">Add to Cart</button>
+  <button (click)="onClickAddProduct()" class="btn btn-sm btn-outline-primary">Add to Cart</button>
 </div>
