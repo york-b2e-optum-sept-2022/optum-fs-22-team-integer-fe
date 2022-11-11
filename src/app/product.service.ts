@@ -37,6 +37,7 @@ export class ProductService {
   public getProductList() {
     this.httpService.getAllProducts().pipe(first()).subscribe({
       next: (productList) => {
+        productList.sort((a, b) => a.id - b.id)
         this.$productList.next(productList);
         console.log(productList);
       },
@@ -48,5 +49,15 @@ export class ProductService {
   }
 
 
-
+  updateProduct(product: IProduct) {
+    this.httpService.updateProduct(product).pipe(first()).subscribe({
+      next: (product) => {
+        this.getProductList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
 }

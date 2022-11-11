@@ -14,8 +14,9 @@ export class InvoiceComponent implements OnInit {
   invoiceList!: IInvoiceList[]
 
   constructor(private cartService: CartService, private accountService: AccountService, private viewService: ViewService) {
-    if (this.cartService.$cart.getValue().accountId === 0 || !this.accountService.$account.getValue())
-      return
+    // if (this.cartService.$cart.getValue().accountId === 0 || !this.accountService.$account.getValue())
+    //   return
+
     if(this.accountService.$account.getValue()?.type === 1)
       this.cartService.getInvoiceByCartId()
     if (this.accountService.$account.getValue()?.type === 2 || this.accountService.$account.getValue()?.type === 3)

@@ -61,7 +61,7 @@ export class HttpService {
 
   public updateProduct(product: IProduct): Observable<IProduct>{
     return this.httpClient.put(
-      "http://localhost:8080/api/products",product
+      "http://localhost:8080/api/products", product
     ) as Observable<IProduct>
   }
 
