@@ -6,6 +6,7 @@ import {ICart} from "./___interfaces/ICart";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {IAccount} from "./___interfaces/IAccount";
 import {IAccountNew} from "./___interfaces/IAccountNew";
+import {ICategoryList} from "./___interfaces/ICategoryList";
 
 @Injectable({
   providedIn: 'root'
@@ -114,6 +115,13 @@ export class HttpService {
     //
   }
 
+
+  // GET http://localhost:8080/api/category
+  public getAllCategories(): Observable<ICategoryList[]> {
+    return this.httpClient.get(
+      "http://localhost:8080/api/category"
+    ) as Observable<ICategoryList[]>
+  }
 
 
 
