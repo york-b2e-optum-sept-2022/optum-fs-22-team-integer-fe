@@ -1,3 +1,23 @@
-<p>profile works!</p>
 
-<button (click)="onClose()">Profile Close</button>
+
+<div class="card m-2" style="width: 18rem">
+  <div class="card-header d-flex">
+    <h2>Profile</h2>
+    <button (click)="onClose()" class="btn btn-sm btn-outline-danger">Profile Close</button>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">
+      {{account.email}}
+    </h5>
+    <div>
+      <span>Password: </span>
+      <input type="text" [(ngModel)]="password">
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="d-flex justify-content-around">
+      <button (click)="onDelete()" class="btn btn-sm btn-outline-danger">Delete Account</button>
+      <button (click)="onUpdate()" class="btn btn-sm btn-outline-primary">Update Password</button>
+    </div>
+  </div>
+</div>
