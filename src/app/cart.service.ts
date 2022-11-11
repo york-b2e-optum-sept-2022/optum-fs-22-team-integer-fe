@@ -4,6 +4,8 @@ import {ICart} from "./___interfaces/ICart";
 import {IProduct} from "./___interfaces/IProduct";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {HttpService} from "./http.service";
+import {ICouponCodes} from "./___interfaces/ICouponCodes";
+import {ICategoryList} from "./___interfaces/ICategoryList";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +22,19 @@ export class CartService {
 
   public $viewCartUI = new BehaviorSubject(false)
 
+  public $couponCodeList = new BehaviorSubject<ICouponCodes[]>([{
+    id: 0,
+    name: "VeteransDaySale",
+    startDate: new Date(),
+    endDate: new Date(),
+    useLimit: 1000,
+    salePercent: 40
+  },
+  ]);
+
   constructor(private httpService: HttpService) {
     this.getAllInvoices()
+    this.getCouponCodes()
   }
 
   public addProduct(product: IProduct) {
@@ -192,6 +205,58 @@ export class CartService {
           //TODO: add errors
         }
       })
+  }
+
+  // COUPON CODES
+
+  getCouponCodes() {
+    this.httpService.getAllCouponCodes().pipe(first()).subscribe(
+      {
+        next: (couponCodeList) => {
+          this.$couponCodeList.next(couponCodeList)
+        },
+        error: (err) => {
+          console.error(err);
+          // TODO - handle error
+        }
+      }
+    )
+  }
+
+  public createNewCouponCode(couponcode: ICouponCodes) {
+    this.httpService.createCouponCode(couponcode).pipe(first()).subscribe({
+      next: (category) => {
+        this.getCouponCodes()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
+
+  public updateCouponCode(couponcode: ICouponCodes) {
+    this.httpService.updateCouponCode(couponcode).pipe(first()).subscribe({
+      next: (couponcode) => {
+        this.getCouponCodes()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
+
+  public deleteCouponCode(couponCodeId: number) {
+    this.httpService.deleteCouponCode(couponCodeId).pipe(first()).subscribe({
+      next: (couponCodeId) => {
+        this.getCouponCodes()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
   }
 
 }// end of class

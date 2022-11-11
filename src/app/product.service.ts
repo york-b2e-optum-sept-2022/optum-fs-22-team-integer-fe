@@ -106,9 +106,4 @@ export class ProductService {
     })
   }
 
-
-
-
-
-
 }
