@@ -17,7 +17,9 @@ export class CartComponent {
 
   constructor(private cartService: CartService, private viewService: ViewService, private productService: ProductService) {
     this.cartService.$cart.subscribe(
-      cart => this.cart = cart
+      cart => {
+        cart.productList.sort((a, b) => a.product.id - b.product.id)
+        this.cart = cart}
     )
   }
 
@@ -25,7 +27,7 @@ export class CartComponent {
     //save invoice
     this.cartService.createInvoice(this.cart)
 
-    //update product quantites
+    //update product quantities
     for (let item of this.cart.productList){
       item.product.storeQuantity -= item.count
     this.productService.updateProduct(item.product)}

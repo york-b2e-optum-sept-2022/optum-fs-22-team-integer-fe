@@ -33,4 +33,20 @@ export class InventoryComponent implements OnInit {
         this.selectedProduct = product
     }
   }
+
+  onSaveClick() {
+
+  }
+
+  onCancelClick() {
+
+  }
+
+  onAddCategoryTag(value: string) {
+
+  }
+
+  onCategoryTagClick(tag: string) {
+
+  }
 }
