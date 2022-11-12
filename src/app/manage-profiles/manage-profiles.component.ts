@@ -47,6 +47,7 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
   }
 
   onSelectAccountClick(accountId: string) {
+    this.resetAccountError();
     for (let account of this.accountList) {
       if (account.id === parseInt(accountId))
         this.selectedAccount = account
@@ -54,12 +55,14 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
   }
 
   onDeleteClick() {
+    this.resetAccountError();
     if(this.selectedAccount) {
       this.accountService.deleteAccount(this.selectedAccount.id);
     }
   }
 
   onSaveClick() {
+    this.resetAccountError();
     if (this.selectedAccount) {
       let account = {
         id: this.selectedAccount.id,
@@ -68,6 +71,10 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
       }
       this.accountService.updateAccount(account);
     }
+  }
+
+  resetAccountError() {
+    this.accountService.$accountError.next("");
   }
 
 }

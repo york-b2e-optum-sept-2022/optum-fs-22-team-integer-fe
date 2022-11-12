@@ -21,6 +21,8 @@ export class AccountService {
   private USERNAME_TAKEN_ERROR = "Username is already in use"
   private UNKNOWN_ERROR = "Unknown error, please try again"
   private LOGIN_ERROR = "Invalid login, please try again"
+  private OWN_ACCOUNT_DELETE_ERROR = "You can not delete your own account"
+  private OWN_ACCOUNT_DEESCALATE_ERROR = "You can not deescalate your own account"
 
   constructor(private httpService: HttpService, private cartService: CartService, private viewService: ViewService) {
   }
@@ -69,6 +71,10 @@ export class AccountService {
   }
 
   public updateAccount(account: IAccountUpdate) {
+    if (this.$account.getValue()?.id === account.id && this.$account.getValue()?.type === 3) {
+      this.$accountError.next(this.OWN_ACCOUNT_DEESCALATE_ERROR);
+      return;
+    }
     this.httpService.updateAccount(account).pipe(first()).subscribe({
       next: () => {},
       error: () => {}
@@ -77,8 +83,8 @@ export class AccountService {
   }
 
   public deleteAccount(id: number) {
-    if (this.$account.getValue()?.id === id) {
-      this.$accountError.next(this.UNKNOWN_ERROR);
+    if (this.$account.getValue()?.id === id && this.$account.getValue()?.type === 3) {
+      this.$accountError.next(this.OWN_ACCOUNT_DELETE_ERROR);
       return;
     }
     this.httpService.deleteAccount(id).pipe(first()).subscribe({

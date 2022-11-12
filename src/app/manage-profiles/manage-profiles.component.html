@@ -34,7 +34,7 @@
         <button class="btn btn-success btn-sm" (click)="onSaveClick()">Save Changes</button>
         <button class="btn btn-outline-secondary btn-sm" (click)="onClose()">Manage Profiles Close</button>
       </div>
-      <div *ngIf="errorMessage">
+      <div *ngIf="errorMessage" class="text-danger">
         {{errorMessage}}
       </div>
     </div>
