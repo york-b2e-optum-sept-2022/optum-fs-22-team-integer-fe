@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {IProduct} from "./___interfaces/IProduct";
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
@@ -37,8 +37,8 @@ export class ProductService {
   ]);
 
   constructor(private httpService: HttpService) {
-   this.getProductList();
-   this.getAllCategoriesList();
+    this.getProductList();
+    this.getAllCategoriesList();
   }
 
 
@@ -94,6 +94,18 @@ export class ProductService {
     })
   }
 
+  createProduct(product: IProduct) {
+    console.log(product)
+    this.httpService.createProduct(product).pipe(first()).subscribe({
+      next: (product) => {
+        this.getProductList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
   public createNewCategory(category: ICategoryList) {
     this.httpService.createCategory(category).pipe(first()).subscribe({
       next: (category) => {

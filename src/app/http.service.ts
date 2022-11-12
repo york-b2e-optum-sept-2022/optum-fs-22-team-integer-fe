@@ -33,7 +33,7 @@ export class HttpService {
 
   public getAllAccounts(): Observable<IAccount[]> {
     return this.httpClient.get(
-      "http://localhost:8080/api/accounts"
+      "http://localhost:8080/api/accounts/ListAll"
     ) as Observable<IAccount[]>
   }
 
@@ -44,7 +44,6 @@ export class HttpService {
   }
 
   public deleteAccount(accountId: number) {
-    console.log(accountId);
     return this.httpClient.delete(
       `http://localhost:8080/api/accounts?accountId=${accountId}`
     )
