@@ -1,3 +1,42 @@
-<p>manage-profiles works!</p>
 
-<button (click)="onClose()">Manage Profiles Close</button>
+<input class="form-control" placeholder="Select Account email" type="text" list="account" #account/>
+<datalist id="account">
+  <option
+    *ngFor="let account of accountList" [value]="account.id"
+  >{{account.email}}</option>
+</datalist>
+<div class="input-group-append">
+  <button type=button class="btn btn-success" (click)="onSelectAccountClick(account.value)">View <i
+    class="bi bi-envelope"></i>
+  </button>
+</div>
+
+<div *ngIf="selectedAccount">
+  <div class="card m-3">
+    <div class="card-header">
+      <h2>{{selectedAccount.email}}</h2>
+      <h5>id: {{selectedAccount.id}}</h5>
+      <h6>Email: {{selectedAccount.email}}</h6>
+      <h6>Password: {{selectedAccount.password}}</h6>
+      <h6>Type: {{selectedAccount.type}}</h6>
+    </div>
+
+    <div class="card-body">
+      <div class="input-group mb-3">
+        <span class="input-group-text w-25">Password</span>
+        <input type="number" class="form-control" [(ngModel)]="selectedAccount.password"></div>
+      <div class="input-group mb-3">
+        <span class="input-group-text w-25">Account Type</span>
+        <input type="text" class="form-control" [(ngModel)]="selectedAccount.type"></div>
+
+      <div class="card-footer d-flex justify-content-around">
+        <button class="btn btn-sm btn-outline-danger" (click)="onDeleteClick()">Delete Account</button>
+        <button class="btn btn-success btn-sm" (click)="onSaveClick()">Save Changes</button>
+        <button class="btn btn-outline-secondary btn-sm" (click)="onClose()">Manage Profiles Close</button>
+      </div>
+      <div *ngIf="errorMessage" class="text-danger">
+        {{errorMessage}}
+      </div>
+    </div>
+  </div>
+</div>

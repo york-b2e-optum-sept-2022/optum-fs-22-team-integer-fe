@@ -5,7 +5,7 @@ import {IProduct} from "./___interfaces/IProduct";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {HttpService} from "./http.service";
 import {ICouponCodes} from "./___interfaces/ICouponCodes";
-import {ICategoryList} from "./___interfaces/ICategoryList";
+
 
 @Injectable({
   providedIn: 'root'
@@ -175,6 +175,7 @@ export class CartService {
         },
         error: (err) => {
           if (err.status === 409) {
+            console.info(err);
             //cart existed, so existing cart is retrieved
             this.httpService.getCart(accountId).pipe(first())
               .subscribe({
