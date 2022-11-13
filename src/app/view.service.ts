@@ -16,6 +16,8 @@ export class ViewService {
   public $viewCoupons = new BehaviorSubject<boolean>(false);
   public $viewManageProfiles = new BehaviorSubject<boolean>(false);
   public $viewFilterSidebar = new BehaviorSubject<boolean>(false);
+  public $viewCreateAccount = new BehaviorSubject<boolean>(false);
+  public $viewEditAccount = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
@@ -62,6 +64,14 @@ export class ViewService {
     this.$viewFilterSidebar.next(true);
   }
 
+  public viewCreateAccount() {
+    this.$viewCreateAccount.next(true);
+  }
+
+  public viewEditAccount() {
+    this.$viewEditAccount.next(true);
+  }
+
   // Close views
   public viewCloseLogin() {
     this.$viewLogin.next(false);
@@ -101,6 +111,29 @@ export class ViewService {
 
   public viewCloseFilterSidebar() {
     this.$viewFilterSidebar.next(false);
+  }
+
+  public viewCloseCreateAccount() {
+    this.$viewCreateAccount.next(false);
+  }
+
+  public viewCloseEditAccount() {
+    this.$viewEditAccount.next(false);
+  }
+
+  public viewCloseAll() {
+    this.$viewLogin.next(false);
+    this.$viewRegister.next(false);
+    this.$viewCart.next(false);
+    this.$viewInvoices.next(false);
+    this.$viewProfile.next(false);
+    this.$viewCategories.next(false);
+    this.$viewInventory.next(false);
+    this.$viewCoupons.next(false);
+    this.$viewManageProfiles.next(false);
+    this.$viewFilterSidebar.next(false);
+    this.$viewCreateAccount.next(false);
+    this.$viewEditAccount.next(false);
   }
 
 }

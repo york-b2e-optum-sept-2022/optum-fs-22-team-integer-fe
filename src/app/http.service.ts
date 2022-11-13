@@ -93,7 +93,7 @@ export class HttpService {
   }
 
   public deleteCart(cartId: number): Observable<ICart>{
-    return this.httpClient.delete(`http://localhost:8080/api/carts/${cartId}`
+    return this.httpClient.delete(`http://localhost:8080/api/carts/delete/${cartId}`
     ) as Observable<ICart>
   }
 

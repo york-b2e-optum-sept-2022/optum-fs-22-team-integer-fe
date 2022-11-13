@@ -1,18 +1,17 @@
 <H2>UPDATE COUPON CODES</H2>
-<input class="form-control" placeholder="Select Coupon Code Id" type="text" list="couponcode" #couponcode/>
-<datalist id="couponcode">
+<input class="form-control" placeholder="Select Coupon Code Id" type="text" list="couponCode" #couponCode/>
+<datalist id="couponCode">
   <option
-    *ngFor="let couponcode of couponcodeList" [value]="couponcode.id"
-  >{{couponcode.name}}</option>
+    *ngFor="let couponCode of couponCodeList" [value]="couponCode.id"
+  >{{couponCode.name}}</option>
 </datalist>
 <div class="input-group-append">
-  <button type=button class="btn btn-success" (click)="onSelectCouponcodeClick(couponcode.value)">Edit Selected Code<i
-    class="bi bi-envelope"></i>
+  <button type=button class="btn btn-success" (click)="onSelectCouponCodeClick(couponCode.value)">Edit Selected Coupon Code
   </button>
   <button class="btn btn-primary" (click)="onAddNewClick()">Add New Coupon</button>
-  <div *ngIf="isAddingNewCouponcode" class="d-flex justify-content-around">
+  <div *ngIf="isAddingNewCouponCode" class="d-flex justify-content-around">
     <div class="d-flex justify-content-around">
-      <input type="text" class="form-control" placeholder="New Coupon Name" [(ngModel)]="newCouponcodeName">
+      <input type="text" class="form-control" placeholder="New Coupon Name" [(ngModel)]="newCouponCodeName">
       <label for="startDate">Start Date</label>
       <input type="date" class="form-control" id="startDate" [(ngModel)]="newCcStartDate">
       <label for="endDate">End Date</label>
@@ -27,23 +26,24 @@
   </div>
 </div>
 
-<div *ngIf="isUpdatingNewCouponcode">
-  <h5 *ngIf="selectedCouponcode">{{selectedCouponcode.id}}</h5>
+<div *ngIf="isUpdatingNewCouponCode">
+  <h5 *ngIf="selectedCouponCode">{{selectedCouponCode.id}}</h5>
   <div class="input-group mb-3">
     <div class="d-flex justify-content-around">
-      <input type="text" class="form-control" placeholder="Update Coupon Name" [(ngModel)]="couponcodeName">
+      <input type="text" class="form-control" placeholder="Update Coupon Name" [(ngModel)]="couponCodeName">
       <label for="currentStartDate">Start Date: </label>
-      <p *ngIf="selectedCouponcode">{{selectedCouponcode.startDate | date}}</p>
+      <p *ngIf="selectedCouponCode">{{selectedCouponCode.startDate | date}}</p>
       <input type="date" class="form-control" id="currentStartDate" [(ngModel)]="currentCcStartDate">
       <label for="currentEndDate">End Date: </label>
-      <p *ngIf="selectedCouponcode">{{selectedCouponcode.endDate | date}}</p>
+      <p *ngIf="selectedCouponCode">{{selectedCouponCode.endDate | date}}</p>
       <input type="date" class="form-control" id="currentEndDate" [(ngModel)]="currentCcEndDate">
       <label for="currentUseLimit">Use Limit</label>
       <input type="text" class="form-control" id="currentUseLimit" [(ngModel)]="currentCcUseLimit">
       <label for="currentSalePercent">Sale Percent</label>
       <input type="text" class="form-control" id="currentSalePercent" [(ngModel)]="currentCcSalePercent">
-      <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
-      <button class="btn btn-primary" (click)="onUpdate()">Submit Update</button>
+      <button class="btn btn-danger" (click)="onDelete(); couponCode.value=''">Delete</button>
+      <button class="btn btn-danger" (click)="onCancel(); couponCode.value=''">Cancel</button>
+      <button class="btn btn-primary" (click)="onUpdate(); couponCode.value=''">Submit Update</button>
     </div>
   </div>
 </div>

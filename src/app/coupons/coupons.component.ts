@@ -10,18 +10,18 @@ import {CartService} from "../cart.service";
 })
 export class CouponsComponent implements OnInit {
 
-  couponcodeList!: ICouponCodes[];
-  selectedCouponcode!: ICouponCodes | null;
+  couponCodeList!: ICouponCodes[];
+  selectedCouponCode!: ICouponCodes | null;
 
-  isUpdatingNewCouponcode: boolean = false;
-  couponcodeName: String ='';
+  isUpdatingNewCouponCode: boolean = false;
+  couponCodeName: String ='';
   currentCcStartDate: String = '';
   currentCcEndDate: String = '';
   currentCcUseLimit: number = 0;
   currentCcSalePercent: number = 0;
 
-  isAddingNewCouponcode: boolean = false;
-  newCouponcodeName: string ='';
+  isAddingNewCouponCode: boolean = false;
+  newCouponCodeName: string ='';
   newCcStartDate: String = '';
   newCcEndDate: String = '';
   newCcUseLimit: number = 0;
@@ -30,7 +30,7 @@ export class CouponsComponent implements OnInit {
 
   constructor(private viewService: ViewService, private cartService: CartService) {
     this.cartService.$couponCodeList.subscribe(
-      list => this.couponcodeList = list
+      list => this.couponCodeList = list
     )
   }
 
@@ -41,87 +41,95 @@ export class CouponsComponent implements OnInit {
     this.viewService.viewCloseCoupons();
   }
 
-  onSelectCouponcodeClick(couponcodeId: string) {
-    for(let couponcode of this.couponcodeList){
-      if(couponcode.id === parseInt(couponcodeId))
-        this.selectedCouponcode = couponcode
+  onSelectCouponCodeClick(couponCodeId: string) {
+    for(let couponCode of this.couponCodeList){
+      if(couponCode.id === parseInt(couponCodeId))
+        this.selectedCouponCode = couponCode
     }
 
-    if (this.selectedCouponcode)
+    if (this.selectedCouponCode)
     {
-      this.couponcodeName = this.selectedCouponcode.name
-      if (this.selectedCouponcode.startDate) {
-        this.currentCcStartDate = this.selectedCouponcode.startDate.toString();
+      this.couponCodeName = this.selectedCouponCode.name
+      if (this.selectedCouponCode.startDate) {
+        this.currentCcStartDate = this.selectedCouponCode.startDate.toString();
       } else {
         this.currentCcStartDate = ""
       }
-      if (this.selectedCouponcode.endDate) {
-        this.currentCcEndDate = this.selectedCouponcode.endDate.toString();
+      if (this.selectedCouponCode.endDate) {
+        this.currentCcEndDate = this.selectedCouponCode.endDate.toString();
       } else {
         this.currentCcEndDate = ""
       }
 
-      this.currentCcUseLimit= this.selectedCouponcode.useLimit;
-      this.currentCcSalePercent= this.selectedCouponcode.salePercent;
-      this.isUpdatingNewCouponcode = true;
+      this.currentCcUseLimit= this.selectedCouponCode.useLimit;
+      this.currentCcSalePercent= this.selectedCouponCode.salePercent;
+      this.isUpdatingNewCouponCode = true;
     }
   }
 
   onAddNewClick() {
-    this.isAddingNewCouponcode = true
+    this.isAddingNewCouponCode = true
   }
 
   onCancelNew() {
     //cancel adding new
-    this.isAddingNewCouponcode = false
-    this.newCouponcodeName = ''
+    this.isAddingNewCouponCode = false
+    this.newCouponCodeName = ''
   }
 
   onSubmitNew() {
-    this.isAddingNewCouponcode = false
-    const newCouponcodeToAdd: ICouponCodes = {
+    this.isAddingNewCouponCode = false
+    const newCouponCodeToAdd: ICouponCodes = {
       id: -1,
-      name: this.newCouponcodeName,
+      name: this.newCouponCodeName,
       startDate: new Date(this.newCcStartDate.toString().replace(/-/g, '\/')),
       endDate: new Date(this.newCcEndDate.toString().replace(/-/g, '\/')),
       useLimit: this.newCcUseLimit,
       salePercent: this.newCcSalePercent,
     }
-    this.cartService.createNewCouponCode(newCouponcodeToAdd)
-    this.newCouponcodeName = ''
+    this.cartService.createNewCouponCode(newCouponCodeToAdd)
+    this.newCouponCodeName = ''
   }
 
   onCancel() {
     //update canceled
-    this.selectedCouponcode = null;
-    this.isUpdatingNewCouponcode = false;
-    this.couponcodeName = ''
+    this.selectedCouponCode = null;
+    this.isUpdatingNewCouponCode = false;
+    this.couponCodeName = ''
     this.currentCcStartDate= "";
     this.currentCcEndDate= "";
     this.currentCcUseLimit= 0;
     this.currentCcSalePercent= 0;
   }
 
+  onDelete() {
+    if(this.selectedCouponCode) {
+      this.cartService.deleteCouponCode(this.selectedCouponCode.id);
+      this.selectedCouponCode = null;
+      this.isUpdatingNewCouponCode = false;
+    }
+  }
+
   onUpdate() {
     //update code
-    if (this.selectedCouponcode) {
-      this.selectedCouponcode.name = this.couponcodeName
-      this.selectedCouponcode.startDate = new Date(this.currentCcStartDate.toString().replace(/-/g, '\/'))
-      this.selectedCouponcode.endDate = new Date(this.currentCcEndDate.toString().replace(/-/g, '\/'))
-      this.selectedCouponcode.useLimit = this.currentCcUseLimit
-      this.selectedCouponcode.salePercent = this.currentCcSalePercent
+    if (this.selectedCouponCode) {
+      this.selectedCouponCode.name = this.couponCodeName
+      this.selectedCouponCode.startDate = new Date(this.currentCcStartDate.toString().replace(/-/g, '\/'))
+      this.selectedCouponCode.endDate = new Date(this.currentCcEndDate.toString().replace(/-/g, '\/'))
+      this.selectedCouponCode.useLimit = this.currentCcUseLimit
+      this.selectedCouponCode.salePercent = this.currentCcSalePercent
 
-      this.couponcodeName = ''
+      this.couponCodeName = ''
       this.currentCcStartDate= "";
       this.currentCcEndDate= "";
       this.currentCcUseLimit= 0;
       this.currentCcSalePercent= 0;
 
       //DB Category PUT (update)
-      this.cartService.updateCouponCode(this.selectedCouponcode)
+      this.cartService.updateCouponCode(this.selectedCouponCode)
 
-      this.selectedCouponcode = null;
-      this.isUpdatingNewCouponcode = false;
+      this.selectedCouponCode = null;
+      this.isUpdatingNewCouponCode = false;
     }
   }
 }

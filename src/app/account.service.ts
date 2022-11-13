@@ -42,32 +42,55 @@ export class AccountService {
 
   public logout() {
     this.$account.next(null);
+    this.viewService.viewCloseAll();
   }
 
-  public createAccount(email: string, password: string) {
-    let account = {
-      email: email,
-      password: password,
-      type: 1
-    }
-
-    this.httpService.createAccount(account)
-      .pipe(first())
-      .subscribe({
-        next: (account) => {
-          this.$account.next(account);
-          this.cartService.connectCart(account.id)
-          this.viewService.viewCloseRegister();
-        },
-        error: (err) => {
-          if (err.status === 409) {
-            this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
-            return;
+  public createAccount(email: string, password: string, type: number) {
+    if(this.$account.getValue() === null) {
+      let account = {
+        email: email,
+        password: password,
+        type: type
+      }
+      this.httpService.createAccount(account)
+        .pipe(first())
+        .subscribe({
+          next: (account) => {
+            this.$account.next(account);
+            this.cartService.connectCart(account.id)
+            this.viewService.viewCloseRegister();
+          },
+          error: (err) => {
+            if (err.status === 409) {
+              this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
+              return;
+            }
+            this.$registrationError.next(this.UNKNOWN_ERROR);
           }
-
-          this.$registrationError.next(this.UNKNOWN_ERROR);
-        }
-      })
+        })
+    } else if (this.$account.getValue()?.type === 3) {
+      let account = {
+        email: email,
+        password: password,
+        type: type
+      }
+      this.httpService.createAccount(account)
+        .pipe(first())
+        .subscribe({
+          next: (account) => {
+            this.cartService.connectCart(account.id)
+            this.viewService.viewCloseCreateAccount();
+            this.getAllAccounts();
+          },
+          error: (err) => {
+            if (err.status === 409) {
+              this.$registrationError.next(this.USERNAME_TAKEN_ERROR);
+              return;
+            }
+            this.$registrationError.next(this.UNKNOWN_ERROR);
+          }
+        })
+    }
   }
 
   public updateAccount(account: IAccountUpdate) {
@@ -76,10 +99,14 @@ export class AccountService {
       return;
     }
     this.httpService.updateAccount(account).pipe(first()).subscribe({
-      next: () => {},
+      next: () => {
+        this.viewService.viewCloseProfile();
+        this.viewService.viewCloseEditAccount();
+        this.getAllAccounts();
+      },
       error: () => {}
     });
-    this.viewService.viewCloseProfile();
+
   }
 
   public deleteAccount(id: number) {
@@ -88,7 +115,15 @@ export class AccountService {
       return;
     }
     this.httpService.deleteAccount(id).pipe(first()).subscribe({
-      next: () => {},
+      next: () => {
+        this.httpService.deleteCart(id).pipe(first()).subscribe({
+          next: () => {
+            this.viewService.viewCloseEditAccount();
+            this.getAllAccounts();
+          },
+          error: () => {}
+        })
+      },
       error: () => {}
     });
     if (this.$account.getValue()?.type !== 3) {

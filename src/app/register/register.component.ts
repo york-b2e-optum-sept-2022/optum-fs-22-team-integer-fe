@@ -12,6 +12,7 @@ export class RegisterComponent implements OnDestroy {
 
   email: string = "";
   password: string = "";
+  type: number = 1;
   errorMessage: string = "";
 
   subscription: Subscription;
@@ -29,7 +30,8 @@ export class RegisterComponent implements OnDestroy {
   onRegister() {
     this.accountService.createAccount(
       this.email,
-      this.password
+      this.password,
+      this.type
     );
   }
 
