@@ -12,7 +12,7 @@ export class ProductListComponent {
   public productList: IProduct[] = [];
 
   constructor(private productService: ProductService) {
-    this.productService.$productList.subscribe(
+    this.productService.$displayList.subscribe(
       productList => {
         this.productList = productList
       }

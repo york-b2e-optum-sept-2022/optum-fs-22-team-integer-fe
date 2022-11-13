@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IProduct} from "./___interfaces/IProduct";
-import {BehaviorSubject, first} from "rxjs";
+import {BehaviorSubject, filter, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {ICategoryList} from "./___interfaces/ICategoryList";
 
@@ -9,6 +9,7 @@ import {ICategoryList} from "./___interfaces/ICategoryList";
 })
 export class ProductService {
 
+  public $displayList = new BehaviorSubject<IProduct[]>([])
   public $productList = new BehaviorSubject<IProduct[]>([{
     id: 1,
     isDiscontinued: false,
@@ -47,6 +48,7 @@ export class ProductService {
       next: (productList) => {
         productList.sort((a, b) => a.id - b.id)
         this.$productList.next(productList);
+        this.$displayList.next(productList)
       },
       error: (err) => {
         console.error(err);
@@ -131,4 +133,20 @@ export class ProductService {
   }
 
 
+  filterCategoryView(categorySelected: string) {
+    if (categorySelected === "All Categories") {
+      this.getProductList()
+      return
+    }
+    let filteredProductList = [...this.$productList.getValue()]
+    let productsInView: number[] = []
+    for (let product of filteredProductList)
+      if (product.categoryList.includes(categorySelected))
+        productsInView.push(product.id)
+    console.log("products in view", productsInView)
+
+    let newArray = filteredProductList.filter(product => productsInView.includes(product.id))
+    console.log(newArray)
+    this.$displayList.next(newArray)
+  }
 }//end of class

@@ -32,7 +32,8 @@
 <app-invoice *ngIf="viewInvoices && isLoggedIn === false"></app-invoice>
 
 <button (click)="onViewFilterSidebar()">Filter Sidebar</button>
-<app-filter-sidebar *ngIf="viewFilterSidebar"></app-filter-sidebar>
 
+<div class="d-flex">
+<app-filter-sidebar></app-filter-sidebar>
 <app-product-list></app-product-list>
-
+</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ViewService} from "../view.service";
+import {ProductService} from "../product.service";
+import {ICategoryList} from "../___interfaces/ICategoryList";
 
 @Component({
   selector: 'app-filter-sidebar',
@@ -8,7 +10,16 @@ import {ViewService} from "../view.service";
 })
 export class FilterSidebarComponent implements OnInit {
 
-  constructor(private viewService: ViewService) { }
+  selectedCategory!: string
+  categoryList!: ICategoryList[]
+
+
+
+  constructor(private viewService: ViewService, private productService: ProductService) {
+    this.productService.$categoryList.subscribe(
+      list => this.categoryList = list
+    )
+  }
 
   ngOnInit(): void {
   }
@@ -17,4 +28,8 @@ export class FilterSidebarComponent implements OnInit {
     this.viewService.viewCloseFilterSidebar();
   }
 
+  onViewSelect(categorySelected: string) {
+    console.log(categorySelected)
+this.productService.filterCategoryView(categorySelected)
+  }
 }
