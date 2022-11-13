@@ -19,8 +19,10 @@ export class InventoryComponent {
   newCurrentPrice!: number
   newDescription!: string
   newImage!: string
+  newMSRP!: number;
   newDateAvailableOn!: Date
   isCreating: boolean = false
+  mapWarning: string | null = null
 
   constructor(private productService: ProductService) {
     this.productService.$productList.subscribe(
@@ -41,7 +43,11 @@ export class InventoryComponent {
   }
 
   onSaveClick() {
-    if(this.selectedProduct)
+    // if (this.checkMapPrice()) {
+    //   this.mapWarning = "CurrentPrice is below MAP"
+    //   return
+    // }
+    if (this.selectedProduct)
       this.productService.updateProduct(this.selectedProduct)
   }
 
@@ -59,9 +65,9 @@ export class InventoryComponent {
   }
 
   onDeleteTagClick() {
-    if(!this.tagSelected)
+    if (!this.tagSelected)
       return
-    if(this.selectedProduct)
+    if (this.selectedProduct)
       this.selectedProduct.categoryList.splice(this.selectedProduct.categoryList.indexOf(this.tagSelected, 1))
   }
 
@@ -78,33 +84,46 @@ export class InventoryComponent {
   }
 
   onCreateProductClick() {
- this.productService.createProduct(
-   {
-     id: -1,
-     isDiscontinued: false,
-     msrp: 0,
-     mapStartDate: new Date(),
-     mapEndDate: new Date(),
-     priceStartDate: new Date(),
-     priceEndDate: new Date(),
-     price: 0,
-     saleStartDate: new Date(),
-     saleEndDate: new Date(),
-     salePercentOff: 0,
-     quantityAtCost: 0,
-     categoryList: [],
-     storeQuantity: this.newStoreQuantity,
-     currentPrice: this.newCurrentPrice,
-     description: this.newDescription,
-     image: this.newImage,
-     dateAvailableOn: this.newDateAvailableOn
-   }
- )
+    // if (this.checkMapPrice()) {
+    //   this.mapWarning = "CurrentPrice is below MAP"
+    //   return
+    // }
+    this.productService.createProduct(
+      {
+        id: -1,
+        isDiscontinued: false,
+        msrp: this.newMSRP,
+        mapStartDate: new Date(),
+        mapEndDate: new Date(),
+        priceStartDate: new Date(),
+        priceEndDate: new Date(),
+        price: 0,
+        saleStartDate: new Date(),
+        saleEndDate: new Date(),
+        salePercentOff: 0,
+        quantityAtCost: 0,
+        categoryList: [],
+        storeQuantity: this.newStoreQuantity,
+        currentPrice: this.newCurrentPrice,
+        description: this.newDescription,
+        image: this.newImage,
+        dateAvailableOn: this.newDateAvailableOn
+      }
+    )
   }
 
   onDeleteProductClick() {
-    if(this.selectedProduct)
-    this.productService.deleteProduct(this.selectedProduct.id)
+    if (this.selectedProduct)
+      this.productService.deleteProduct(this.selectedProduct.id)
     this.selectedProduct = null
   }
+
+  // private checkMapPrice() {
+  //   if (this.selectedProduct.m &&
+  //     new Date(this.selectedProduct?.mapStartDate ?).getDate() < new Date().getDate() &&
+  //     new Date(this.selectedProduct.endDate).getDate() > new Date().getDate() &&) {
+  //   }
+  //
+  //   return false;
+  // }
 }
