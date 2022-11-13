@@ -1,5 +1,4 @@
 import {Component, OnDestroy} from '@angular/core';
-import {ViewService} from "../view.service";
 import {AccountService} from "../account.service";
 import {Subscription} from "rxjs";
 import {IAccount} from "../___interfaces/IAccount";
@@ -16,14 +15,14 @@ export class ProfileComponent implements OnDestroy {
 
   subscription: Subscription;
 
-  constructor(private accountService: AccountService, private viewService: ViewService) {
+  constructor(private accountService: AccountService) {
     this.subscription = this.accountService.$account.subscribe({
       next: (account) => {
         if(account) {
           this.account = account;
         }
       },
-      error: (err) => {
+      error: () => {
         // TODO add error handling
       }
     })
@@ -31,10 +30,6 @@ export class ProfileComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  onClose() {
-    this.viewService.viewCloseProfile();
   }
 
   onDelete() {

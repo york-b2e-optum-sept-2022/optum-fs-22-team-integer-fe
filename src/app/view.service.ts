@@ -21,46 +21,69 @@ export class ViewService {
 
   constructor() { }
 
+  public viewCloseAll() {
+    this.$viewLogin.next(false);
+    this.$viewRegister.next(false);
+    this.$viewCart.next(false);
+    this.$viewInvoices.next(false);
+    this.$viewProfile.next(false);
+    this.$viewCategories.next(false);
+    this.$viewInventory.next(false);
+    this.$viewCoupons.next(false);
+    this.$viewManageProfiles.next(false);
+    this.$viewFilterSidebar.next(false);
+    this.$viewCreateAccount.next(false);
+    this.$viewEditAccount.next(false);
+  }
+
   // Open views
   public viewLogin() {
+    this.viewCloseAll();
     this.$viewLogin.next(true);
-    this.$viewRegister.next(false);
   }
 
   public viewRegister() {
+    this.viewCloseAll();
     this.$viewRegister.next(true);
-    this.$viewLogin.next(false);
   }
 
   public viewCart() {
+    this.viewCloseAll();
     this.$viewCart.next(true);
   }
 
   public viewInvoices() {
+    this.viewCloseAll();
     this.$viewInvoices.next(true);
   }
 
   public viewProfile() {
+    this.viewCloseAll();
     this.$viewProfile.next(true);
   }
 
   public viewCategories() {
+    this.viewCloseAll();
     this.$viewCategories.next(true);
   }
 
   public viewInventory() {
+    this.viewCloseAll();
     this.$viewInventory.next(true);
   }
 
   public viewCoupons() {
+    this.viewCloseAll();
     this.$viewCoupons.next(true);
   }
 
   public viewManageProfiles() {
+    this.viewCloseAll();
     this.$viewManageProfiles.next(true);
   }
 
   public viewFilterSidebar() {
+    this.viewCloseAll();
     this.$viewFilterSidebar.next(true);
   }
 
@@ -118,21 +141,6 @@ export class ViewService {
   }
 
   public viewCloseEditAccount() {
-    this.$viewEditAccount.next(false);
-  }
-
-  public viewCloseAll() {
-    this.$viewLogin.next(false);
-    this.$viewRegister.next(false);
-    this.$viewCart.next(false);
-    this.$viewInvoices.next(false);
-    this.$viewProfile.next(false);
-    this.$viewCategories.next(false);
-    this.$viewInventory.next(false);
-    this.$viewCoupons.next(false);
-    this.$viewManageProfiles.next(false);
-    this.$viewFilterSidebar.next(false);
-    this.$viewCreateAccount.next(false);
     this.$viewEditAccount.next(false);
   }
 

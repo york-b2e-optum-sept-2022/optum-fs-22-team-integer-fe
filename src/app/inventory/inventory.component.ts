@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {ViewService} from "../view.service";
+import {Component} from '@angular/core';
 import {ProductService} from "../product.service";
 import {IProduct} from "../___interfaces/IProduct";
 import {ICategoryList} from "../___interfaces/ICategoryList";
@@ -9,7 +8,7 @@ import {ICategoryList} from "../___interfaces/ICategoryList";
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent {
 
   productList!: IProduct[]
   selectedProduct!: IProduct | null
@@ -23,21 +22,13 @@ export class InventoryComponent implements OnInit {
   newDateAvailableOn!: Date
   isCreating: boolean = false
 
-  constructor(private viewService: ViewService, private productService: ProductService) {
+  constructor(private productService: ProductService) {
     this.productService.$productList.subscribe(
       list => this.productList = list
     )
     this.productService.$categoryList.subscribe(
       list => this.categoryList = list
     )
-  }
-
-  ngOnInit(): void {
-  }
-
-
-  onClose() {
-    this.viewService.viewCloseInventory();
   }
 
   onSelectProductClick(productId: string) {
