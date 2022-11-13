@@ -52,7 +52,7 @@ export class CartComponent implements OnDestroy{
     this.cart.productList = []
     this.cart.totalPrice = 0
     this.cartService.$cart.next(this.cart)
-    this.viewService.viewCloseAll();
+    this.viewService.viewCloseCart();
     if (this.cart.accountId === 0)
       this.viewService.viewInvoices();
   }
