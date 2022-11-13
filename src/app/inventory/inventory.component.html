@@ -17,26 +17,26 @@
 *ngIf="isCreating">
   <div class="input-group mb-3">
     <span class="input-group-text w-25">Quantity in stock</span>
-    <input type="number" class="form-control" [(ngModel)]="newProduct.storeQuantity"></div>
+    <input type="number" class="form-control" [(ngModel)]="newStoreQuantity"></div>
   <div>
     Please input 200px x 200 px url
     <div class="input-group mb-3">
       <span class="input-group-text w-25">Product Image</span>
-      <input type="text" class="form-control" [(ngModel)]="newProduct.image"></div>
+      <input type="text" class="form-control" [(ngModel)]="newImage"></div>
   </div>
   Preview Image:
-  <img src="{{newProduct.image}}" alt="product">
+  <img src="{{newImage}}" alt="product">
 
 
   <div class="input-group mb-3">
     <span class="input-group-text w-25">Product Description</span>
-    <input type="text" class="form-control" [(ngModel)]="newProduct.description"></div>
+    <input type="text" class="form-control" [(ngModel)]="newDescription"></div>
   <div class="input-group mb-3">
     <span class="input-group-text w-25">Date Available</span>
-    <input type="date" class="form-control" [(ngModel)]="newProduct.dateAvailableOn"></div>
+    <input type="date" class="form-control" [(ngModel)]="newDateAvailableOn"></div>
   <div class="input-group mb-3">
     <span class="input-group-text w-25">Current Price</span>
-    <input type="text" class="form-control" [(ngModel)]="newProduct.currentPrice"></div>
+    <input type="text" class="form-control" [(ngModel)]="newCurrentPrice"></div>
   <div class="card-footer d-flex justify-content-around">
     <button class="btn btn-success btn-sm" (click)="onCreateProductClick()">Create Product</button>
     <button class="btn btn-outline-secondary btn-sm" (click)="onCancelNewProductClick()">Cancel</button>
@@ -150,6 +150,7 @@
       <div class="card-footer d-flex justify-content-around">
         <button class="btn btn-success btn-sm" (click)="onSaveClick()">Save Changes</button>
         <button class="btn btn-outline-secondary btn-sm" (click)="onCancelClick()">Cancel</button>
+        <button class="btn btn-danger btn-sm" (click)="onDeleteProductClick()">Delete</button>
       </div>
 
 

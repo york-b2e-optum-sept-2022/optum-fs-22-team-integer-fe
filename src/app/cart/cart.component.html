@@ -25,6 +25,14 @@
   <h3>Total Price: {{cart.totalPrice}}</h3>
 </div>
 
+<div class="input-group mb-3">
+  <span class="input-group-text w-25">Enter Coupon Code:</span>
+  <input type="text" class="form-control" [(ngModel)]="couponCodeInput"></div>
+<div class="input-group-append">
+  <button type=button class="btn btn-success" (click)="checkCouponCode()">Check Coupon
+  </button>
+</div>
+
 <div>
   <button (click)="onClose()">Cart Close</button>
   <button (click)="onCheckoutClick()">Check out</button>
