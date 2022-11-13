@@ -42,6 +42,11 @@ export class AccountService {
 
   public logout() {
     this.$account.next(null);
+    this.cartService.$cart.next({
+      accountId: 0,
+      productList: [],
+      totalPrice: 0
+    });
     this.viewService.viewCloseAll();
   }
 
