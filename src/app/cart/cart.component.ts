@@ -1,25 +1,27 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ICart} from "../___interfaces/ICart";
 import {CartService} from "../cart.service";
 import {ViewService} from "../view.service";
 import {IProduct} from "../___interfaces/IProduct";
 import {ProductService} from "../product.service";
 import {ICouponCodes} from "../___interfaces/ICouponCodes";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
+export class CartComponent implements OnDestroy{
 
   cart!: ICart
   couponCodeInput: string | null = null
   couponCodeList!: ICouponCodes[]
 
+  onDestroy = new Subject();
 
   constructor(private cartService: CartService, private viewService: ViewService, private productService: ProductService) {
-    this.cartService.$cart.subscribe(
+    this.cartService.$cart.pipe(takeUntil(this.onDestroy)).subscribe(
       cart => {
         cart.productList.sort((a, b) => a.product.id - b.product.id)
         this.cart = cart
@@ -29,6 +31,11 @@ export class CartComponent {
     this.cartService.$couponCodeList.subscribe(
       couponList => this.couponCodeList = couponList
     )
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy.next(null);
+    this.onDestroy.complete();
   }
 
   onCheckoutClick() {
