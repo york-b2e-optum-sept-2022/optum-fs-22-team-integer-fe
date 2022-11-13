@@ -71,33 +71,8 @@ export class AppComponent {
 
   }
 
-  onViewProfile() {
-    this.viewService.viewProfile();
-  }
-
-  onViewInvoices() {
-    this.viewService.viewInvoices();
-  }
-
-  onViewCategories() {
-    this.viewService.viewCategories();
-  }
-
-  onViewInventory() {
-    this.viewService.viewInventory();
-  }
-
-  onViewCoupons() {
-    this.viewService.viewCoupons();
-  }
-
-  onViewManageProfiles() {
-    this.viewService.viewManageProfiles();
-  }
-
   onViewFilterSidebar() {
     this.viewService.viewFilterSidebar();
   }
-
 
 }

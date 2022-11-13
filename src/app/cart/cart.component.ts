@@ -77,10 +77,6 @@ export class CartComponent implements OnDestroy {
     this.cartService.increaseProductCount(product)
   }
 
-  onClose() {
-    this.viewService.viewCloseCart();
-  }
-
   checkCouponCode() {
     for (let coupon of this.couponCodeList) {
       if (coupon.name === this.couponCodeInput &&

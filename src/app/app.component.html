@@ -1,4 +1,3 @@
-
 <app-navbar></app-navbar>
 
 <app-register *ngIf="viewRegister"></app-register>
@@ -6,34 +5,17 @@
 
 <app-cart *ngIf="viewCart"></app-cart>
 
-<div *ngIf="isLoggedIn && type === 1">
-  <button (click)="onViewProfile()">Profile</button>
-  <button (click)="onViewInvoices()">Order History</button>
+<app-profile *ngIf="viewProfile"></app-profile>
 
-  <app-profile *ngIf="viewProfile"></app-profile>
-</div>
-
-<div *ngIf="isLoggedIn && type > 1">
-  <button (click)="onViewCategories()">Categories</button>
-  <button (click)="onViewInventory()">Products</button>
-  <button (click)="onViewCoupons()">Coupons</button>
-  <button (click)="onViewInvoices()">Order History</button>
-  <button *ngIf="type === 2" (click)="onViewProfile()">Profile</button>
-  <button *ngIf="type === 3" (click)="onViewManageProfiles()">All Accounts</button>
-
-  <app-product-categories *ngIf="viewCategories"></app-product-categories>
-  <app-inventory *ngIf="viewInventory"></app-inventory>
-  <app-coupons *ngIf="viewCoupons"></app-coupons>
-  <app-invoice *ngIf="viewInvoices"></app-invoice>
-  <app-profile *ngIf="viewProfile"></app-profile>
-  <app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
-</div>
-
-<app-invoice *ngIf="viewInvoices && isLoggedIn === false"></app-invoice>
+<app-product-categories *ngIf="viewCategories"></app-product-categories>
+<app-inventory *ngIf="viewInventory"></app-inventory>
+<app-coupons *ngIf="viewCoupons"></app-coupons>
+<app-invoice *ngIf="viewInvoices"></app-invoice>
+<app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
 
 <button (click)="onViewFilterSidebar()">Filter Sidebar</button>
 
 <div class="d-flex">
-<app-filter-sidebar></app-filter-sidebar>
-<app-product-list></app-product-list>
+  <app-filter-sidebar></app-filter-sidebar>
+  <app-product-list></app-product-list>
 </div>

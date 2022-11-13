@@ -56,10 +56,6 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
     this.subscription3.unsubscribe();
   }
 
-  onClose() {
-    this.viewService.viewCloseManageProfiles();
-  }
-
   onSelectAccountClick(accountId: string) {
     this.resetAccountError();
     for (let account of this.accountList) {

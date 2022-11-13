@@ -1,7 +1,6 @@
+<h2>LOGIN</h2>
 <div>
   <div>
-    <h3>Login</h3>
-
     <div *ngIf="errorMessage" class="text-danger">
       {{errorMessage}}
     </div>
@@ -17,7 +16,6 @@
     </div>
 
     <div>
-      <button (click)="onClose()">Login Close</button>
       <button (click)="onCreateAccount()">Make an Account</button>
       <button (click)="onLogin()">Login</button>
     </div>

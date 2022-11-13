@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {ViewService} from "../view.service";
-
+import { Component} from '@angular/core';
 import {ICategoryList} from "../___interfaces/ICategoryList";
 import {ProductService} from "../product.service";
 
@@ -9,7 +7,7 @@ import {ProductService} from "../product.service";
   templateUrl: './product-categories.component.html',
   styleUrls: ['./product-categories.component.css']
 })
-export class ProductCategoriesComponent implements OnInit {
+export class ProductCategoriesComponent {
 
   categoryList!: ICategoryList[]
   selectedCategory!: ICategoryList | null
@@ -17,17 +15,10 @@ export class ProductCategoriesComponent implements OnInit {
   isAddingNewCategory: boolean = false;
   newCategoryName: string ='';
 
-  constructor(private viewService: ViewService, private productService: ProductService ) {
+  constructor(private productService: ProductService ) {
     this.productService.$categoryList.subscribe(
       list => this.categoryList = list
     )
-  }
-
-  ngOnInit(): void {
-  }
-
-  onClose() {
-    this.viewService.viewCloseCategories();
   }
 
   onSelectCategoryClick(categoryId: string) {

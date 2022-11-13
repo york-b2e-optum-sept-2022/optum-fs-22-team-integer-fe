@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {ViewService} from "../view.service";
 import {ICouponCodes} from "../___interfaces/ICouponCodes";
 import {CartService} from "../cart.service";
 
@@ -28,17 +27,13 @@ export class CouponsComponent implements OnInit {
   newCcSalePercent: number = 0;
 
 
-  constructor(private viewService: ViewService, private cartService: CartService) {
+  constructor(private cartService: CartService) {
     this.cartService.$couponCodeList.subscribe(
       list => this.couponCodeList = list
     )
   }
 
   ngOnInit(): void {
-  }
-
-  onClose() {
-    this.viewService.viewCloseCoupons();
   }
 
   onSelectCouponCodeClick(couponCodeId: string) {
