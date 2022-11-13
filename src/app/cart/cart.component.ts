@@ -12,12 +12,12 @@ import {Subject, takeUntil} from "rxjs";
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnDestroy{
+export class CartComponent implements OnDestroy {
 
   cart!: ICart
   couponCodeInput: string | null = null
   couponCodeList!: ICouponCodes[]
-
+  couponInvalid: string | null = null
   onDestroy = new Subject();
 
   constructor(private cartService: CartService, private viewService: ViewService, private productService: ProductService) {
@@ -39,6 +39,14 @@ export class CartComponent implements OnDestroy{
   }
 
   onCheckoutClick() {
+    //if coupon, update couponCount
+    if (!this.checkCouponCode()) {
+      for (let coupon of this.couponCodeList) {
+        if (coupon.name === this.couponCodeInput) {
+          coupon.useLimit--
+        }
+      }
+    }
     //save invoice
     this.cartService.createInvoice(this.cart)
 
@@ -75,13 +83,17 @@ export class CartComponent implements OnDestroy{
 
   checkCouponCode() {
     for (let coupon of this.couponCodeList) {
-      if (coupon.name === this.couponCodeInput) {
+      if (coupon.name === this.couponCodeInput &&
+        new Date(coupon.startDate).getDate() < new Date().getDate() &&
+        new Date(coupon.endDate).getDate() > new Date().getDate() &&
+        coupon.useLimit > 0) {
         this.cart.totalPrice *= 1 - coupon.salePercent / 100
-        if (coupon.useLimit === 0)
-          return
-        coupon.useLimit--
+        this.couponInvalid = null
+      } else {
+        this.couponInvalid = "Invalid Coupon"
       }
-
     }
+    return this.couponInvalid
   }
-}
+
+}//end of class
