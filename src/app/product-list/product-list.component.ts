@@ -14,7 +14,13 @@ export class ProductListComponent {
   constructor(private productService: ProductService) {
     this.productService.$displayList.subscribe(
       productList => {
-        this.productList = productList
+        let availableProducts: IProduct[] = []
+        let now: Date = new Date()
+        for(let product of productList){
+          if(new Date(product.dateAvailableOn).getDate() <= now.getDate() || !product.dateAvailableOn)
+            availableProducts.push(product)
+        }
+        this.productList = availableProducts
       }
     );
   }
