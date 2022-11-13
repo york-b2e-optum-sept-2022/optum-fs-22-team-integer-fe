@@ -25,6 +25,7 @@ export class InvoiceComponent implements OnInit {
     this.cartService.$invoiceList.subscribe(
       invoiceList => this.invoiceList = invoiceList
     )
+    console.log(this.invoiceList)
   }
 
   ngOnInit(): void {

@@ -95,7 +95,6 @@ export class ProductService {
   }
 
   createProduct(product: IProduct) {
-    console.log(product)
     this.httpService.createProduct(product).pipe(first()).subscribe({
       next: (product) => {
         this.getProductList()
@@ -106,6 +105,7 @@ export class ProductService {
       }
     })
   }
+
   public createNewCategory(category: ICategoryList) {
     this.httpService.createCategory(category).pipe(first()).subscribe({
       next: (category) => {
@@ -118,4 +118,17 @@ export class ProductService {
     })
   }
 
-}
+  deleteProduct(productId: number) {
+    this.httpService.deleteProduct(productId).pipe(first()).subscribe({
+      next: (product) => {
+        this.getProductList()
+      },
+      error: (err) => {
+        console.error(err);
+        // TODO - handle error
+      }
+    })
+  }
+
+
+}//end of class
