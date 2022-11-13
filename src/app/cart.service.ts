@@ -70,10 +70,11 @@ export class CartService {
     let currentCart: ICart = {...this.$cart.getValue()};
     for (let item of currentCart.productList)
       if (item.product === product) {
+        if (item.count === 1)
+          return
         item.count--
-        if (item.count <= 0)
-          this.removeProduct(item.product)
-      } else this.$cart.next(currentCart)
+      }
+    this.$cart.next(currentCart)
     this.calculateTotalPrice()
   }
 

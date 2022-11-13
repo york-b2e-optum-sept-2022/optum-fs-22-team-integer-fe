@@ -4,6 +4,7 @@ import {CartService} from "../cart.service";
 import {ViewService} from "../view.service";
 import {IProduct} from "../___interfaces/IProduct";
 import {ProductService} from "../product.service";
+import {ICouponCodes} from "../___interfaces/ICouponCodes";
 
 @Component({
   selector: 'app-cart',
@@ -13,13 +14,20 @@ import {ProductService} from "../product.service";
 export class CartComponent {
 
   cart!: ICart
+  couponCodeInput: string | null = null
+  couponCodeList!: ICouponCodes[]
 
 
   constructor(private cartService: CartService, private viewService: ViewService, private productService: ProductService) {
     this.cartService.$cart.subscribe(
       cart => {
         cart.productList.sort((a, b) => a.product.id - b.product.id)
-        this.cart = cart}
+        this.cart = cart
+      }
+    )
+
+    this.cartService.$couponCodeList.subscribe(
+      couponList => this.couponCodeList = couponList
     )
   }
 
@@ -28,9 +36,10 @@ export class CartComponent {
     this.cartService.createInvoice(this.cart)
 
     //update product quantities
-    for (let item of this.cart.productList){
+    for (let item of this.cart.productList) {
       item.product.storeQuantity -= item.count
-    this.productService.updateProduct(item.product)}
+      this.productService.updateProduct(item.product)
+    }
     //TODO: update product table
     //clear cart
     this.cart.productList = []
@@ -41,15 +50,15 @@ export class CartComponent {
       this.viewService.viewInvoices();
   }
 
-  onMinusClick(product: IProduct){
+  onMinusClick(product: IProduct) {
     this.cartService.decreaseProductCount(product)
   }
 
-  onRemoveClick(product: IProduct){
+  onRemoveClick(product: IProduct) {
     this.cartService.removeProduct(product)
   }
 
-  onPlusClick(product: IProduct){
+  onPlusClick(product: IProduct) {
     this.cartService.increaseProductCount(product)
   }
 
@@ -57,4 +66,15 @@ export class CartComponent {
     this.viewService.viewCloseCart();
   }
 
+  checkCouponCode() {
+    for (let coupon of this.couponCodeList) {
+      if (coupon.name === this.couponCodeInput) {
+        this.cart.totalPrice *= 1 - coupon.salePercent / 100
+        if (coupon.useLimit === 0)
+          return
+        coupon.useLimit--
+      }
+
+    }
+  }
 }

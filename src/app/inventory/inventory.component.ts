@@ -12,11 +12,15 @@ import {ICategoryList} from "../___interfaces/ICategoryList";
 export class InventoryComponent implements OnInit {
 
   productList!: IProduct[]
-  selectedProduct!: IProduct
+  selectedProduct!: IProduct | null
   categoryList!: ICategoryList[]
   tagSelected: string | null = null
   originalProduct!: IProduct
-  newProduct!: IProduct
+  newStoreQuantity!: number
+  newCurrentPrice!: number
+  newDescription!: string
+  newImage!: string
+  newDateAvailableOn!: Date
   isCreating: boolean = false
 
   constructor(private viewService: ViewService, private productService: ProductService) {
@@ -46,7 +50,8 @@ export class InventoryComponent implements OnInit {
   }
 
   onSaveClick() {
-    this.productService.updateProduct(this.selectedProduct)
+    if(this.selectedProduct)
+      this.productService.updateProduct(this.selectedProduct)
   }
 
   onCancelClick() {
@@ -65,7 +70,8 @@ export class InventoryComponent implements OnInit {
   onDeleteTagClick() {
     if(!this.tagSelected)
       return
-    this.selectedProduct.categoryList.splice(this.selectedProduct.categoryList.indexOf(this.tagSelected, 1))
+    if(this.selectedProduct)
+      this.selectedProduct.categoryList.splice(this.selectedProduct.categoryList.indexOf(this.tagSelected, 1))
   }
 
   onCancelTagRemovalClick() {
@@ -96,12 +102,18 @@ export class InventoryComponent implements OnInit {
      salePercentOff: 0,
      quantityAtCost: 0,
      categoryList: [],
-     storeQuantity: this.newProduct.storeQuantity,
-     currentPrice: this.newProduct.currentPrice,
-     description: this.newProduct.description,
-     image: this.newProduct.image,
-     dateAvailableOn: this.newProduct.dateAvailableOn
+     storeQuantity: this.newStoreQuantity,
+     currentPrice: this.newCurrentPrice,
+     description: this.newDescription,
+     image: this.newImage,
+     dateAvailableOn: this.newDateAvailableOn
    }
  )
+  }
+
+  onDeleteProductClick() {
+    if(this.selectedProduct)
+    this.productService.deleteProduct(this.selectedProduct.id)
+    this.selectedProduct = null
   }
 }
