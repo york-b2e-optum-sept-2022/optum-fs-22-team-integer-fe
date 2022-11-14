@@ -1,22 +1,26 @@
-<app-navbar></app-navbar>
-<div class="text-center text-bg-danger">{{httpErrorMessage}}</div>
+<div class="bg-secondary min-vh-100">
+  <div class="mb-5">
+    <app-navbar></app-navbar>
+    <div class="text-center text-bg-danger">{{httpErrorMessage}}</div>
+  </div>
 
-<app-register *ngIf="viewRegister"></app-register>
-<app-login *ngIf="viewLogin"></app-login>
+  <div class="d-flex justify-content-center">
+    <app-register *ngIf="viewRegister"></app-register>
+    <app-login *ngIf="viewLogin"></app-login>
 
-<app-cart *ngIf="viewCart"></app-cart>
+    <app-cart *ngIf="viewCart"></app-cart>
 
-<app-profile *ngIf="viewProfile"></app-profile>
+    <app-profile *ngIf="viewProfile"></app-profile>
 
-<app-product-categories *ngIf="viewCategories"></app-product-categories>
-<app-inventory *ngIf="viewInventory"></app-inventory>
-<app-coupons *ngIf="viewCoupons"></app-coupons>
-<app-invoice *ngIf="viewInvoices"></app-invoice>
-<app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
+    <app-product-categories *ngIf="viewCategories"></app-product-categories>
+    <app-inventory *ngIf="viewInventory"></app-inventory>
+    <app-coupons *ngIf="viewCoupons"></app-coupons>
+    <app-invoice *ngIf="viewInvoices"></app-invoice>
+    <app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
 
-<button (click)="onViewFilterSidebar()">Filter Sidebar</button>
-
-<div class="d-flex">
-  <app-filter-sidebar></app-filter-sidebar>
-  <app-product-list></app-product-list>
+    <div *ngIf="viewProductList" class="d-flex justify-content-center">
+      <app-filter-sidebar class="m-5"></app-filter-sidebar>
+      <app-product-list class="w-50 m-"></app-product-list>
+    </div>
+  </div>
 </div>

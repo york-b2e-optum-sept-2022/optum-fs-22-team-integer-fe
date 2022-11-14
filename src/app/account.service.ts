@@ -33,6 +33,7 @@ export class AccountService {
         this.$account.next(account);
         this.cartService.connectCart(account.id)
         this.viewService.viewCloseLogin();
+        this.viewService.viewProductList();
       },
       error: () => {
         this.$loginError.next(this.LOGIN_ERROR);
@@ -48,6 +49,7 @@ export class AccountService {
       totalPrice: 0
     });
     this.viewService.viewCloseAll();
+    this.viewService.viewProductList();
   }
 
   public createAccount(email: string, password: string, type: number) {
