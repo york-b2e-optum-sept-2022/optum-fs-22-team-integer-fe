@@ -1,9 +1,10 @@
-<div class="card w-100">
+<div class="card shadow-lg">
   <div class="card-header">
     <h2>CART</h2>
   </div>
-  <div class="d-flex flex-wrap">
-    <div *ngFor="let productList of cart.productList" class="card-body">
+
+  <div class="card-body d-flex flex-wrap">
+    <div *ngFor="let productList of cart.productList">
       <h5>
         {{productList.product.description}}
         <span *ngIf="productList.product.isDiscontinued">Product is Discontinued</span>
@@ -12,23 +13,21 @@
       <h6>Price: ${{productList.product.currentPrice}}</h6>
       <h3>Quantity: {{productList.count}}</h3>
       <div>
-        <button type=button class="btn btn-outline-danger m-1" (click)="onRemoveClick(productList.product)">Remove</button>
+        <button type=button class="btn btn-outline-danger m-1" (click)="onRemoveClick(productList.product)">Remove
+        </button>
         <button type=button class="btn btn-outline-warning m-1" (click)="onMinusClick(productList.product)">-</button>
         <button type=button class="btn btn-outline-success m-1" (click)="onPlusClick(productList.product)">+</button>
       </div>
     </div>
   </div>
 
-  <div>
-    <h3>Total Price: ${{cart.totalPrice}}</h3>
-  </div>
+  <h3 class="d-flex justify-content-end m-2">Total Price: ${{cart.totalPrice}}</h3>
 
   <div class="card-footer d-flex justify-content-around align-items-center">
     <label for="couponCode">Enter Coupon Code:</label>
     <input type="text" class="form-control m-2 w-25" id="couponCode" [(ngModel)]="couponCodeInput">
     <div class="text-danger m-2">{{couponInvalid}}</div>
-    <button type=button class="btn btn-info m-2" (click)="checkCouponCode()">Check Coupon</button>
-    <button type=button class="btn btn-success m-2" (click)="onCheckoutClick()">Check out</button>
+    <button type=button class="btn btn-outline-info m-2" (click)="checkCouponCode()">Check Coupon</button>
+    <button type=button class="btn btn-outline-success m-2" (click)="onCheckoutClick()">Check out</button>
   </div>
-
 </div>

@@ -1,50 +1,96 @@
-<H2>UPDATE COUPON CODES</H2>
-<input class="form-control" placeholder="Select Coupon Code Id" type="text" list="couponCode" #couponCode/>
-<datalist id="couponCode">
-  <option
-    *ngFor="let couponCode of couponCodeList" [value]="couponCode.id"
-  >{{couponCode.name}}</option>
-</datalist>
-<div class="input-group-append">
-  <button type=button class="btn btn-success" (click)="onSelectCouponCodeClick(couponCode.value)">Edit Selected Coupon Code
-  </button>
-  <button class="btn btn-primary" (click)="onAddNewClick()">Add New Coupon</button>
-  <div *ngIf="isAddingNewCouponCode" class="d-flex justify-content-around">
-    <div class="d-flex justify-content-around">
-      <input type="text" class="form-control" placeholder="New Coupon Name" [(ngModel)]="newCouponCodeName">
-      <label for="startDate">Start Date</label>
-      <input type="date" class="form-control" id="startDate" [(ngModel)]="newCcStartDate">
-      <label for="endDate">End Date</label>
-      <input type="date" class="form-control" id="endDate" [(ngModel)]="newCcEndDate">
-      <label for="useLimit">Use Limit</label>
-      <input type="text" class="form-control" id="useLimit" [(ngModel)]="newCcUseLimit">
-      <label for="salePercent">Sale Percent</label>
-      <input type="text" class="form-control" id="salePercent" [(ngModel)]="newCcSalePercent">
-      <button class="btn btn-danger" (click)="onCancelNew()">Cancel</button>
-      <button class="btn btn-primary" (click)="onSubmitNew()">Submit New Coupon</button>
-    </div>
+<div class="card shadow-lg mb-3">
+  <div class="card-header">
+    <H2>MANAGE COUPONS</H2>
+  </div>
+
+  <div class="card-body">
+    <input class="form-control" placeholder="Select Coupon Code Id" type="text" list="couponCode" #couponCode/>
+    <datalist id="couponCode">
+      <option
+        *ngFor="let couponCode of couponCodeList" [value]="couponCode.id"
+      >{{couponCode.name}}</option>
+    </datalist>
+  </div>
+
+  <div class="card-footer">
+    <button type=button class="btn btn-outline-primary m-2" (click)="onSelectCouponCodeClick(couponCode.value)">Edit
+      Selected Coupon
+      Code
+    </button>
+    <button class="btn btn-outline-primary m-2" (click)="onAddNewClick()">Add New Coupon</button>
   </div>
 </div>
 
-<div *ngIf="isUpdatingNewCouponCode">
-  <h5 *ngIf="selectedCouponCode">{{selectedCouponCode.id}}</h5>
-  <div class="input-group mb-3">
-    <div class="d-flex justify-content-around">
-      <input type="text" class="form-control" placeholder="Update Coupon Name" [(ngModel)]="couponCodeName">
-      <label for="currentStartDate">Start Date: </label>
-      <p *ngIf="selectedCouponCode">{{selectedCouponCode.startDate | date}}</p>
-      <input type="date" class="form-control" id="currentStartDate" [(ngModel)]="currentCcStartDate">
-      <label for="currentEndDate">End Date: </label>
-      <p *ngIf="selectedCouponCode">{{selectedCouponCode.endDate | date}}</p>
-      <input type="date" class="form-control" id="currentEndDate" [(ngModel)]="currentCcEndDate">
-      <label for="currentUseLimit">Use Limit</label>
-      <input type="text" class="form-control" id="currentUseLimit" [(ngModel)]="currentCcUseLimit">
-      <label for="currentSalePercent">Sale Percent</label>
-      <input type="text" class="form-control" id="currentSalePercent" [(ngModel)]="currentCcSalePercent">
-      <button class="btn btn-danger" (click)="onDelete(); couponCode.value=''">Delete</button>
-      <button class="btn btn-danger" (click)="onCancel(); couponCode.value=''">Cancel</button>
-      <button class="btn btn-primary" (click)="onUpdate(); couponCode.value=''">Submit Update</button>
+<div *ngIf="isAddingNewCouponCode" class="card shadow-lg d-flex justify-content-around mt-3">
+  <div class="card-header">
+    <h2>CREATE COUPON</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Coupon Name</span>
+      <input type="text" class="form-control" [(ngModel)]="newCouponCodeName">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Start Date</span>
+      <input type="date" class="form-control" [(ngModel)]="newCcStartDate">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">End Date</span>
+      <input type="date" class="form-control" [(ngModel)]="newCcEndDate">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Use Limit</span>
+      <input type="text" class="form-control" [(ngModel)]="newCcUseLimit">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Sale Percent</span>
+      <input type="text" class="form-control" [(ngModel)]="newCcSalePercent">
     </div>
   </div>
+
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-outline-secondary m-2" (click)="onCancelNew()">Cancel</button>
+    <button class="btn btn-outline-primary m-2" (click)="onSubmitNew()">Create Coupon</button>
+  </div>
+</div>
+
+<div *ngIf="isUpdatingNewCouponCode" class="card shadow-lg mt-3">
+  <div class="card-header">
+    <h2>EDIT COUPON</h2>
+    <h5 *ngIf="selectedCouponCode">{{selectedCouponCode.id}}</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Coupon Name</span>
+      <input type="text" class="form-control" [(ngModel)]="couponCodeName">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Start Date</span>
+      <input type="date" class="form-control" [(ngModel)]="currentCcStartDate">
+      <p *ngIf="selectedCouponCode">{{selectedCouponCode.startDate | date}}</p>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">End Date</span>
+      <input type="date" class="form-control" [(ngModel)]="currentCcEndDate">
+      <p *ngIf="selectedCouponCode">{{selectedCouponCode.endDate | date}}</p>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Use Limit</span>
+      <input type="text" class="form-control" [(ngModel)]="currentCcUseLimit">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Sale Percent</span>
+      <input type="text" class="form-control" [(ngModel)]="currentCcSalePercent">
+    </div>
+  </div>
+
+  <div class="card-footer d-flex justify-content-around">
+    <button class="btn btn-outline-danger" (click)="onDelete(); couponCode.value=''">Delete</button>
+    <button class="btn btn-outline-secondary" (click)="onCancel(); couponCode.value=''">Cancel</button>
+    <button class="btn btn-outline-success" (click)="onUpdate(); couponCode.value=''">Save Changes</button>
+  </div>
+
 </div>
 
