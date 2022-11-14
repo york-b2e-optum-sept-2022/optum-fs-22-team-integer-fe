@@ -14,6 +14,7 @@ export class NavbarComponent implements OnDestroy{
 
   public account: IAccount | null = null;
   accountType: String = "";
+  numberOfProductsInCart: number = 0;
   onDestroy$ = new Subject()
 
   constructor(private cartService: CartService, private accountService: AccountService, private viewService: ViewService) {
@@ -25,7 +26,16 @@ export class NavbarComponent implements OnDestroy{
       error: (err) => {
         console.error(err);
       }
-
+    })
+    this.cartService.$cart.pipe(takeUntil(this.onDestroy$)).subscribe({
+      next: (cart) => {
+        this.numberOfProductsInCart = 0;
+        for (let productList of cart.productList)
+          this.numberOfProductsInCart += productList.count;
+      },
+      error: (err) => {
+        console.error(err);
+      }
     })
   }
 
@@ -67,6 +77,10 @@ export class NavbarComponent implements OnDestroy{
 
   onViewManageProfiles() {
     this.viewService.viewManageProfiles();
+  }
+
+  onViewProductList() {
+    this.viewService.viewProductList();
   }
 
   renderAccountType() {
