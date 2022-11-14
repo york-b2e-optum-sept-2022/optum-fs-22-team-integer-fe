@@ -1,5 +1,4 @@
-
-<div class="card shadow-lg d-flex flex-column align-items-center">
+<div class="card shadow-lg">
   <div class="card-header">
     <h2>REGISTER</h2>
   </div>
@@ -15,11 +14,10 @@
     </div>
 
     <div *ngIf="errorMessage" class="text-danger">{{errorMessage}}</div>
-
-    <div class="card-footer">
-      <button type="button" class="btn btn-outline-primary m-2" (click)="onAccountExists()">Already have Account?
-      </button>
-      <button type="button" class="btn btn-outline-success m-2" (click)="onRegister()">Create Account</button>
-    </div>
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-primary m-2" (click)="onAccountExists()">Already have Account?
+    </button>
+    <button type="button" class="btn btn-outline-success m-2" (click)="onRegister()">Create Account</button>
   </div>
 </div>
