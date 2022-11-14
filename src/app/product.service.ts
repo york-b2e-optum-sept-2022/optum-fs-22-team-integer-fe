@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IProduct} from "./___interfaces/IProduct";
-import {BehaviorSubject, filter, first} from "rxjs";
+import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {ICategoryList} from "./___interfaces/ICategoryList";
 
@@ -41,7 +41,6 @@ export class ProductService {
     this.getProductList();
     this.getAllCategoriesList();
   }
-
 
   public getProductList() {
     this.httpService.getAllProducts().pipe(first()).subscribe({

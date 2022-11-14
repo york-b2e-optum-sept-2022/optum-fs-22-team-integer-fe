@@ -18,7 +18,7 @@ export class ViewService {
   public $viewFilterSidebar = new BehaviorSubject<boolean>(false);
   public $viewCreateAccount = new BehaviorSubject<boolean>(false);
   public $viewEditAccount = new BehaviorSubject<boolean>(false);
-  public $viewProductList = new BehaviorSubject<boolean>(false);
+  public $viewProductList = new BehaviorSubject<boolean>(true);
 
   constructor() { }
 
