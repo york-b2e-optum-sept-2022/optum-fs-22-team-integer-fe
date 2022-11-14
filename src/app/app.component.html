@@ -13,9 +13,7 @@
 <app-invoice *ngIf="viewInvoices"></app-invoice>
 <app-manage-profiles *ngIf="viewManageProfiles"></app-manage-profiles>
 
-<button (click)="onViewFilterSidebar()">Filter Sidebar</button>
-
-<div class="d-flex">
-  <app-filter-sidebar></app-filter-sidebar>
-  <app-product-list></app-product-list>
+<div *ngIf="viewProductList" class="d-flex justify-content-center">
+  <app-filter-sidebar class="m-2"></app-filter-sidebar>
+  <app-product-list class="w-50 m-2"></app-product-list>
 </div>

@@ -21,13 +21,10 @@ export class ProductComponent implements OnInit{
 
   ngOnInit() {
     this.isDiscontinued = this.product.isDiscontinued;
-    console.log(this.product);
   }
 
   onClickAddProduct(){
     this.cartService.addProduct(this.product);
-    console.log(this.isDiscontinued);
-    console.log(this.product);
   }
 
 }

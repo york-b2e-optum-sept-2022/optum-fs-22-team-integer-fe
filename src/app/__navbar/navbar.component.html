@@ -1,5 +1,6 @@
 <nav class="navbar bg-secondary">
   <h1>Team Integer Store</h1>
+  <button type="button" class="btn btn-lg btn-primary m-2" (click)="onViewProductList()">Store</button>
 
   <div *ngIf="!account" class="m-2">
     <button type="button" class="btn btn-primary m-2" (click)="onViewLogin()">Login</button>

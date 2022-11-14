@@ -1,13 +1,10 @@
-<div class="card m-2" style="width: 18rem;">
+<div class="card m-2" style="width: 16rem; height: 22rem;">
   <div class="card-header">
-    <h5>
-      {{product.description}}
-      <span *ngIf="product.isDiscontinued">Product is Discontinued</span>
-    </h5>
+    <span *ngIf="product.isDiscontinued" class="text-warning">Product is Discontinued</span>
+    <h5>{{product.description}}</h5>
   </div>
   <div class="card-body">
     <img src="{{product.image}}" alt="product">
-    <span *ngIf="product.isDiscontinued" class="text-danger">Product is Discontinued</span>
   </div>
   <div class="card-footer d-flex justify-content-between">
     <h6>{{product.currentPrice | currency}}</h6>

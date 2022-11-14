@@ -18,7 +18,9 @@ export class ProductListComponent {
         let now: Date = new Date()
         for(let product of productList){
           if(new Date(product.dateAvailableOn).getDate() <= now.getDate() || !product.dateAvailableOn)
-            availableProducts.push(product)
+            if(product.storeQuantity !== 0) {
+              availableProducts.push(product)
+            }
         }
         this.productList = availableProducts
       }

@@ -18,6 +18,7 @@ export class ViewService {
   public $viewFilterSidebar = new BehaviorSubject<boolean>(false);
   public $viewCreateAccount = new BehaviorSubject<boolean>(false);
   public $viewEditAccount = new BehaviorSubject<boolean>(false);
+  public $viewProductList = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
@@ -34,6 +35,7 @@ export class ViewService {
     this.$viewFilterSidebar.next(false);
     this.$viewCreateAccount.next(false);
     this.$viewEditAccount.next(false);
+    this.$viewProductList.next(false);
   }
 
   // Open views
@@ -85,6 +87,11 @@ export class ViewService {
   public viewFilterSidebar() {
     this.viewCloseAll();
     this.$viewFilterSidebar.next(true);
+  }
+
+  public viewProductList() {
+    this.viewCloseAll();
+    this.$viewProductList.next(true);
   }
 
   public viewCreateAccount() {
@@ -142,6 +149,10 @@ export class ViewService {
 
   public viewCloseEditAccount() {
     this.$viewEditAccount.next(false);
+  }
+
+  public viewCloseProductList() {
+    this.$viewProductList.next(false);
   }
 
 }

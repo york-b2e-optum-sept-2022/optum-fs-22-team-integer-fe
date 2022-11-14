@@ -67,6 +67,10 @@ export class NavbarComponent {
     this.viewService.viewManageProfiles();
   }
 
+  onViewProductList() {
+    this.viewService.viewProductList();
+  }
+
   renderAccountType() {
     switch (this.account?.type) {
       case 1:

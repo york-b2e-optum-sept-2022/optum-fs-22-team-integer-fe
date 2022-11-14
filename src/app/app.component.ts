@@ -23,6 +23,7 @@ export class AppComponent {
   viewCoupons: boolean = false;
   viewManageProfiles: boolean = false;
   viewFilterSidebar: boolean = false;
+  viewProductList: boolean = false;
 
   constructor(private accountService: AccountService, private cartService: CartService, private viewService: ViewService) {
     this.accountService.$account.subscribe({
@@ -67,6 +68,9 @@ export class AppComponent {
     );
     this.viewService.$viewFilterSidebar.subscribe(
       (viewFilterSidebar) => this.viewFilterSidebar = viewFilterSidebar
+    );
+    this.viewService.$viewProductList.subscribe(
+      (viewProductList) => this.viewProductList = viewProductList
     );
 
   }
