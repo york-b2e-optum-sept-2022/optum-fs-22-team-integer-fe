@@ -109,7 +109,7 @@ export class AccountService {
         this.viewService.viewCloseEditAccount();
         this.getAllAccounts();
       },
-      error: () => {}
+      error: () => {this.viewService.sendHttpErrorMessage()}
     });
 
   }
@@ -126,10 +126,10 @@ export class AccountService {
             this.viewService.viewCloseEditAccount();
             this.getAllAccounts();
           },
-          error: () => {}
+          error: () => {this.viewService.sendHttpErrorMessage()}
         })
       },
-      error: () => {}
+      error: () => {this.viewService.sendHttpErrorMessage()}
     });
     if (this.$account.getValue()?.type !== 3) {
       this.$account.next(null);
@@ -142,7 +142,7 @@ export class AccountService {
         accountList.sort((a, b) => a.id - b.id);
         this.$accountList.next(accountList);
       },
-      error: () => {}
+      error: () => {this.viewService.sendHttpErrorMessage()}
     });
   }
 

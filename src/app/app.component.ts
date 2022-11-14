@@ -23,6 +23,7 @@ export class AppComponent {
   viewCoupons: boolean = false;
   viewManageProfiles: boolean = false;
   viewFilterSidebar: boolean = false;
+  httpErrorMessage: string | null = null
 
   constructor(private accountService: AccountService, private cartService: CartService, private viewService: ViewService) {
     this.accountService.$account.subscribe({
@@ -68,6 +69,9 @@ export class AppComponent {
     this.viewService.$viewFilterSidebar.subscribe(
       (viewFilterSidebar) => this.viewFilterSidebar = viewFilterSidebar
     );
+    this.viewService.$httpErrorMessage.subscribe(
+      message => this.httpErrorMessage = message
+    )
 
   }
 

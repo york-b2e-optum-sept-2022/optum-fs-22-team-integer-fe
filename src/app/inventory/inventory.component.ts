@@ -9,7 +9,7 @@ import {Subject, takeUntil} from "rxjs";
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnDestroy{
+export class InventoryComponent implements OnDestroy {
 
   productList!: IProduct[]
   selectedProduct!: IProduct | null
@@ -23,8 +23,9 @@ export class InventoryComponent implements OnDestroy{
   newMSRP!: number;
   newDateAvailableOn!: Date
   isCreating: boolean = false
-  mapWarning: string | null = null
   onDestroy$ = new Subject();
+  priceWarning: string | null = null
+  private readonly profitMargin: number = 60
 
   constructor(private productService: ProductService) {
     this.productService.$productList.pipe(takeUntil(this.onDestroy$)).subscribe(
@@ -45,12 +46,17 @@ export class InventoryComponent implements OnDestroy{
   }
 
   onSaveClick() {
-    // if (this.checkMapPrice()) {
-    //   this.mapWarning = "CurrentPrice is below MAP"
-    //   return
-    // }
-    if (this.selectedProduct)
+    let currentPrice = this.getCurrentPrice()
+    if (this.checkPrice(currentPrice))
+      return
+    if (this.selectedProduct) {
+      this.selectedProduct.currentPrice = currentPrice
+      console.log(
+        this.selectedProduct,
+        this.priceWarning
+      )
       this.productService.updateProduct(this.selectedProduct)
+    }
   }
 
   onCancelClick() {
@@ -86,10 +92,12 @@ export class InventoryComponent implements OnDestroy{
   }
 
   onCreateProductClick() {
-    // if (this.checkMapPrice()) {
-    //   this.mapWarning = "CurrentPrice is below MAP"
-    //   return
-    // }
+    let currentPrice = this.getCurrentPrice()
+    if (currentPrice)
+      return
+    this.checkPrice(currentPrice)
+    if (this.checkPrice(currentPrice))
+      return
     this.productService.createProduct(
       {
         id: -1,
@@ -106,7 +114,7 @@ export class InventoryComponent implements OnDestroy{
         quantityAtCost: 0,
         categoryList: [],
         storeQuantity: this.newStoreQuantity,
-        currentPrice: this.newCurrentPrice,
+        currentPrice: currentPrice,
         description: this.newDescription,
         image: this.newImage,
         dateAvailableOn: this.newDateAvailableOn
@@ -120,17 +128,44 @@ export class InventoryComponent implements OnDestroy{
     this.selectedProduct = null
   }
 
-  // private checkMapPrice() {
-  //   if (this.selectedProduct.m &&
-  //     new Date(this.selectedProduct?.mapStartDate ?).getDate() < new Date().getDate() &&
-  //     new Date(this.selectedProduct.endDate).getDate() > new Date().getDate() &&) {
-  //   }
-  //
-  //   return false;
-  // }
+  private checkPrice(currentPrice: number) {
+    this.priceWarning = null
+    if (!this.selectedProduct)
+      return
+    if (!this.selectedProduct.msrp)
+      return
+    if (currentPrice < this.selectedProduct.msrp * .80)
+      this.priceWarning = "Price is lower than MAP"
+    if (currentPrice < this.selectedProduct.msrp * (1 - (this.profitMargin/100)))
+      this.priceWarning = "Price causes product to sell for a loss"
+    return this.priceWarning
+  }
+
+  getCurrentPrice() {
+    if (!this.selectedProduct)
+      return 0
+    if (this.newCurrentPrice)
+      return this.newCurrentPrice
+    if (this.selectedProduct.salePercentOff &&
+      new Date(this.selectedProduct.saleStartDate).getDate() < new Date().getDate() &&
+      new Date(this.selectedProduct.saleEndDate).getDate() > new Date().getDate())
+      return this.selectedProduct.currentPrice * (1 - (this.selectedProduct.salePercentOff / 100))
+    if (this.selectedProduct.price &&
+      new Date(this.selectedProduct.priceStartDate).getDate() < new Date().getDate() &&
+      new Date(this.selectedProduct.priceEndDate).getDate() > new Date().getDate())
+      return this.selectedProduct.price
+    if (this.selectedProduct.price)
+      return this.selectedProduct.price
+    if (this.selectedProduct.currentPrice)
+      return this.selectedProduct.currentPrice
+    else return 0
+  }
+
 
   ngOnDestroy() {
     this.onDestroy$.next(null)
     this.onDestroy$.complete()
   }
+
+
 }

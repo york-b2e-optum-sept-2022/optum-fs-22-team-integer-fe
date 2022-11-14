@@ -18,6 +18,7 @@ export class ViewService {
   public $viewFilterSidebar = new BehaviorSubject<boolean>(false);
   public $viewCreateAccount = new BehaviorSubject<boolean>(false);
   public $viewEditAccount = new BehaviorSubject<boolean>(false);
+  public $httpErrorMessage = new BehaviorSubject<string | null>(null)
 
   constructor() { }
 
@@ -34,6 +35,7 @@ export class ViewService {
     this.$viewFilterSidebar.next(false);
     this.$viewCreateAccount.next(false);
     this.$viewEditAccount.next(false);
+    this.$httpErrorMessage.next(null)
   }
 
   // Open views
@@ -142,6 +144,10 @@ export class ViewService {
 
   public viewCloseEditAccount() {
     this.$viewEditAccount.next(false);
+  }
+
+  sendHttpErrorMessage(){
+    this.$httpErrorMessage.next("Unknown error, please try again later.")
   }
 
 }

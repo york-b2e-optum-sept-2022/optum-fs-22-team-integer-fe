@@ -5,6 +5,7 @@ import {IProduct} from "./___interfaces/IProduct";
 import {IInvoiceList} from "./___interfaces/IInvoiceList";
 import {HttpService} from "./http.service";
 import {ICouponCodes} from "./___interfaces/ICouponCodes";
+import {ViewService} from "./view.service";
 
 
 @Injectable({
@@ -30,7 +31,7 @@ export class CartService {
   },
   ]);
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private viewService: ViewService) {
     this.getAllInvoices()
     this.getCouponCodes()
   }
@@ -106,7 +107,7 @@ export class CartService {
         },
         error: (err) => {
           console.error(err);
-          // TODO - handle error
+          this.viewService.sendHttpErrorMessage()
         }
       }
     )
@@ -120,7 +121,7 @@ export class CartService {
         },
         error: err => {
           console.error(err);
-          // TODO - handle error
+          this.viewService.sendHttpErrorMessage()
         }
       }
     )
@@ -157,7 +158,7 @@ export class CartService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -174,7 +175,6 @@ export class CartService {
         },
         error: (err) => {
           if (err.status === 409) {
-            console.info(err);
             //cart existed, so existing cart is retrieved
             this.httpService.getCart(accountId).pipe(first())
               .subscribe({
@@ -185,10 +185,11 @@ export class CartService {
                   this.$cart.next(returnedCart)
                 },
                 error: (err) => {
-                  //TODO
+                  this.viewService.sendHttpErrorMessage()
                 }
               })
           }
+          else this.viewService.sendHttpErrorMessage()
         }
       })
   }
@@ -201,8 +202,8 @@ export class CartService {
         },
         error: err => {
           if (err.status === 500)
-            "error handled"
-          //TODO: add errors
+          {}
+          else this.viewService.sendHttpErrorMessage()
         }
       })
   }
@@ -217,7 +218,7 @@ export class CartService {
         },
         error: (err) => {
           console.error(err);
-          // TODO - handle error
+          this.viewService.sendHttpErrorMessage()
         }
       }
     )
@@ -230,7 +231,7 @@ export class CartService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -242,7 +243,7 @@ export class CartService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -254,7 +255,7 @@ export class CartService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
