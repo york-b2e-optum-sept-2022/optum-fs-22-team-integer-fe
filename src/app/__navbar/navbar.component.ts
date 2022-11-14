@@ -1,21 +1,23 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {CartService} from "../cart.service";
 import {AccountService} from "../account.service";
 import {IAccount} from "../___interfaces/IAccount";
 import {ViewService} from "../view.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnDestroy{
 
   public account: IAccount | null = null;
   accountType: String = "";
+  onDestroy$ = new Subject()
 
   constructor(private cartService: CartService, private accountService: AccountService, private viewService: ViewService) {
-    this.accountService.$account.subscribe({
+    this.accountService.$account.pipe(takeUntil(this.onDestroy$)).subscribe({
       next: (account) => {
         this.account = account
        this.renderAccountType();
@@ -82,6 +84,11 @@ export class NavbarComponent {
         this.accountType = "Error"
         break;
     }
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
   }
 
 }

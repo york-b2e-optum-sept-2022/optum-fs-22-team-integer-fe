@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ICouponCodes} from "../___interfaces/ICouponCodes";
 import {CartService} from "../cart.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-coupons',
   templateUrl: './coupons.component.html',
   styleUrls: ['./coupons.component.css']
 })
-export class CouponsComponent implements OnInit {
+export class CouponsComponent implements OnDestroy {
 
   couponCodeList!: ICouponCodes[];
   selectedCouponCode!: ICouponCodes | null;
@@ -25,16 +26,15 @@ export class CouponsComponent implements OnInit {
   newCcEndDate: String = '';
   newCcUseLimit: number = 0;
   newCcSalePercent: number = 0;
+  onDestroy$ = new Subject()
 
 
   constructor(private cartService: CartService) {
-    this.cartService.$couponCodeList.subscribe(
+    this.cartService.$couponCodeList.pipe(takeUntil(this.onDestroy$)).subscribe(
       list => this.couponCodeList = list
     )
   }
 
-  ngOnInit(): void {
-  }
 
   onSelectCouponCodeClick(couponCodeId: string) {
     for(let couponCode of this.couponCodeList){
@@ -127,4 +127,10 @@ export class CouponsComponent implements OnInit {
       this.isUpdatingNewCouponCode = false;
     }
   }
+
+  ngOnDestroy() {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
+  }
+
 }
