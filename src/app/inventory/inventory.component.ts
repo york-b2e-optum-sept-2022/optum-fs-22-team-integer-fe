@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ProductService} from "../product.service";
 import {IProduct} from "../___interfaces/IProduct";
 import {ICategoryList} from "../___interfaces/ICategoryList";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent {
+export class InventoryComponent implements OnDestroy{
 
   productList!: IProduct[]
   selectedProduct!: IProduct | null
@@ -23,12 +24,13 @@ export class InventoryComponent {
   newDateAvailableOn!: Date
   isCreating: boolean = false
   mapWarning: string | null = null
+  onDestroy$ = new Subject();
 
   constructor(private productService: ProductService) {
-    this.productService.$productList.subscribe(
+    this.productService.$productList.pipe(takeUntil(this.onDestroy$)).subscribe(
       list => this.productList = list
     )
-    this.productService.$categoryList.subscribe(
+    this.productService.$categoryList.pipe(takeUntil(this.onDestroy$)).subscribe(
       list => this.categoryList = list
     )
   }
@@ -126,4 +128,9 @@ export class InventoryComponent {
   //
   //   return false;
   // }
+
+  ngOnDestroy() {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
+  }
 }

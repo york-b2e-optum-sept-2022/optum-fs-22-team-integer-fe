@@ -10,12 +10,9 @@ import {CartService} from "../cart.service";
 export class ProductComponent {
 
   @Input() product!: IProduct;
-  viewCartUI: boolean = false
 
   constructor(private cartService: CartService) {
-    this.cartService.$viewCartUI.subscribe(
-      viewCartUI => this.viewCartUI = viewCartUI
-    )
+
   }
 
   onClickAddProduct(){
