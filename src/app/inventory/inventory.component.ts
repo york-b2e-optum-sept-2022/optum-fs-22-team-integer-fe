@@ -147,12 +147,12 @@ export class InventoryComponent implements OnDestroy {
     if (this.newCurrentPrice)
       return this.newCurrentPrice
     if (this.selectedProduct.salePercentOff &&
-      new Date(this.selectedProduct.saleStartDate).getDate() < new Date().getDate() &&
-      new Date(this.selectedProduct.saleEndDate).getDate() > new Date().getDate())
+      new Date(this.selectedProduct.saleStartDate).getDate() <= new Date().getDate() &&
+      new Date(this.selectedProduct.saleEndDate).getDate() >= new Date().getDate())
       return this.selectedProduct.currentPrice * (1 - (this.selectedProduct.salePercentOff / 100))
     if (this.selectedProduct.price &&
-      new Date(this.selectedProduct.priceStartDate).getDate() < new Date().getDate() &&
-      new Date(this.selectedProduct.priceEndDate).getDate() > new Date().getDate())
+      new Date(this.selectedProduct.priceStartDate).getDate() <= new Date().getDate() &&
+      new Date(this.selectedProduct.priceEndDate).getDate() >= new Date().getDate())
       return this.selectedProduct.price
     if (this.selectedProduct.price)
       return this.selectedProduct.price
