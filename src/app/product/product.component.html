@@ -7,9 +7,11 @@
   </div>
   <div class="card-body">
     <img src="{{product.image}}" alt="product">
+    Categories: {{product.categoryList}}
   </div>
   <div class="card-footer d-flex justify-content-between">
     <h6>{{product.currentPrice | currency}}</h6>
+    <span *ngIf="isOnSale">ON SALE</span>
     <button (click)="onClickAddProduct()" class="btn btn-sm btn-outline-primary">Add to Cart</button>
   </div>
 </div>
