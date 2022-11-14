@@ -26,7 +26,7 @@
     <input type="text" class="form-control" [(ngModel)]="categoryName">
   </div>
   <div class="d-flex justify-content-around">
-    <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
-    <button class="btn btn-primary" (click)="onUpdate()">Update</button>
+    <button class="btn btn-danger" (click)="onCancel(); category.value=''">Cancel</button>
+    <button class="btn btn-primary" (click)="onUpdate(); category.value=''">Update</button>
   </div>
 </div>
