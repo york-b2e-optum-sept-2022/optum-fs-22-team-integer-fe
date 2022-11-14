@@ -1,22 +1,19 @@
-
 <div class="card shadow-lg" style="width: 18rem">
-  <div class="card-header d-flex">
-    <h2>Profile</h2>
+  <div class="card-header">
+    <h2>PROFILE</h2>
+    <h5>Email: {{account.email}}</h5>
   </div>
-  <div class="card-body d-flex flex-column align-items-center">
-    <h5 class="card-title">
-      {{account.email}}
-    </h5>
-    <div class="d-flex justify-content-between">
-      <span class="m-2">Password: </span>
-      <input type="text" [(ngModel)]="password">
+
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Password</span>
+      <input type="text" class="form-control" [(ngModel)]="password">
     </div>
   </div>
-  <div class="card-footer">
-    <div class="d-flex justify-content-around">
-      <button (click)="onDelete()" class="btn btn-sm btn-outline-danger">Delete Account</button>
-      <button (click)="onUpdate()" class="btn btn-sm btn-outline-primary">Update Password</button>
-    </div>
+
+  <div class="card-footer d-flex justify-content-around">
+    <button (click)="onDelete()" class="btn btn-outline-danger m-2">Delete Account</button>
+    <button (click)="onUpdate()" class="btn btn-outline-primary m-2">Update Password</button>
   </div>
 </div>
 

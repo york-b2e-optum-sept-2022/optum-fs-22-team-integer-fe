@@ -56,12 +56,15 @@ export class InventoryComponent implements OnDestroy {
         this.priceWarning
       )
       this.productService.updateProduct(this.selectedProduct)
+      this.selectedProduct = null;
     }
   }
 
   onCancelClick() {
-    if (this.selectedProduct !== undefined)
+    if (this.selectedProduct !== undefined) {
       this.selectedProduct = {...this.originalProduct}
+    }
+    this.selectedProduct = null;
   }
 
   onAddCategoryTag(tag: string) {
@@ -89,6 +92,12 @@ export class InventoryComponent implements OnDestroy {
 
   onCancelNewProductClick() {
     this.isCreating = false
+    this.newStoreQuantity = 0;
+    this.newImage = "";
+    this.newDescription = "";
+    this.newDateAvailableOn = new Date();
+    this.newMSRP = 0;
+    this.newCurrentPrice = 0;
   }
 
   onCreateProductClick() {
@@ -120,6 +129,7 @@ export class InventoryComponent implements OnDestroy {
         dateAvailableOn: this.newDateAvailableOn
       }
     )
+    this.isCreating = false;
   }
 
   onDeleteProductClick() {

@@ -1,63 +1,85 @@
+<div class="card shadow-lg mb-2">
+  <div class="card-header">
+    <H2>MANAGE ACCOUNTS</H2>
+  </div>
 
-<H2>MANAGE ALL ACCOUNTS</H2>
-<input class="form-control" placeholder="Select Account email" type="text" list="account" #account/>
-<datalist id="account">
-  <option
-    *ngFor="let account of accountList" [value]="account.id"
-  >{{account.email}}</option>
-</datalist>
-<div class="input-group-append">
-  <button type=button class="btn btn-success" (click)="onSelectAccountClick(account.value)">Edit Selected Account
-  </button>
-  <button class="btn btn-primary" (click)="onCreateAccountClick()">Create New Account</button>
+  <div class="card-body">
+    <input class="form-control" placeholder="Select Account email" type="text" list="account" #account/>
+    <datalist id="account">
+      <option
+        *ngFor="let account of accountList" [value]="account.id"
+      >{{account.email}}</option>
+    </datalist>
+  </div>
 
-  <div *ngIf="viewCreateAccount" class="d-flex justify-content-around">
-    <div class="d-flex justify-content-around">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" [(ngModel)]="createAccountEmail">
-      <label for="password">Password</label>
-      <input type="text" class="form-control" id="password" [(ngModel)]="createAccountPassword">
-      <label for="type">Type</label>
-      <input type="text" class="form-control" id="type" [(ngModel)]="createAccountType">
-
-      <button class="btn btn-danger" (click)="onCancelCreateClick()">Cancel</button>
-      <button class="btn btn-primary" (click)="onSubmitNew()">Submit New Account</button>
-    </div>
-    <div *ngIf="errorMessage" class="text-danger">
-      {{errorMessage}}
-    </div>
+  <div class="card-footer">
+    <button type=button class="btn btn-outline-primary m-2" (click)="onSelectAccountClick(account.value)">Edit Selected
+      Account
+    </button>
+    <button class="btn btn-outline-primary m-2" (click)="onCreateAccountClick()">Create New Account</button>
   </div>
 </div>
 
-<div *ngIf="viewEditAccount">
-  <div *ngIf="selectedAccount">
-    <div class="card m-3">
+<div *ngIf="viewCreateAccount" class="card shadow-lg d-flex justify-content-around mt-2">
+  <div class="card-header">
+    <h2>CREATE ACCOUNT</h2>
+  </div>
+
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Email</span>
+      <input type="text" class="form-control" [(ngModel)]="createAccountEmail">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Password</span>
+      <input type="text" class="form-control" [(ngModel)]="createAccountPassword">
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Type</span>
+      <input type="text" class="form-control" [(ngModel)]="createAccountType">
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-danger">{{errorMessage}}</div>
+
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-outline-secondary m-2" (click)="onCancelCreateClick()">Cancel</button>
+    <button class="btn btn-outline-success m-2" (click)="onSubmitNew()">Create Account</button>
+  </div>
+</div>
+
+<div *ngIf="viewEditAccount" class="mt-2">
+  <div *ngIf="copySelectAccount && selectedAccount">
+    <div class="card shadow-lg m-3">
       <div class="card-header">
-        <h2>{{selectedAccount.email}}</h2>
-        <h5>id: {{selectedAccount.id}}</h5>
-        <h6>Email: {{selectedAccount.email}}</h6>
-        <h6>Password: {{selectedAccount.password}}</h6>
-        <h6>Type: {{selectedAccount.type}}</h6>
+        <h2>EDIT ACCOUNT</h2>
+        <h4>Account: {{copySelectAccount.email}}</h4>
+        <h5>id: {{copySelectAccount.id}}</h5>
+        <h6>Email: {{copySelectAccount.email}}</h6>
+        <h6>Password: {{copySelectAccount.password}}</h6>
+        <h6>Type: {{copySelectAccount.type}}</h6>
       </div>
 
       <div class="card-body">
         <div class="input-group mb-3">
-          <span class="input-group-text w-25">Password</span>
-          <input type="number" class="form-control" [(ngModel)]="selectedAccount.password"></div>
+          <span class="input-group-text">Password</span>
+          <input type="text" class="form-control" [(ngModel)]="selectedAccount.password">
+        </div>
         <div class="input-group mb-3">
-          <span class="input-group-text w-25">Account Type</span>
-          <input type="text" class="form-control" [(ngModel)]="selectedAccount.type"></div>
+          <span class="input-group-text">Account Type</span>
+          <input type="text" class="form-control" [(ngModel)]="selectedAccount.type">
+        </div>
+      </div>
 
-        <div class="card-footer d-flex justify-content-around">
-          <button class="btn btn-sm btn-outline-danger" (click)="onDeleteClick(); account.value=''">Delete Account
-          </button>
-          <button class="btn btn-secondary" (click)="onCancel(); account.value=''">Cancel</button>
-          <button class="btn btn-success btn-sm" (click)="onSaveClick(); account.value=''">Save Changes</button>
-        </div>
-        <div *ngIf="errorMessage" class="text-danger">
-          {{errorMessage}}
-        </div>
+      <div *ngIf="errorMessage" class="text-danger">{{errorMessage}}</div>
+
+      <div class="card-footer d-flex justify-content-around">
+        <button class="btn btn-sm btn-outline-danger" (click)="onDeleteClick(); account.value=''">Delete Account
+        </button>
+        <button class="btn btn-outline-secondary" (click)="onCancel(); account.value=''">Cancel</button>
+        <button class="btn btn-outline-success" (click)="onSaveClick(); account.value=''">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
+

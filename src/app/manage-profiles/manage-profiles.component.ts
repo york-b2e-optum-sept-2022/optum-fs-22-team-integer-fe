@@ -13,6 +13,7 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
 
   accountList!: IAccount[]
   selectedAccount!: IAccount | null
+  copySelectAccount!: IAccount | null;
   errorMessage: string = "";
 
   viewCreateAccount: boolean = false;
@@ -61,6 +62,9 @@ export class ManageProfilesComponent implements OnInit, OnDestroy {
     for (let account of this.accountList) {
       if (account.id === parseInt(accountId))
         this.selectedAccount = account
+    }
+    if(this.selectedAccount) {
+        this.copySelectAccount = {...this.selectedAccount};
     }
     this.viewService.viewEditAccount();
   }

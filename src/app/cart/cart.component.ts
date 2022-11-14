@@ -28,7 +28,7 @@ export class CartComponent implements OnDestroy {
       }
     )
 
-    this.cartService.$couponCodeList.subscribe(
+    this.cartService.$couponCodeList.pipe(takeUntil(this.onDestroy)).subscribe(
       couponList => this.couponCodeList = couponList
     )
   }
@@ -78,6 +78,9 @@ export class CartComponent implements OnDestroy {
   }
 
   checkCouponCode() {
+    if (this.couponCodeList.length === 0) {
+      return this.couponInvalid = "No Coupons in Database"
+    }
     for (let coupon of this.couponCodeList) {
       if (coupon.name === this.couponCodeInput &&
         new Date(coupon.startDate).getDate() < new Date().getDate() &&
@@ -91,5 +94,4 @@ export class CartComponent implements OnDestroy {
     }
     return this.couponInvalid
   }
-
-}//end of class
+}

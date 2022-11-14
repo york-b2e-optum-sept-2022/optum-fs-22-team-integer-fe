@@ -1,161 +1,164 @@
+<div class="card shadow-lg mb-2">
+  <div class="card-header">
+    <H2 class="">PRODUCTS</H2>
+  </div>
 
-<input class="form-control" placeholder="Select Product Id" type="text" list="inventory" #inventory/>
-<datalist id="inventory">
-  <option
-    *ngFor="let product of productList" [value]="product.id"
-  >{{product.description}}</option>
-</datalist>
-<div class="input-group-append">
-  <button type=button class="btn btn-success" (click)="onSelectProductClick(inventory.value)">View <i
-    class="bi bi-envelope"></i>
-  </button>
+  <div class="card-body">
+    <input class="form-control" placeholder="Select Product Id" type="text" list="inventory" #inventory/>
+    <datalist id="inventory">
+      <option
+        *ngFor="let product of productList" [value]="product.id"
+      >{{product.description}}</option>
+    </datalist>
+  </div>
+  <div class="card-footer">
+    <button type=button class="btn btn-outline-primary m-2" (click)="onSelectProductClick(inventory.value)">Edit Product
+    </button>
+    <button class="btn btn-outline-primary m-2" (click)="onAddNewProductClick()">Add New Product</button>
+  </div>
 </div>
 
-<button (click)="onAddNewProductClick()">Add New Product</button>
-
-<div
-*ngIf="isCreating">
-  <div class="input-group mb-3">
-    <span class="input-group-text w-25">Quantity in stock</span>
-    <input type="number" class="form-control" [(ngModel)]="newStoreQuantity"></div>
-  <div>
-    Please input 200px x 200 px url
+<div *ngIf="isCreating" class="card shadow-lg mt-2">
+  <div class="card-header">
+    <h2>Create a Product</h2>
+  </div>
+  <div class="card-body">
     <div class="input-group mb-3">
-      <span class="input-group-text w-25">Product Image</span>
-      <input type="text" class="form-control" [(ngModel)]="newImage"></div>
+      <span class="input-group-text">Quantity in stock</span>
+      <input type="number" class="form-control" [(ngModel)]="newStoreQuantity"></div>
+    <div>
+      Please input 200px x 200 px url
+      <div class="input-group mb-3">
+        <span class="input-group-text">Product Image</span>
+        <input type="text" class="form-control" [(ngModel)]="newImage"></div>
+    </div>
+
+    Preview Image:
+    <img src="{{newImage}}" alt="product">
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">Product Description</span>
+      <input type="text" class="form-control" [(ngModel)]="newDescription"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Date Available</span>
+      <input type="date" class="form-control" [(ngModel)]="newDateAvailableOn"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">MSRP</span>
+      <input type="text" class="form-control" [(ngModel)]="newMSRP"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Current Price</span>
+      <input type="text" class="form-control" [(ngModel)]="newCurrentPrice"></div>
+    <div class="text-center text-danger">{{priceWarning}}</div>
   </div>
-  Preview Image:
-  <img src="{{newImage}}" alt="product">
 
-
-  <div class="input-group mb-3">
-    <span class="input-group-text w-25">Product Description</span>
-    <input type="text" class="form-control" [(ngModel)]="newDescription"></div>
-  <div class="input-group mb-3">
-    <span class="input-group-text w-25">Date Available</span>
-    <input type="date" class="form-control" [(ngModel)]="newDateAvailableOn"></div>
-  <div class="input-group mb-3">
-    <span class="input-group-text w-25">MSRP</span>
-    <input type="text" class="form-control" [(ngModel)]="newMSRP"></div>
-  <div class="input-group mb-3">
-    <span class="input-group-text w-25">Current Price</span>
-    <input type="text" class="form-control" [(ngModel)]="newCurrentPrice"></div>
-  <div class="text-center text-danger">{{priceWarning}}</div>
   <div class="card-footer d-flex justify-content-around">
-    <button class="btn btn-success btn-sm" (click)="onCreateProductClick()">Create Product</button>
-    <button class="btn btn-outline-secondary btn-sm" (click)="onCancelNewProductClick()">Cancel</button>
+    <button class="btn btn-outline-secondary" (click)="onCancelNewProductClick()">Cancel</button>
+    <button class="btn btn-outline-success" (click)="onCreateProductClick()">Create Product</button>
   </div>
-
 </div>
 
 
-<div *ngIf="selectedProduct">
+<div *ngIf="selectedProduct" class="card shadow-lg mt-2">
+  <div class="card-header">
+    <h2>General Information</h2>
+    <h5>
+      Description: {{selectedProduct.description}}
+      <span *ngIf="selectedProduct.isDiscontinued">Product is Discontinued</span>
+    </h5>
+    <img src="{{selectedProduct.image}}" alt="product">
+    <h6>Current Price: {{selectedProduct.currentPrice | currency}}</h6>
+    <h6>Quantity in Stock: {{selectedProduct.storeQuantity}}</h6>
+    <h6>Date Available: {{selectedProduct.dateAvailableOn | date}}</h6>
+  </div>
 
-  <h2>General Information</h2>
-  <h5>
-    Description: {{selectedProduct.description}}
-    <span *ngIf="selectedProduct.isDiscontinued">Product is Discontinued</span>
-  </h5>
-  <img src="{{selectedProduct.image}}" alt="product">
-  <h6>Current Price: {{selectedProduct.currentPrice | currency}}</h6>
-  <h6>Quantity in Stock: {{selectedProduct.storeQuantity}}</h6>
-  <h6>Date Available: {{selectedProduct.dateAvailableOn | date}}</h6>
-
-  <div class="card m-3">
-    <div class="card-body">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="finishedCheckbox"
-               [(ngModel)]="selectedProduct.isDiscontinued">
-        <label class="form-check-label" for="finishedCheckbox">
-          Discontinued
-        </label>
+  <div class="card-body">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="finishedCheckbox"
+             [(ngModel)]="selectedProduct.isDiscontinued">
+      <label class="form-check-label" for="finishedCheckbox">
+        Discontinued
+      </label>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Quantity in stock</span>
+      <input type="number" class="form-control" [(ngModel)]="selectedProduct.storeQuantity"></div>
+    <div>
+      Please input 200px x 200 px url
+      <div class="input-group mb-3">
+        <span class="input-group-text">Product Image</span>
+        <input type="text" class="form-control" [(ngModel)]="selectedProduct.image"></div>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Product Description</span>
+      <input type="text" class="form-control" [(ngModel)]="selectedProduct.description"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Date Available</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.dateAvailableOn"></div>
+    <div>
+      <input class="form-control" placeholder="Select Category Tag" type="text" list="category" #category/>
+      <datalist id="category">
+        <option
+          *ngFor="let category of categoryList" [value]="category.name"
+        >{{category.name}}</option>
+      </datalist>
+      <div class="input-group-append">
+        <button type=button class="btn btn-success" (click)="onAddCategoryTag(category.value)">Add tag <i
+          class="bi bi-envelope"></i>
+        </button>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Quantity in stock</span>
-        <input type="number" class="form-control" [(ngModel)]="selectedProduct.storeQuantity"></div>
-      <div>
-        Please input 200px x 200 px url
-        <div class="input-group mb-3">
-          <span class="input-group-text w-25">Product Image</span>
-          <input type="text" class="form-control" [(ngModel)]="selectedProduct.image"></div>
+      <div class="mb-3">
+        Product tags:
+        <span *ngFor="let tag of selectedProduct.categoryList">
+          <button (click)="onCategoryTagClick(tag)" class="btn btn-link-secondary">{{tag}}</button>
+        </span>
       </div>
-
-
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Product Description</span>
-        <input type="text" class="form-control" [(ngModel)]="selectedProduct.description"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Date Available</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.dateAvailableOn"></div>
-
-
-      <div>
-        <input class="form-control" placeholder="Select Category Tag" type="text" list="category" #category/>
-        <datalist id="category">
-          <option
-            *ngFor="let category of categoryList" [value]="category.name"
-          >{{category.name}}</option>
-        </datalist>
-        <div class="input-group-append">
-          <button type=button class="btn btn-success" (click)="onAddCategoryTag(category.value)">Add tag <i
-            class="bi bi-envelope"></i>
-          </button>
+      <div *ngIf="tagSelected"
+           class="d-flex flex-column align-items-center">
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-outline-danger btn-sm mx-3" (click)="onDeleteTagClick()">Remove Tag</button>
+          <button class="btn btn-outline-secondary btn-sm mx-3" (click)="onCancelTagRemovalClick()">Cancel</button>
         </div>
-        <div class="mb-3">
-          Product tags:
-          <span
-            *ngFor="let tag of selectedProduct.categoryList"
-          >
-  <button
-    (click)="onCategoryTagClick(tag)"
-    class="btn btn-link-secondary">{{tag}}</button>
-</span>
-        </div>
-        <div *ngIf="tagSelected"
-             class="d-flex flex-column align-items-center">
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-danger btn-sm mx-3" (click)="onDeleteTagClick()">Remove Tag</button>
-            <button class="btn btn-outline-secondary btn-sm mx-3" (click)="onCancelTagRemovalClick()">Cancel</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Quantity At Cost</span>
-        <input type="text" class="form-control" [(ngModel)]="selectedProduct.quantityAtCost"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">MSRP</span>
-        <input type="text" class="form-control" [(ngModel)]="selectedProduct.msrp"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">MAP Start Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.mapStartDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Map End Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.mapEndDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Price Start Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.priceStartDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Price End Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.priceEndDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Price</span>
-        <input type="text" class="form-control" [(ngModel)]="selectedProduct.price"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Sale State Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.saleStartDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Sale End Date</span>
-        <input type="date" class="form-control" [(ngModel)]="selectedProduct.saleEndDate"></div>
-      <div class="input-group mb-3">
-        <span class="input-group-text w-25">Sale Percent</span>
-        <input type="text" class="form-control" [(ngModel)]="selectedProduct.salePercentOff"></div>
-      <div class="text-center text-danger">{{priceWarning}}</div>
-      <div class="card-footer d-flex justify-content-around">
-        <button class="btn btn-success btn-sm" (click)="onSaveClick()">Save Changes</button>
-        <button class="btn btn-outline-secondary btn-sm" (click)="onCancelClick()">Cancel</button>
-        <button class="btn btn-danger btn-sm" (click)="onDeleteProductClick()">Delete</button>
       </div>
     </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">Quantity At Cost</span>
+      <input type="text" class="form-control" [(ngModel)]="selectedProduct.quantityAtCost"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">MSRP</span>
+      <input type="text" class="form-control" [(ngModel)]="selectedProduct.msrp"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">MAP Start Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.mapStartDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Map End Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.mapEndDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Price Start Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.priceStartDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Price End Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.priceEndDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Price</span>
+      <input type="text" class="form-control" [(ngModel)]="selectedProduct.price"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Sale State Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.saleStartDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Sale End Date</span>
+      <input type="date" class="form-control" [(ngModel)]="selectedProduct.saleEndDate"></div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Sale Percent</span>
+      <input type="text" class="form-control" [(ngModel)]="selectedProduct.salePercentOff"></div>
   </div>
+
+  <div class="text-center text-danger">{{priceWarning}}</div>
+
+  <div class="card-footer d-flex justify-content-around">
+    <button class="btn btn-outline-danger" (click)="onDeleteProductClick(); inventory.value=''">Delete</button>
+    <button class="btn btn-outline-secondary" (click)="onCancelClick(); inventory.value=''">Cancel</button>
+    <button class="btn btn-outline-success" (click)="onSaveClick(); inventory.value=''">Save Changes</button>
+  </div>
+
 </div>

@@ -1,32 +1,54 @@
-<H2>UPDATE CATEGORY</H2>
-<input class="form-control" placeholder="Select Category Id" type="text" list="category" #category/>
-<datalist id="category">
-  <option
-    *ngFor="let category of categoryList" [value]="category.id"
-  >{{category.name}}</option>
-</datalist>
-<div class="input-group-append">
-  <button type=button class="btn btn-success" (click)="onSelectCategoryClick(category.value)">View <i
-    class="bi bi-envelope"></i>
-  </button>
-  <button class="btn btn-primary" (click)="onAddNewClick()">Add New Category</button>
-  <div *ngIf="isAddingNewCategory" class="d-flex justify-content-around">
-    <div class="d-flex justify-content-around">
-      <input type="text" class="form-control" placeholder="New Category to Add" [(ngModel)]="newCategoryName">
-      <button class="btn btn-danger" (click)="onCancelNew()">Cancel</button>
-      <button class="btn btn-primary" (click)="onSubmitNew()">Submit Category</button>
-    </div>
+<div class="card shadow-lg mb-3">
+  <div class="card-header">
+    <H2>MANAGE CATEGORIES</H2>
+  </div>
+
+  <div class="card-body">
+    <input class="form-control" placeholder="Select Category Id" type="text" list="category" #category/>
+    <datalist id="category">
+      <option
+        *ngFor="let category of categoryList" [value]="category.id"
+      >{{category.name}}</option>
+    </datalist>
+  </div>
+
+  <div class="card-footer">
+    <button type=button class="btn btn-outline-primary m-2" (click)="onSelectCategoryClick(category.value)">Edit
+      Category
+    </button>
+    <button class="btn btn-outline-primary m-2" (click)="onAddNewClick()">Create Category</button>
   </div>
 </div>
 
-<div *ngIf="selectedCategory">
-  <h5>{{selectedCategory.id}}</h5>
-  <div class="input-group mb-3">
-    <span class="input-group-text">category name</span>
-    <input type="text" class="form-control" [(ngModel)]="categoryName">
+<div *ngIf="isAddingNewCategory" class="card shadow-lg mt-3">
+  <div class="card-header">
+    <h2>CREATE CATEGORY</h2>
   </div>
-  <div class="d-flex justify-content-around">
-    <button class="btn btn-danger" (click)="onCancel()">Cancel</button>
-    <button class="btn btn-primary" (click)="onUpdate()">Update</button>
+  <div class="card-body">
+    <input type="text" class="form-control" placeholder="New Category to Add" [(ngModel)]="newCategoryName">
+  </div>
+
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-outline-secondary m-2" (click)="onCancelNew()">Cancel</button>
+    <button class="btn btn-outline-success m-2" (click)="onSubmitNew()">Create Category</button>
+  </div>
+</div>
+
+<div *ngIf="selectedCategory" class="card shadow-lg mt-3">
+  <div class="card-header">
+    <h2>EDIT CATEGORY</h2>
+    <h5>id: {{selectedCategory.id}}</h5>
+  </div>
+
+  <div class="card-body">
+    <div class="input-group mb-3">
+      <span class="input-group-text">Category Name</span>
+      <input type="text" class="form-control" [(ngModel)]="categoryName">
+    </div>
+  </div>
+
+  <div class="card-footer d-flex justify-content-end">
+    <button class="btn btn-outline-secondary m-2" (click)="onCancel(); category.value=''">Cancel</button>
+    <button class="btn btn-outline-success m-2" (click)="onUpdate(); category.value=''">Update Category</button>
   </div>
 </div>
