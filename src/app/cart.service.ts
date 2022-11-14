@@ -20,8 +20,6 @@ export class CartService {
 
   public $invoiceList = new BehaviorSubject<IInvoiceList[]>([])
 
-  public $viewCartUI = new BehaviorSubject(false)
-
   public $couponCodeList = new BehaviorSubject<ICouponCodes[]>([{
     id: 0,
     name: "VeteransDaySale",

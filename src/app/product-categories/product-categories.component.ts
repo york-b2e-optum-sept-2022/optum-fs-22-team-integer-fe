@@ -1,22 +1,24 @@
-import { Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ICategoryList} from "../___interfaces/ICategoryList";
 import {ProductService} from "../product.service";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-product-categories',
   templateUrl: './product-categories.component.html',
   styleUrls: ['./product-categories.component.css']
 })
-export class ProductCategoriesComponent {
+export class ProductCategoriesComponent implements OnDestroy{
 
   categoryList!: ICategoryList[]
   selectedCategory!: ICategoryList | null
   categoryName: string ='';
   isAddingNewCategory: boolean = false;
   newCategoryName: string ='';
+  onDestroy$ = new Subject()
 
   constructor(private productService: ProductService ) {
-    this.productService.$categoryList.subscribe(
+    this.productService.$categoryList.pipe(takeUntil(this.onDestroy$)).subscribe(
       list => this.categoryList = list
     )
   }
@@ -67,5 +69,10 @@ export class ProductCategoriesComponent {
     }
     this.productService.createNewCategory(newCategoryToAdd)
     this.newCategoryName = ''
+  }
+
+  ngOnDestroy() {
+    this.onDestroy$.next(null)
+    this.onDestroy$.complete()
   }
 }
