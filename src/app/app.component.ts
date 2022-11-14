@@ -23,6 +23,7 @@ export class AppComponent {
   viewCoupons: boolean = false;
   viewManageProfiles: boolean = false;
   viewFilterSidebar: boolean = false;
+  httpErrorMessage: string | null = null
   viewProductList: boolean = true;
 
   constructor(private accountService: AccountService, private cartService: CartService, private viewService: ViewService) {
@@ -71,6 +72,9 @@ export class AppComponent {
     );
     this.viewService.$viewProductList.subscribe(
       (viewProductList) => this.viewProductList = viewProductList
+    );
+    this.viewService.$httpErrorMessage.subscribe(
+      message => this.httpErrorMessage = message
     );
 
   }

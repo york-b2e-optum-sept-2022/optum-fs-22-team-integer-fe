@@ -3,6 +3,7 @@ import {IProduct} from "./___interfaces/IProduct";
 import {BehaviorSubject, first} from "rxjs";
 import {HttpService} from "./http.service";
 import {ICategoryList} from "./___interfaces/ICategoryList";
+import {ViewService} from "./view.service";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class ProductService {
   },
   ]);
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private viewService: ViewService) {
     this.getProductList();
     this.getAllCategoriesList();
   }
@@ -51,7 +52,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -64,7 +65,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -78,7 +79,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -90,7 +91,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -102,7 +103,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -114,7 +115,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
@@ -126,7 +127,7 @@ export class ProductService {
       },
       error: (err) => {
         console.error(err);
-        // TODO - handle error
+        this.viewService.sendHttpErrorMessage()
       }
     })
   }
